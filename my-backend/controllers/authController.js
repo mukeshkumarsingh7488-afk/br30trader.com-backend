@@ -643,15 +643,17 @@ exports.forgotPassword = async (req, res) => {
       : forgotPasswordTemplate(user.name, otp); // <--- Ab ye Red Security template uthayega
 
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // Port 465 ke liye true rakhein
+      host: "smtp.gmail.com",   // ✅ fixed
+      port: 587,
+      secure: false,            // ✅ 587 ke liye false
       auth: {
         user: emailUser,
         pass: emailPass
       },
       tls: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        servername: "smtp.gmail.com", // ✅ fixed
+        minVersion: "TLSv1.2"
       }
     });
 
