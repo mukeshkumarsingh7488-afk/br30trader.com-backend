@@ -99,7 +99,6 @@ io.on("connection", (socket) => {
 // 4. API Routes
 app.use("/api/admin/email", adminEmailRoutes);
 app.use("/certificates", express.static("certificates"));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/api/payment", require("./routes/paymentRoutes"));

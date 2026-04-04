@@ -739,7 +739,7 @@ exports.updateProfile = async (req, res) => {
         // --- PURANI PHOTO DELETE LOGIC END ---
 
         // Nayi photo ka naam DB mein daalo
-        user.profilePic = req.file.filename;
+       user.profilePic = `/uploads/${req.file.filename}`;
         console.log("✅ Nayi photo DB mein save ho gayi:", req.file.filename);
       }
 
