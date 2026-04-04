@@ -44,16 +44,16 @@ exports.postReview = async (req, res) => {
 exports.getTopReviews = async (req, res) => {
   try {
     // Logic: Wo reviews dikhao jo 'approved' hain YA jinme abhi tak status set nahi hua (Old Reviews)
-    const reviews = await Review.find({ 
+    const reviews = await Review.find({
       $or: [
-        { status: "approved" }, 
+        { status: "approved" },
         { status: { $exists: false } } // Purane reviews ke liye
-      ] 
-    }) 
-      .populate("userId", "profilePic")
+      ]
+    })
+      .populate("userId", "name profilePic")
       .sort({ createdAt: -1 })
       .limit(10);
-    
+
     res.status(200).json(reviews);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -67,7 +67,7 @@ exports.getTopReviews = async (req, res) => {
 exports.getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.find()
-      .populate("userId", "profilePic") // Latest photo ke liye
+      .populate("userId", "name profilePic") // Latest photo ke liye
       .sort({ createdAt: -1 });
     res.status(200).json(reviews);
   } catch (err) {
@@ -117,20 +117,20 @@ exports.deleteReview = async (req, res) => {
 exports.toggleReviewStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Pehle purana status nikal lo
     const review = await Review.findById(id);
     if (!review) return res.status(404).json({ message: "Review nahi mila!" });
 
     // Agar 'approved' hai toh 'hidden' kar do, aur vice versa
     const newStatus = review.status === 'approved' ? 'hidden' : 'approved';
-    
+
     review.status = newStatus;
     await review.save();
 
-    res.status(200).json({ 
-      message: `Review ab ${newStatus} ho gaya hai! ✅`, 
-      status: newStatus 
+    res.status(200).json({
+      message: `Review ab ${newStatus} ho gaya hai! ✅`,
+      status: newStatus
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
