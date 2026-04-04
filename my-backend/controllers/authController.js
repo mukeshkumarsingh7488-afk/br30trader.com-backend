@@ -705,6 +705,7 @@ exports.getProfile = async (req, res) => {
 // 2. UPDATE PROFILE (Name Edit aur Photo Upload)
 exports.updateProfile = async (req, res) => {
   try {
+    console.log("FILE:", req.file);
     const user = await User.findById(req.user.id);
 
     if (user) {
