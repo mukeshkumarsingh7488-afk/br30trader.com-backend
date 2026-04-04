@@ -1,0 +1,43 @@
+{
+  "name": "weekend-website-backend",
+  "version": "1.0.0",
+  "description": "Backend for local MongoDB website project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js --ignore uploads/*"
+  },
+  "keywords": [],
+  "author": "Mukesh",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@langchain/openai": "^1.3.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.3.1",
+    "firebase": "^12.11.0",
+    "firebase-admin": "^13.7.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.3",
+    "langchain": "^1.2.35",
+    "mongodb": "4.1",
+    "mongoose": "^7.8.9",
+    "morgan": "^1.10.1",
+    "multer": "^2.1.1",
+    "nodemailer": "^8.0.4",
+    "openai": "^6.32.0",
+    "pdfkit": "^0.18.0",
+    "qrcode": "^1.5.4",
+    "razorpay": "^2.9.6",
+    "socket.io": "^4.8.3",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

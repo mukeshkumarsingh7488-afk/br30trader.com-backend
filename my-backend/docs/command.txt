@@ -1,0 +1,55 @@
+IMPORTANT COMMANDS
+manually
+npm install nodemon --save-dev
+
+
+PM2 Start Server
+pm2 start index.js
+
+Check Running Server
+pm2 list
+
+Server Logs
+pm2 logs
+
+Restart Server
+pm2 restart index
+
+Stop Server
+pm2 stop index
+
+old process khatam 
+PM2 Kill
+pm2 delete all
+
+manually run
+node index.js 
+npm run dev 
+
+Install Packages
+npm install dotenv cors helmet
+
+Install Rate Limit
+npm install express-rate-limit
+
+Install Logger
+npm install winston
+
+start+watct
+pm2 start index.js --name "my-app" --watch
+pm2 restart my-app --watch --ignore-watch="node_modules logs"
+
+    Old port Run kill
+    npx kill-port 5000
+
+
+
+//#region      MyCode
+
+// Yahan aapka bahut saara code hai...
+
+//#endregion
+
+
+Auto-Deploy
+git push origin main

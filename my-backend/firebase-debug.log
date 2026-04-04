@@ -1,0 +1,60 @@
+[debug] [2026-03-19T20:02:48.518Z] ----------------------------------------------------------------------
+[debug] [2026-03-19T20:02:48.520Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\realm\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js login:ci
+[debug] [2026-03-19T20:02:48.521Z] CLI Version:   15.11.0
+[debug] [2026-03-19T20:02:48.521Z] Platform:      win32
+[debug] [2026-03-19T20:02:48.521Z] Node Version:  v24.14.0
+[debug] [2026-03-19T20:02:48.521Z] Time:          Fri Mar 20 2026 01:32:48 GMT+0530 (India Standard Time)
+[debug] [2026-03-19T20:02:48.521Z] ----------------------------------------------------------------------
+[debug] 
+[warn] !  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=544953494&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] [2026-03-19T20:02:48.566Z] Error: spawn cmd ENOENT
+    at ChildProcess._handle.onexit (node:internal/child_process:286:19)
+    at onErrorNT (node:internal/child_process:484:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-03-19T20:02:57.975Z] ----------------------------------------------------------------------
+[debug] [2026-03-19T20:02:57.977Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\realm\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js login:ci
+[debug] [2026-03-19T20:02:57.978Z] CLI Version:   15.11.0
+[debug] [2026-03-19T20:02:57.978Z] Platform:      win32
+[debug] [2026-03-19T20:02:57.978Z] Node Version:  v24.14.0
+[debug] [2026-03-19T20:02:57.978Z] Time:          Fri Mar 20 2026 01:32:57 GMT+0530 (India Standard Time)
+[debug] [2026-03-19T20:02:57.978Z] ----------------------------------------------------------------------
+[debug] 
+[warn] !  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=1006056293&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] [2026-03-19T20:02:58.015Z] Error: spawn cmd ENOENT
+    at ChildProcess._handle.onexit (node:internal/child_process:286:19)
+    at onErrorNT (node:internal/child_process:484:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-03-19T20:05:35.173Z] ----------------------------------------------------------------------
+[debug] [2026-03-19T20:05:35.177Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\realm\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js login:ci
+[debug] [2026-03-19T20:05:35.177Z] CLI Version:   15.11.0
+[debug] [2026-03-19T20:05:35.177Z] Platform:      win32
+[debug] [2026-03-19T20:05:35.178Z] Node Version:  v24.14.0
+[debug] [2026-03-19T20:05:35.178Z] Time:          Fri Mar 20 2026 01:35:35 GMT+0530 (India Standard Time)
+[debug] [2026-03-19T20:05:35.178Z] ----------------------------------------------------------------------
+[debug] 
+[warn] !  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=820083337&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] [2026-03-19T20:05:35.417Z] Error: spawn cmd ENOENT
+    at ChildProcess._handle.onexit (node:internal/child_process:286:19)
+    at onErrorNT (node:internal/child_process:484:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[error] 
+[error] Error: An unexpected error has occurred.
