@@ -643,10 +643,15 @@ exports.forgotPassword = async (req, res) => {
       : forgotPasswordTemplate(user.name, otp); // <--- Ab ye Red Security template uthayega
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: emailUser, pass: emailPass },
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // Port 465 ke liye true rakhein
+      auth: {
+        user: emailUser,
+        pass: emailPass
+      },
       tls: {
-        rejectUnauthorized: false // 🚨 Ye line zaroori hai Render ke liye
+        rejectUnauthorized: false
       }
     });
 
@@ -655,6 +660,15 @@ exports.forgotPassword = async (req, res) => {
       to: email,
       subject: `🔐 Security Alert: Reset OTP is ${otp}`,
       html: html, // Yahan final design jayega
+    });
+
+    // 🔍 YE CHECK DALO: Connection check karne ke liye
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log("❌ Transporter Connection Error:", error);
+      } else {
+        console.log("✅ Transporter is ready to send emails");
+      }
     });
 
     res.json({ msg: "Reset OTP sent to your email!" });
