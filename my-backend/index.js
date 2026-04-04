@@ -99,7 +99,6 @@ io.on("connection", (socket) => {
 // 4. API Routes
 app.use("/api/admin/email", adminEmailRoutes);
 app.use("/certificates", express.static("certificates"));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/api/payment", require("./routes/paymentRoutes"));
@@ -107,6 +106,13 @@ app.use("/api/courses", require("./routes/courseRoutes"));
 app.use("/api/trades", require("./routes/trades"));
 app.use("/api/notifications", require("./routes/notifications"));
 app.use("/certificates", express.static(path.join(__dirname, "certificates")));
+// ✅ UPDATED: Static Files with CORS Headers (Isse Copy-Paste karo)
+app.use("/uploads", (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*"); // Sabhi origins ko allow karo
+    res.header("Access-Control-Allow-Methods", "GET");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+}, express.static(path.join(__dirname, "uploads")));
 
 
 // 5. Basic Routes
