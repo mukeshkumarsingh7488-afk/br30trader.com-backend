@@ -1,9 +1,20 @@
 // Whatsapp pe payment fail hone par message bhejne ke liye route
 // 🔥 FUTURE FEATURE: Dynamic WhatsApp Link (Currently not in use)
+const express = require("express");
+const router = express.Router();
+
+// 🔥 WhatsApp Link Generator Route
 router.post("/whatsapp-link", (req, res) => {
   const { name, email, course } = req.body;
 
   const number = process.env.WHATSAPP_NUMBER;
+
+  if (!number) {
+    return res.status(500).json({
+      success: false,
+      msg: "WhatsApp number not configured",
+    });
+  }
 
   const message = `Hi BR30 Team, mera payment fail ho gaya hai.
 
@@ -17,3 +28,5 @@ Please help me retry.`;
 
   res.json({ success: true, url });
 });
+
+module.exports = router;

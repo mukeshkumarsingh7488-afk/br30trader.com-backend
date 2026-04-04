@@ -14,7 +14,6 @@ const nodemailer = require("nodemailer");
 const { Server } = require("socket.io");
 const connectDB = require("./config/db");
 const mongoose = require("mongoose");
-// 🔥 FUTURE FEATURE: Dynamic WhatsApp Link (Currently not in use)
 const whatsappRoute = require("./routes/whatsapp");
 const tradeRoutes = require("./routes/trades");
 const reviewRoutes = require("./routes/reviewRoutes");
@@ -101,7 +100,7 @@ io.on("connection", (socket) => {
 // 4. API Routes
 app.use("/api/admin/email", adminEmailRoutes);
 // 🔥 FUTURE FEATURE: Dynamic WhatsApp Link (Currently not in use)
-app.use("/api", whatsappRoute);
+app.use("/api/whatsapp", whatsappRoute);
 app.use("/certificates", express.static("certificates"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
