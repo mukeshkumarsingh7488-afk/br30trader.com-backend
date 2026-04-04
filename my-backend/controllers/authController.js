@@ -705,57 +705,37 @@ exports.getProfile = async (req, res) => {
 // 2. UPDATE PROFILE (Name Edit aur Photo Upload)
 exports.updateProfile = async (req, res) => {
   try {
-    console.log("FILE:", req.file);
+    console.log("🚀 Incoming File Data:", req.file);
     const user = await User.findById(req.user.id);
 
-    if (user) {
-      // Name update logic
-      user.name = req.body.name || user.name;
-
-      // Agar nayi file upload hui hai
-      if (req.file) {
-        // --- PURANI PHOTO DELETE LOGIC START ---
-        if (user.profilePic) {
-          // Relative path use karo, production me bhi kaam karega
-          const uploadDirectory = path.join(__dirname, "../uploads");
-          const oldImagePath = path.join(uploadDirectory, user.profilePic);
-
-          // Check karo file exist karti hai ya nahi, fir delete maaro
-          if (fs.existsSync(oldImagePath)) {
-            try {
-              fs.unlinkSync(oldImagePath);
-              console.log(
-                "✅ Purani photo successfully delete ho gayi:",
-                user.profilePic,
-              );
-            } catch (err) {
-              console.error(
-                "❌ File delete karne mein error (msr pro):",
-                err.message,
-              );
-            }
-          }
-        }
-        // --- PURANI PHOTO DELETE LOGIC END ---
-
-        // Nayi photo ka naam DB mein daalo
-         user.profilePic = req.file.path; 
-        console.log("✅ Nayi photo DB mein save ho gayi:", req.file.filename);
-      }
-
-      const updatedUser = await user.save();
-
-      // Frontend ko message bhejo taki popup aaye
-      res.json({
-        success: true,
-        message: "🎉 Profile Update Ho Gayi Hai! (msr pro)",
-        user: updatedUser,
-      });
-    } else {
-      res
-        .status(404)
-        .json({ success: false, message: "❌ User nahi mila! (msr pro)" });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "❌ User nahi mila! (msr pro)" });
     }
+
+    // 1. Name update logic
+    user.name = req.body.name || user.name;
+
+    // 2. Agar Cloudinary par nayi file upload hui hai
+    if (req.file) {
+      // Cloudinary ka direct URL 'req.file.path' mein hota hai
+      user.profilePic = req.file.path; 
+      console.log("✅ Nayi Cloudinary URL DB mein save ho gayi:", req.file.path);
+    }
+
+    const updatedUser = await user.save();
+
+    // 3. Frontend ko Success Response bhejo
+    res.json({
+      success: true,
+      message: "🎉 Profile Update Ho Gayi Hai! (msr pro)",
+      user: {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        profilePic: updatedUser.profilePic // Pura URL jayega frontend ko
+      },
+    });
+
   } catch (err) {
     console.error("❌ Update Error (msr pro):", err.message);
     res.status(500).json({
@@ -764,6 +744,7 @@ exports.updateProfile = async (req, res) => {
     });
   }
 };
+
 //#endregion
 
 //#region Reset Password Function (OTP Verify ke Baad Naya Password Set Karne ke Liye)

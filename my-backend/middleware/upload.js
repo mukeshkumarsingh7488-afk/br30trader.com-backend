@@ -10,13 +10,18 @@ const cloudinary = require("../config/cloudinary");
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "profile_pics", // Cloudinary me folder banega
+    folder: "profile_pics",
     allowed_formats: ["jpg", "png", "jpeg"],
+    // Important: resource_type aur overwrite add karo
+    resource_type: "image", 
     public_id: (req, file) => {
-      return req.user.id; // same user ki photo replace ho jayegi
+      // Isse file ka naam user ID ban jayega
+      return req.user.id; 
     },
+    overwrite: true, // Nayi upload purani wali ko replace kar degi
   },
 });
+
 
 /* --------------------------------------------------------------------------
    2. INITIALIZE MULTER
