@@ -23,6 +23,7 @@
     "express-rate-limit": "^8.3.1",
     "firebase": "^12.11.0",
     "firebase-admin": "^13.7.0",
+    "greeks": "^1.0.0",
     "helmet": "^8.1.0",
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
