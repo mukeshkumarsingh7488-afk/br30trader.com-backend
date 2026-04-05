@@ -10,22 +10,30 @@ router.get('/option-chain/:index', async (req, res) => {
         const { index } = req.params;
         const tokenDoc = await UpstoxToken.findOne().sort({ updatedAt: -1 });
 
-        if (!tokenDoc) return res.status(401).json({ error: "Connect Upstox First!" });
+        if (!tokenDoc) return res.status(401).json({ success: false, error: "Connect Upstox First!" });
 
-        // 🚨 Date logic simple rakho aaj ke liye (Dynamic baad mein karenge)
+        const instrumentMap = { 'NIFTY': 'NSE_INDEX|Nifty 50', 'BANKNIFTY': 'NSE_INDEX|Nifty Bank' };
+        const instrumentKey = instrumentMap[index.toUpperCase()] || instrumentMap['NIFTY'];
+        
+        // 🚨 Date check: Sunday ko shayad 07 ya 09 mang raha ho
         const expiryDate = "2026-04-09"; 
 
         const response = await axios.get('https://upstox.com', {
-            params: {
-                instrument_key: `NSE_INDEX|${index === 'NIFTY' ? 'Nifty 50' : 'Nifty Bank'}`,
-                expiry_date: expiryDate
-            },
-            headers: { 'Authorization': `Bearer ${tokenDoc.accessToken}` }
+            params: { instrument_key: instrumentKey, expiry_date: expiryDate },
+            headers: { 'Authorization': `Bearer ${tokenDoc.accessToken}`, 'Accept': 'application/json' }
         });
 
-        // ✅ proData defined correctly
-        const proData = response.data.data.map(strike => {
-            const spot = response.data.underlying_spot_price || 0;
+        // ✅ SAFETY CHECK: Agar data undefined hai toh khali array dalo
+        const chainData = response.data?.data || [];
+        
+        if (chainData.length === 0) {
+            return res.status(404).json({ success: false, error: "No data found for this expiry" });
+        }
+
+        const spotPrice = response.data.underlying_spot_price || 0;
+
+        // ✅ proData processing
+        const proData = chainData.map(strike => {
             const cIV = strike.call_options?.market_data?.iv || 15;
             const pIV = strike.put_options?.market_data?.iv || 15;
 
@@ -35,24 +43,25 @@ router.get('/option-chain/:index', async (req, res) => {
                     ltp: strike.call_options?.market_data?.ltp || 0,
                     oi: strike.call_options?.market_data?.oi || 0,
                     iv: cIV,
-                    ...calculateOptionGreeks(spot, strike.strike_price, 4, cIV, 0.07, 'call')
+                    ...calculateOptionGreeks(spotPrice, strike.strike_price, 4, cIV, 0.07, 'call')
                 },
                 put: {
                     ltp: strike.put_options?.market_data?.ltp || 0,
                     oi: strike.put_options?.market_data?.oi || 0,
                     iv: pIV,
-                    ...calculateOptionGreeks(spot, strike.strike_price, 4, pIV, 0.07, 'put')
+                    ...calculateOptionGreeks(spotPrice, strike.strike_price, 4, pIV, 0.07, 'put')
                 }
             };
         });
 
-        res.json({ success: true, spotPrice: response.data.underlying_spot_price, data: proData });
+        res.json({ success: true, spotPrice, expiryDate, data: proData });
 
     } catch (err) {
         console.error("❌ API Error:", err.response?.data || err.message);
-        res.status(500).json({ error: "Upstox API Error" });
+        res.status(500).json({ success: false, error: "Upstox API Error", details: err.message });
     }
 });
+
 
 module.exports = router;
 
