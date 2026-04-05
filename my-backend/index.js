@@ -9,7 +9,6 @@ const app = express();
 const cors = require("cors");
 const path = require("path");
 const http = require("http");
-const upstoxRoutes = require('./routes/upstoxRoutes'); 
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
 const { Server } = require("socket.io");
@@ -102,7 +101,6 @@ io.on("connection", (socket) => {
 app.use("/api/admin/email", adminEmailRoutes);
 // 🔥 FUTURE FEATURE: Dynamic WhatsApp Link (Currently not in use)
 app.use("/api/whatsapp", whatsappRoute);
-app.use('/api/upstox', upstoxRoutes);
 app.use("/certificates", express.static("certificates"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
