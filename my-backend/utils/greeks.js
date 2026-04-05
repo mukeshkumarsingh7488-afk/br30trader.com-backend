@@ -1,5 +1,5 @@
 // Black-Scholes formula for Greeks
-const greeks = require('greeks'); // npm install greeks
+const { calculateOptionGreeks } = require('../utils/greeks'); // npm install greeks
 
 exports.calculateOptionGreeks = (spot, strike, expiryDays, iv, rate = 0.07, type) => {
     // 🛡️ Safety Check: Agar IV zero hai toh default 0.01 (1%) dalo warna error aayega
