@@ -1,67 +1,84 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { getValidAccessToken } = require("../utils/upstoxToken");
 const { calculateOptionGreeks } = require('../utils/greeks');
 const UpstoxToken = require('../models/UpstoxToken');
 
-// 💡 Redirect URI ko variable mein rakha hai taaki dono jagah same rahe
-
-// 1. 🔑 LOGIN ROUTE
-router.get('/login', (req, res) => {
+// -----------------------------
+// 1️⃣ LOGIN ROUTE
+// -----------------------------
+router.get("/login", (req, res) => {
     const apiKey = process.env.UPSTOX_API_KEY;
-    const redirectUri = "https://my-backend-1-avpd.onrender.com/api/upstox/callback";
+    const redirectUri = process.env.REDIRECT_URI;
 
-    // ✅ FIXED: Sahi URL format aur parameters ke saath
-   const url = `https://upstox.com?apiKey=${apiKey}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+    // ✅ Correct Upstox OAuth URL
+    const url = `https://api.upstox.com/login/oauth2/authorize?apiKey=${apiKey}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
 
-    console.log("🚀 Redirecting to Upstox Login Page...");
+    console.log("🚀 [LOGIN ROUTE] Redirecting user to Upstox login page...");
+    console.log("🔗 Redirect URL:", url);
+
     res.redirect(url);
 });
 
-// 2. 🔑 CALLBACK ROUTE
-router.get('/callback', async (req, res) => {
+// -----------------------------
+// 2️⃣ CALLBACK ROUTE
+// -----------------------------
+router.get("/callback", async (req, res) => {
     const { code } = req.query;
+    console.log("🚀 [CALLBACK ROUTE] Code received from Upstox:", code);
 
     if (!code) {
+        console.log("❌ [CALLBACK ROUTE] No code received from Upstox");
         return res.status(400).send("❌ No code received from Upstox");
     }
 
     try {
-        // ✅ FIXED: Sahi Token URL (v2 API)
+        console.log("⏳ Exchanging code for access token...");
         const response = await axios.post(
-            'https://api.upstox.com/login/oauth2/token', // ✅ Correct v2 token URL
+            "https://api.upstox.com/login/oauth2/token",
             new URLSearchParams({
-                code: code,
+                code,
                 client_id: process.env.UPSTOX_API_KEY,
                 client_secret: process.env.UPSTOX_API_SECRET,
-                redirect_uri: REDIRECT_URI, // ✅ Same as dashboard redirect URI
-                grant_type: 'authorization_code'
+                redirect_uri: process.env.REDIRECT_URI,
+                grant_type: "authorization_code"
             }),
-            {
-                headers: { 
-                    'Content-Type': 'application/x-www-form-urlencoded', 
-                    'Accept': 'application/json' 
-                }
-            }
+            { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         );
 
         const token = response.data.access_token;
+        console.log("✅ Access token received:", token);
 
-        // DB mein save/update karo
+        // 🔹 Save / Update token in DB
         await UpstoxToken.findOneAndUpdate(
             {},
             { accessToken: token, updatedAt: Date.now() },
             { upsert: true, new: true }
         );
+        console.log("💾 Access token saved/updated in DB successfully!");
 
-        res.send("<h1>✅ Connected Successfully!</h1><p>Ab aap tab close kar sakte hain.</p><script>setTimeout(()=>window.close(), 2000)</script>");
+        res.send("<h1>✅ Connected Successfully!</h1><p>You can close this tab now.</p><script>setTimeout(()=>window.close(),2000)</script>");
     } catch (err) {
-        console.error("❌ Callback Error Details:", err.response?.data || err.message);
-        res.status(500).json({
-            error: "Login Failed",
-            details: err.response?.data || err.message
-        });
+        console.error("❌ [CALLBACK ROUTE] Error exchanging code for token:", err.response?.data || err.message);
+        res.status(500).json({ error: "Login Failed", details: err.response?.data || err.message });
     }
+});
+
+// -----------------------------
+// 3️⃣ TOKEN CHECK ROUTE (Optional, for frontend/debug)
+// -----------------------------
+router.get("/check-token", async (req, res) => {
+    console.log("🔍 [CHECK TOKEN ROUTE] Fetching latest token from DB...");
+    const tokenData = await getValidAccessToken();
+
+    if (!tokenData) {
+        console.log("❌ [CHECK TOKEN ROUTE] Token expired or not found");
+        return res.status(401).json({ message: "❌ Token expired or not found, please login." });
+    }
+
+    console.log("✅ [CHECK TOKEN ROUTE] Valid token found:", tokenData.token);
+    res.json({ accessToken: tokenData.token, payload: tokenData.decoded });
 });
 
 // 🔥 C. OPTION CHAIN (PRO LEVEL)

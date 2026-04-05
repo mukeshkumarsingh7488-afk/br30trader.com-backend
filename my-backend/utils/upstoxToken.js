@@ -1,18 +1,30 @@
-const UpstoxToken = require('../models/UpstoxToken');
+const UpstoxToken = require("../models/UpstoxToken");
+const jwt = require("jsonwebtoken");
 
-// Isme koi Axios call mat rakho, sirf DB se latest token uthao
+// Fetch latest token and check expiry
 const getValidAccessToken = async () => {
     try {
+        console.log("🔍 [TOKEN HELPER] Fetching latest token from DB...");
         const tokenDoc = await UpstoxToken.findOne().sort({ updatedAt: -1 });
-        if (!tokenDoc) return null;
-        
-        // Upstox token 24 hours ke liye valid hota hai
-        // Agar token 24 ghante se purana hai, toh null return karo taaki frontend login bole
-        const isExpired = (new Date() - new Date(tokenDoc.updatedAt)) > (24 * 60 * 60 * 1000);
-        
-        return isExpired ? null : tokenDoc.accessToken;
+
+        if (!tokenDoc) {
+            console.log("❌ [TOKEN HELPER] No token found in DB");
+            return null;
+        }
+
+        const ageMs = new Date() - new Date(tokenDoc.updatedAt);
+        const isExpired = ageMs > 24 * 60 * 60 * 1000;
+        console.log(`⏱ [TOKEN HELPER] Token age: ${ageMs / 1000}s (${isExpired ? "Expired" : "Valid"})`);
+
+        if (isExpired) return null;
+
+        // Decode payload safely (no verification)
+        const decoded = jwt.decode(tokenDoc.accessToken);
+        console.log("📝 [TOKEN HELPER] Decoded token payload:", decoded);
+
+        return { token: tokenDoc.accessToken, decoded };
     } catch (err) {
-        console.error("Token Fetch Error:", err);
+        console.error("❌ [TOKEN HELPER] Token Fetch Error:", err);
         return null;
     }
 };
