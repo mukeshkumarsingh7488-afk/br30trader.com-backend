@@ -9,6 +9,7 @@ const app = express();
 const cors = require("cors");
 const path = require("path");
 const http = require("http");
+const upstoxRoutes = require("./routes/upstox");
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
 const { Server } = require("socket.io");
