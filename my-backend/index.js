@@ -102,7 +102,7 @@ io.on("connection", (socket) => {
 app.use("/api/admin/email", adminEmailRoutes);
 // 🔥 FUTURE FEATURE: Dynamic WhatsApp Link (Currently not in use)
 app.use("/api/whatsapp", whatsappRoute);
-app.use('/api/upstox', upstoxRoutes);
+app.use('/api/upstox', require('./routes/upstoxRoutes'));
 app.use("/certificates", express.static("certificates"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
