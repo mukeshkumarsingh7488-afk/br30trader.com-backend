@@ -9,13 +9,12 @@ const UpstoxToken = require('../models/UpstoxToken');
 // 1. 🔑 LOGIN ROUTE
 router.get('/login', (req, res) => {
     const apiKey = process.env.UPSTOX_API_KEY;
-    // 🚨 Ye wahi URI hai jo tumne dashboard mein daali hai
     const redirectUri = "https://my-backend-1-avpd.onrender.com/api/upstox/callback";
 
-    // ✅ FIXED URL: Isme 'response_type' aur 'client_id' hona mandatory hai
-    const url = `https://upstox.com{apiKey}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+    // ✅ FIXED: Sahi URL format aur parameters ke saath
+   const url = `https://upstox.com?apiKey=${apiKey}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 
-    console.log("🚀 Redirecting to Upstox...");
+    console.log("🚀 Redirecting to Upstox Login Page...");
     res.redirect(url);
 });
 
@@ -29,21 +28,28 @@ router.get('/callback', async (req, res) => {
 
     try {
         // ✅ FIXED: Sahi Token URL (v2 API)
-        const response = await axios.post('https://upstox.com',
+        const response = await axios.post(
+            'https://api.upstox.com/login/oauth2/token', // ✅ Correct v2 token URL
             new URLSearchParams({
                 code: code,
                 client_id: process.env.UPSTOX_API_KEY,
                 client_secret: process.env.UPSTOX_API_SECRET,
-                redirect_uri: REDIRECT_URI, // ✅ FIXED: Same as dashboard
+                redirect_uri: REDIRECT_URI, // ✅ Same as dashboard redirect URI
                 grant_type: 'authorization_code'
-            }), {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' }
-        });
+            }),
+            {
+                headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded', 
+                    'Accept': 'application/json' 
+                }
+            }
+        );
 
         const token = response.data.access_token;
 
         // DB mein save/update karo
-        await UpstoxToken.findOneAndUpdate({},
+        await UpstoxToken.findOneAndUpdate(
+            {},
             { accessToken: token, updatedAt: Date.now() },
             { upsert: true, new: true }
         );
