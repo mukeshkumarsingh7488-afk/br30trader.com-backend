@@ -12,8 +12,10 @@ const UpstoxToken = require('../models/UpstoxToken');
 router.get('/login', (req, res) => {
     const apiKey = process.env.UPSTOX_API_KEY;
     const redirectUri = encodeURIComponent(process.env.UPSTOX_REDIRECT_URI);
-    // Upstox Auth URL
     const url = `https://upstox.com{apiKey}&redirect_uri=${redirectUri}`;
+
+    // 🛡️ Security Headers Reset (Taaki browser block na kare)
+    res.setHeader('X-Frame-Options', 'ALLOWALL');
     res.redirect(url);
 });
 
@@ -23,22 +25,22 @@ router.get('/callback', async (req, res) => {
     if (!code) return res.status(400).send("❌ Login failed: No code received");
 
     try {
-        const response = await axios.post('https://upstox.com', 
-        new URLSearchParams({
-            code: code,
-            client_id: process.env.UPSTOX_API_KEY,
-            client_secret: process.env.UPSTOX_API_SECRET,
-            redirect_uri: process.env.UPSTOX_REDIRECT_URI,
-            grant_type: 'authorization_code'
-        }), {
+        const response = await axios.post('https://upstox.com',
+            new URLSearchParams({
+                code: code,
+                client_id: process.env.UPSTOX_API_KEY,
+                client_secret: process.env.UPSTOX_API_SECRET,
+                redirect_uri: process.env.UPSTOX_REDIRECT_URI,
+                grant_type: 'authorization_code'
+            }), {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
 
         const accessToken = response.data.access_token;
 
         // DB mein save/update (Hamesha ek hi doc rahega)
-        await UpstoxToken.findOneAndUpdate({}, 
-            { accessToken: accessToken, updatedAt: new Date() }, 
+        await UpstoxToken.findOneAndUpdate({},
+            { accessToken: accessToken, updatedAt: new Date() },
             { upsert: true, new: true }
         );
 
@@ -60,12 +62,12 @@ router.get('/option-chain/:index', async (req, res) => {
 
         if (!tokenDoc) return res.status(401).json({ success: false, error: "Connect Upstox First!" });
 
-        const instrumentMap = { 
-            'NIFTY': 'NSE_INDEX|Nifty 50', 
-            'BANKNIFTY': 'NSE_INDEX|Nifty Bank' 
+        const instrumentMap = {
+            'NIFTY': 'NSE_INDEX|Nifty 50',
+            'BANKNIFTY': 'NSE_INDEX|Nifty Bank'
         };
         const instrumentKey = instrumentMap[index.toUpperCase()] || instrumentMap['NIFTY'];
-        const expiryDate = "2026-04-09"; 
+        const expiryDate = "2026-04-09";
 
         // ✅ SAHI API URL (v2)
         const response = await axios.get('https://upstox.com', {
