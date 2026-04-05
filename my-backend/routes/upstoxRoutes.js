@@ -6,7 +6,7 @@ const axios = require('axios');
 router.get('/login', (req, res) => {
     const apiKey = process.env.UPSTOX_API_KEY;
     // Render Redirect URL
-    const redirectUri = encodeURIComponent("https://onrender.com");
+    const redirectUri = encodeURIComponent("https://my-backend-1-avpd.onrender.com");
     const url = `https://upstox.com{apiKey}&redirect_uri=${redirectUri}`;
     
     res.redirect(url);
@@ -24,7 +24,7 @@ router.get('/callback', async (req, res) => {
             code: code,
             client_id: process.env.UPSTOX_API_KEY,
             client_secret: process.env.UPSTOX_API_SECRET,
-            redirect_uri: "https://onrender.com",
+            redirect_uri: "https://my-backend-1-avpd.onrender.com",
             grant_type: 'authorization_code'
         }), {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
