@@ -60,41 +60,70 @@ exports.addVideo = async (req, res) => {
 // ✅ 1. UPDATE COURSE (Controller Function)
 exports.updateCourse = async (req, res) => {
   try {
+    console.log("-----------------------------------------");
+    console.log("🚀 Request Aayi! ID:", req.params.id);
+    console.log("📦 Body Data:", req.body);
+    console.log("📷 Uploaded File:", req.file ? req.file.filename : "Koi file nahi mili!");
+
     const { title, price, videoUrl } = req.body;
 
-    // 🎯 1. Pehle normal fields set karo
-    let updateFields = { 
-        title, 
-        price 
-    };
+    // 🎯 1. Normal fields setup
+    let updateFields = { title, price };
 
-    // 🎯 2. Video URL Fix: Database mein 'videos' array ke 0 index par update karo
+    // 🎯 2. Video URL Update
     if (videoUrl) {
+      console.log("📹 Updating Video URL...");
       updateFields["videos.0.videoUrl"] = videoUrl;
     }
 
-    // 🚀 3. AGAR ADMIN NE NAYI FILE SELECT KI HAI
+    // 🚀 3. AGAR NAYI FILE HAI TOH PURANI WALI DELETE KARO
     if (req.file) {
-      // Database mein 'thumbnail' field ko naye path se update karo
+      console.log("🔍 Checking for old thumbnail to delete...");
+      
+      const oldCourse = await Course.findById(req.params.id);
+      
+      if (oldCourse && oldCourse.thumbnail) {
+        // Path fix: 'uploads/file.jpg' format ke liye
+        const relativePath = oldCourse.thumbnail.startsWith('/') ? oldCourse.thumbnail : `/${oldCourse.thumbnail}`;
+        const oldFilePath = path.join(__dirname, '..', '..', 'public', relativePath); // Path check kar lena apne folder structure ke hisab se
+        
+        console.log("🗑️ Purana path delete karne ki koshish:", oldFilePath);
+
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+          console.log("✅ Old thumbnail deleted successfully!");
+        } else {
+          console.log("⚠️ Purani file disk pe nahi mili (Shayad Render ne delete kar di ho).");
+        }
+      }
+
+      // Nayi file set karo
       updateFields.thumbnail = `/uploads/${req.file.filename}`; 
+      console.log("✅ New thumbnail path set:", updateFields.thumbnail);
     }
 
     // 🎯 4. Final Update Database mein
+    console.log("💾 Database update ho raha hai...");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
-      { $set: updateFields }, // $set zaroori hai dot notation (".0.") ke liye
+      { $set: updateFields },
       { new: true }
     );
 
     if (!updatedCourse) {
+      console.log("❌ Course nahi mila!");
       return res.status(404).json({ success: false, msg: "Course nahi mila!" });
     }
 
+    console.log("🎉 Sab kuch update ho gaya!");
     res.json({ success: true, msg: "Title, Price, Thumbnail aur Video URL sab update ho gaya! 🚀" });
+
   } catch (err) {
+    console.error("🔥 Error in updateCourse:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 //#endregion
 
 //#region 3. DELETE COURSE (Admin course Management ke andar Delete Course ke liye)
