@@ -83,19 +83,22 @@ exports.updateCourse = async (req, res) => {
       // 🎯 AGAR PATH FULL NAHI HAI (Sirf 'uploads/...' hai)
       if (finalUrl && !finalUrl.startsWith("http")) {
         console.log("⚠️ Converting Relative Path to Full Cloudinary URL...");
-        
-        const myCloudName = "dw4imlekm"; 
-        // 🔥 FIX: Sahi URL structure (://cloudinary.com)
+
+        const myCloudName = "dw4imlekm";
+
+        // 🔥 FIX: Sahi URL "https://cloudinary.com" se start hota hai
+        // Aur cloud name ke baad "/" lagana zaroori hai
         finalUrl = "https://cloudinary.com" + myCloudName + "/image/upload/" + finalUrl;
       }
 
       console.log("✅ Final URL for DB:", finalUrl);
-      
-      // Forcefully String mein convert karo taaki MongoDB poora save kare
-      updateFields.thumbnail = String(finalUrl); 
+
+      // Forcefully String mein convert karo
+      updateFields.thumbnail = String(finalUrl);
     } else {
       console.log("ℹ️ Nayi file nahi mili, purana thumbnail hi rahega.");
     }
+
 
     // 💾 3. Database Update
     console.log("💾 Database update ho raha hai...");
@@ -111,10 +114,10 @@ exports.updateCourse = async (req, res) => {
     }
 
     console.log("🎉 DB mein Full URL (https://) save ho gaya!");
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       msg: "Thumbnail aur Data Cloudinary par Full URL ke saath update ho gaya! 🚀",
-      data: updatedCourse 
+      data: updatedCourse
     });
 
   } catch (err) {
