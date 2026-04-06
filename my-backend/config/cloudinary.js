@@ -6,4 +6,11 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
+console.log("✅ Cloudinary Connected");
+
 module.exports = cloudinary;
+
+
+
+
+

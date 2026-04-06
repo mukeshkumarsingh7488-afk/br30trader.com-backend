@@ -10,6 +10,8 @@ const admin = require("../middleware/admin");
 const upload = require("../middleware/upload");
 const Course = require("../models/Course");
 const uploadCloud = require('../middleware/multerCloudinary');
+const uploadCloud = require("../middleware/uploadCloud");
+const { updateCourse } = require("../controllers/courseController");
 const multer = require('multer');
 const path = require('path');
 

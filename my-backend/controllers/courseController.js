@@ -59,104 +59,47 @@ exports.addVideo = async (req, res) => {
 
 //#region 2. UPDATE COURSE (Admin Course Management ke andar Edit Course ke liye)
 // ✅ 1. UPDATE COURSE (Controller Function)
+// 📁 controllers/courseController.js
+
 exports.updateCourse = async (req, res) => {
   try {
-    console.log("=========================================");
-    console.log("🚀 [START] Cloudinary Update Course API");
-    console.log("🆔 Course ID:", req.params.id);
-    console.log("📦 Body Data:", req.body);
+    console.log("=================================");
+    console.log("🚀 Update Course Start");
 
-    const { title, price, videoUrl } = req.body;
+    const { title, price } = req.body;
 
-    // 🎯 Step 1: Basic fields set kar rahe hain
     let updateFields = { title, price };
-    console.log("🧱 Initial Update Fields:", updateFields);
 
-    // 🎯 Step 2: Video URL update logic
-    if (videoUrl) {
-      console.log("📹 Video URL mila -> update kar rahe hain");
-      updateFields["videos.0.videoUrl"] = videoUrl;
-    } else {
-      console.log("ℹ️ Video URL nahi mila");
-    }
-
-    // 🚀 Step 3: File upload handling
+    // 🔥 IMAGE HANDLE
     if (req.file) {
-      console.log("📷 File detect hui:", req.file);
+      console.log("📷 Cloudinary File:", req.file);
 
-      let finalUrl = "";
+      // ✅ DIRECT URL (NO MANUAL URL)
+      updateFields.thumbnail = req.file.path;
 
-      // 🔥 IMPORTANT: Agar tu Cloudinary use kar raha hai,
-      // to multer ka path use nahi karna chahiye
-      // Cloudinary upload ka result use karo
-
-      // 👉 CASE 1: Agar Cloudinary middleware already use kar raha hai
-      if (req.file.path && req.file.path.startsWith("http")) {
-        console.log("✅ Already Cloudinary URL mila:", req.file.path);
-        finalUrl = req.file.path;
-      }
-
-      // 👉 CASE 2: Agar sirf local path hai (uploads/...)
-      else if (req.file.path) {
-        console.log("⚠️ Local path mila:", req.file.path);
-        console.log("⚠️ Ye Cloudinary URL nahi hai!");
-
-        const myCloudName = "dw4imlekm";
-
-        // ✅ Correct Cloudinary URL format
-        finalUrl = `https://res.cloudinary.com/${myCloudName}/image/upload/${req.file.path}`;
-
-        console.log("🔄 Converted to Cloudinary format:", finalUrl);
-        console.log("❗ WARNING: Ye tabhi kaam karega jab file Cloudinary pe exist kare");
-      }
-
-      else {
-        console.log("❌ File object me path hi nahi mila!");
-      }
-
-      console.log("✅ Final Thumbnail URL:", finalUrl);
-
-      // 🎯 Final assign
-      updateFields.thumbnail = String(finalUrl);
+      console.log("🌩️ Cloudinary URL:", req.file.path);
     } else {
-      console.log("ℹ️ Koi new file upload nahi hui");
+      console.log("ℹ️ No new image uploaded");
     }
 
-    console.log("📦 Final Update Fields going to DB:", updateFields);
+    console.log("📦 Final Data:", updateFields);
 
-    // 💾 Step 4: Database update
-    console.log("💾 DB update start...");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
       { new: true }
     );
 
-    if (!updatedCourse) {
-      console.log("❌ Course nahi mila DB me");
-      return res.status(404).json({
-        success: false,
-        msg: "Course nahi mila!"
-      });
-    }
-
-    console.log("🎉 SUCCESS: Course update ho gaya!");
-    console.log("📊 Updated Data:", updatedCourse);
+    console.log("🎉 Update Success");
 
     res.json({
       success: true,
-      msg: "Course successfully updated with Cloudinary URL 🚀",
-      data: updatedCourse
+      data: updatedCourse,
     });
 
   } catch (err) {
-    console.error("🔥 ERROR in updateCourse:");
-    console.error(err);
-
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
+    console.error("🔥 ERROR:", err);
+    res.status(500).json({ error: err.message });
   }
 };
 

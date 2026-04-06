@@ -1,6 +1,7 @@
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
+const cloudinary = require("../config/cloudinary");
 
 // 1. Cloudinary Config (Environment variables use ho rahe hain)
 cloudinary.config({
@@ -13,16 +14,20 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "course_thumbnails", // Cloudinary par ye folder ban jayega
+    folder: "course_thumbnails",
+    allowed_formats: ["jpg", "png", "jpeg"],
     public_id: (req, file) => {
-      // 🎯 Sabse zaroori: Course ID ko filename banana
-      // Isse purani file hamesha REPLACE hogi!
-      return req.params.id; 
+      return `course_${Date.now()}`;
     },
-    format: async (req, file) => "jpg", // Sab image JPG ban jayengi
   },
 });
 
 const uploadCloud = multer({ storage: storage });
 
+console.log("✅ Multer Cloudinary Ready");
+
 module.exports = uploadCloud;
+
+
+
+
