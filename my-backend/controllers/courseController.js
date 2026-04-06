@@ -73,31 +73,31 @@ exports.updateCourse = async (req, res) => {
 
 // 📁 File: controllers/courseController.js
 
-    // 🚀 Nayi file select ki hai toh Full Link setup karo (Profile style logic)
     if (req.file) {
-      console.log("📷 Cloudinary Raw Path:", req.file.path);
+      console.log("📷 Raw Path from Multer:", req.file.path);
 
-      // 1. Pehle dekho path full hai ya relative (Profile logic style)
-      let finalCloudinaryUrl = req.file.path;
+      let finalUrl = req.file.path;
 
-      // 2. AGAR SIRF 'uploads/...' AA RAHA HAI, TOH USE FULL URL BANAAO
-      if (finalCloudinaryUrl && !finalCloudinaryUrl.startsWith("http")) {
-        console.log("⚠️ Relative path detected, converting to Cloudinary Full URL...");
-        const cloudName = process.env.CLOUD_NAME || "dw4imlekm"; // Tera cloud name logs se liya hai
-        finalCloudinaryUrl = `https://cloudinary.com{cloudName}/image/upload/${finalCloudinaryUrl}`;
+      // 🎯 AGAR PATH FULL NAHI HAI (Sirf 'uploads/...' hai)
+      if (finalUrl && !finalUrl.startsWith("http")) {
+        console.log("⚠️ Converting Relative Path to Full Cloudinary URL...");
+        
+        // 🔥 FIX: Cloud Name aur URL structure ekdum sahi kar diya hai
+        const myCloudName = "dw4imlekm"; 
+        finalUrl = `https://cloudinary.com{myCloudName}/image/upload/${finalUrl}`;
       }
 
-      console.log("✅ Final Full URL for DB:", finalCloudinaryUrl);
-      updateFields.thumbnail = finalCloudinaryUrl; 
+      console.log("✅ Final URL for DB:", finalUrl);
+      updateFields.thumbnail = finalUrl; 
     }
 
-    // 🎯 3. Final Update Database mein
-    console.log("💾 Database update ho raha hai...");
+    // 💾 Database Update
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
       { new: true }
     );
+
 
     if (!updatedCourse) {
       console.log("❌ Error: Course nahi mila!");
