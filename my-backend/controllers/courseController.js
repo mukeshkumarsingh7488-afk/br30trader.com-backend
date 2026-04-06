@@ -61,49 +61,41 @@ exports.addVideo = async (req, res) => {
 exports.updateCourse = async (req, res) => {
   try {
     console.log("-----------------------------------------");
-    console.log("🚀 Request Aayi! ID:", req.params.id);
-    console.log("📦 Body Data:", req.body);
-    console.log("📷 Uploaded File:", req.file ? req.file.filename : "Koi file nahi mili!");
+    console.log("🚀 Request ID:", req.params.id);
 
     const { title, price, videoUrl } = req.body;
-
-    // 🎯 1. Normal fields setup
     let updateFields = { title, price };
 
-    // 🎯 2. Video URL Update
     if (videoUrl) {
-      console.log("📹 Updating Video URL...");
       updateFields["videos.0.videoUrl"] = videoUrl;
     }
 
-    // 🚀 3. AGAR NAYI FILE HAI TOH PURANI WALI DELETE KARO
+    // 🚀 AGAR NAYI FILE UPLOAD HUI HAI
     if (req.file) {
-      console.log("🔍 Checking for old thumbnail to delete...");
-      
-      const oldCourse = await Course.findById(req.params.id);
-      
-      if (oldCourse && oldCourse.thumbnail) {
-        // Path fix: 'uploads/file.jpg' format ke liye
-        const relativePath = oldCourse.thumbnail.startsWith('/') ? oldCourse.thumbnail : `/${oldCourse.thumbnail}`;
-        const oldFilePath = path.join(__dirname, '..', '..', 'public', relativePath); // Path check kar lena apne folder structure ke hisab se
-        
-        console.log("🗑️ Purana path delete karne ki koshish:", oldFilePath);
+      console.log("📷 Nayi file aayi hai, purani wali UPLOADS folder se delete kar raha hoon...");
 
-        if (fs.existsSync(oldFilePath)) {
-          fs.unlinkSync(oldFilePath);
-          console.log("✅ Old thumbnail deleted successfully!");
-        } else {
-          console.log("⚠️ Purani file disk pe nahi mili (Shayad Render ne delete kar di ho).");
+      // 1. Path set karo (Root folder ke 'uploads' mein)
+      // Hum filename wahi rakh rahe hain jo Course ID hai (req.params.id)
+      const fileName = req.file.filename; 
+      const filePathOnDisk = path.join(__dirname, '..', '..', 'uploads', fileName);
+
+      console.log("🗑️ Checking file at:", filePathOnDisk);
+
+      // 2. AGAR FILE PEHLE SE HAI, TOH USE DELETE KARO (Force Replace)
+      if (fs.existsSync(filePathOnDisk)) {
+        try {
+          fs.unlinkSync(filePathOnDisk); 
+          console.log("✅ Purani file 'uploads' folder se delete ho gayi!");
+        } catch (err) {
+          console.log("❌ File delete karne mein error (Shayad lock ho):", err.message);
         }
       }
 
-      // Nayi file set karo
-      updateFields.thumbnail = `/uploads/${req.file.filename}`; 
-      console.log("✅ New thumbnail path set:", updateFields.thumbnail);
+      // 3. DB mein path update karo
+      updateFields.thumbnail = `/uploads/${req.file.filename}`;
     }
 
-    // 🎯 4. Final Update Database mein
-    console.log("💾 Database update ho raha hai...");
+    // 🎯 Final Update Database mein
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
@@ -111,18 +103,18 @@ exports.updateCourse = async (req, res) => {
     );
 
     if (!updatedCourse) {
-      console.log("❌ Course nahi mila!");
       return res.status(404).json({ success: false, msg: "Course nahi mila!" });
     }
 
-    console.log("🎉 Sab kuch update ho gaya!");
-    res.json({ success: true, msg: "Title, Price, Thumbnail aur Video URL sab update ho gaya! 🚀" });
+    console.log("🎉 Folder aur DB dono jagah update ho gaya!");
+    res.json({ success: true, msg: "Thumbnail aur Data replace ho gaya! 🚀" });
 
   } catch (err) {
-    console.error("🔥 Error in updateCourse:", err.message);
+    console.error("🔥 Error:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 
 //#endregion
 
