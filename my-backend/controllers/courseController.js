@@ -62,50 +62,37 @@ exports.addVideo = async (req, res) => {
 exports.updateCourse = async (req, res) => {
   try {
     console.log("-----------------------------------------");
-    console.log("☁️ Cloudinary Update Start! ID:", req.params.id);
+    console.log("🚀 Cloudinary Full URL Update Start! ID:", req.params.id);
 
     const { title, price, videoUrl } = req.body;
     let updateFields = { title, price };
 
-    // 🎯 1. Video URL update
     if (videoUrl) {
-      console.log("📹 Updating Video URL...");
       updateFields["videos.0.videoUrl"] = videoUrl;
     }
 
-    // 🚀 2. AGAR NAYI FILE HAI (Multer ne upload kar di hai)
+    // 🚀 Nayi file select ki hai toh Full Link lo
     if (req.file) {
-      console.log("📷 Cloudinary ne file save kar li hai:", req.file.path);
-      
-      // Database mein naya secure URL save karo
+      // Multer-Cloudinary 'path' mein pura https link deta hai
+      console.log("📷 Cloudinary Path:", req.file.path);
       updateFields.thumbnail = req.file.path; 
     }
 
-    // 🎯 3. Final Update Database mein
-    console.log("💾 Database update ho raha hai...");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
       { new: true }
     );
 
-    if (!updatedCourse) {
-      console.log("❌ Error: Course nahi mila!");
-      return res.status(404).json({ success: false, msg: "Course nahi mila!" });
-    }
-
-    console.log("🎉 Sab kuch successfully update ho gaya!");
-    res.json({ 
-      success: true, 
-      msg: "Cloudinary Thumbnail aur Data sab update ho gaya! 🚀",
-      data: updatedCourse 
-    });
+    console.log("🎉 DB mein Full URL save ho gaya!");
+    res.json({ success: true, msg: "Full URL Updated! 🚀", data: updatedCourse });
 
   } catch (err) {
-    console.error("🔥 Error in updateCourse:", err.message);
+    console.error("🔥 Error:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 
 //#endregion
 
