@@ -133,6 +133,7 @@ exports.verifyPayment = async (req, res) => {
 // #region Payment Failure Alert Logic (Support Team & User ko alert bhejne ke liye)
 // 🔥 NAYA SYSTEM: Payment Failure Alert Logic
 exports.handlePaymentFailure = async (req, res) => {
+  console.error("❌ FAILURE ALERT ERROR:", err);
   try {
     const { courseId, reason } = req.body;
 
