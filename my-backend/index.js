@@ -10,7 +10,6 @@ const cors = require("cors");
 const path = require("path");
 const http = require("http");
 const admin = require("firebase-admin");
-const nodemailer = require("nodemailer");
 const { Server } = require("socket.io");
 const connectDB = require("./config/db");
 const mongoose = require("mongoose");
