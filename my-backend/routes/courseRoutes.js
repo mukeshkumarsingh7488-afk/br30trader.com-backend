@@ -9,6 +9,7 @@ const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 const upload = require("../middleware/upload");
 const Course = require("../models/Course");
+const uploadCloud = require('../middleware/multerCloudinary');
 const multer = require('multer');
 const path = require('path');
 
@@ -64,7 +65,7 @@ router.put("/add-video/:id", auth, admin, addVideo);
 // 🚀 8. UPDATE COURSE (Admin Dashboard se Edit ke liye)
 router.put("/update-course/:id", auth, admin, courseUpload.single("image"), updateCourse);
 
-
+router.put('/update/:id', uploadCloud.single('thumbnail'), updateCourse);
 
 // 🗑️ 9. DELETE COURSE (Admin Dashboard se Delete ke liye)
 router.delete("/delete-course/:id", auth, admin, deleteCourse);

@@ -3,6 +3,7 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const fs = require('fs');
 const path = require('path');
+const cloudinary = require('cloudinary').v2;
 //#endregion
 
 //#region Create Course (Admin Create Course Pannel)
@@ -61,41 +62,27 @@ exports.addVideo = async (req, res) => {
 exports.updateCourse = async (req, res) => {
   try {
     console.log("-----------------------------------------");
-    console.log("🚀 Request ID:", req.params.id);
+    console.log("☁️ Cloudinary Update Start! ID:", req.params.id);
 
     const { title, price, videoUrl } = req.body;
     let updateFields = { title, price };
 
+    // 🎯 1. Video URL update
     if (videoUrl) {
+      console.log("📹 Updating Video URL...");
       updateFields["videos.0.videoUrl"] = videoUrl;
     }
 
-    // 🚀 AGAR NAYI FILE UPLOAD HUI HAI
+    // 🚀 2. AGAR NAYI FILE HAI (Multer ne upload kar di hai)
     if (req.file) {
-      console.log("📷 Nayi file aayi hai, purani wali UPLOADS folder se delete kar raha hoon...");
-
-      // 1. Path set karo (Root folder ke 'uploads' mein)
-      // Hum filename wahi rakh rahe hain jo Course ID hai (req.params.id)
-      const fileName = req.file.filename; 
-      const filePathOnDisk = path.join(__dirname, '..', '..', 'uploads', fileName);
-
-      console.log("🗑️ Checking file at:", filePathOnDisk);
-
-      // 2. AGAR FILE PEHLE SE HAI, TOH USE DELETE KARO (Force Replace)
-      if (fs.existsSync(filePathOnDisk)) {
-        try {
-          fs.unlinkSync(filePathOnDisk); 
-          console.log("✅ Purani file 'uploads' folder se delete ho gayi!");
-        } catch (err) {
-          console.log("❌ File delete karne mein error (Shayad lock ho):", err.message);
-        }
-      }
-
-      // 3. DB mein path update karo
-      updateFields.thumbnail = `/uploads/${req.file.filename}`;
+      console.log("📷 Cloudinary ne file save kar li hai:", req.file.path);
+      
+      // Database mein naya secure URL save karo
+      updateFields.thumbnail = req.file.path; 
     }
 
-    // 🎯 Final Update Database mein
+    // 🎯 3. Final Update Database mein
+    console.log("💾 Database update ho raha hai...");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
@@ -103,18 +90,22 @@ exports.updateCourse = async (req, res) => {
     );
 
     if (!updatedCourse) {
+      console.log("❌ Error: Course nahi mila!");
       return res.status(404).json({ success: false, msg: "Course nahi mila!" });
     }
 
-    console.log("🎉 Folder aur DB dono jagah update ho gaya!");
-    res.json({ success: true, msg: "Thumbnail aur Data replace ho gaya! 🚀" });
+    console.log("🎉 Sab kuch successfully update ho gaya!");
+    res.json({ 
+      success: true, 
+      msg: "Cloudinary Thumbnail aur Data sab update ho gaya! 🚀",
+      data: updatedCourse 
+    });
 
   } catch (err) {
-    console.error("🔥 Error:", err.message);
+    console.error("🔥 Error in updateCourse:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 };
-
 
 //#endregion
 
