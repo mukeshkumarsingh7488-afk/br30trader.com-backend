@@ -25,9 +25,6 @@ const {
 // 1. Leaderboard
 router.get("/leaderboard", getLeaderboard);
 
-// 2. Add Course (Admin Only)
-router.post("/add", auth, admin, uploadCloud.single("thumbnail"), createCourse);
-
 // 3. Get All Courses
 router.get("/", getCourses);
 

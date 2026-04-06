@@ -1,16 +1,31 @@
-//#region Mailer Utility
-// Ye utility humare email sending ke liye hai. Isme hum nodemailer ka use karke apne application se emails bhejenge. 
-// Jab bhi hume user ko koi notification, confirmation, ya congratulatory email bhejna hoga, toh hum is utility ka use karenge, jisse humara email sending process simple aur efficient ho jayega.
+//#region Mailer Utility (RESEND VERSION)
+// Ye utility humare email sending ke liye hai. Ab hum Resend API ka use kar rahe hain
+// taaki Render aur Atlas pe connection timeout ka issue na aaye.
 require("dotenv").config();
-const nodemailer = require("nodemailer");
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// ✅ Resend setup (Ab ye transporter ki jagah kaam karega)
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-module.exports = transporter;
+/**
+ * 📧 Central SendEmail Function
+ * Isse tum pure project mein kahin bhi call kar sakte ho.
+ */
+const sendEmail = async (options) => {
+    try {
+        const data = await resend.emails.send({
+            from: 'onboarding@resend.dev', // Testing ke liye fix rakho
+            to: options.email,
+            subject: options.subject,
+            html: options.message,
+        });
+        console.log("✅ Email sent successfully:", data.id);
+        return data;
+    } catch (error) {
+        console.error("❌ Resend Utility Error:", error.message);
+        throw error;
+    }
+};
+
+module.exports = sendEmail;
 //#endregion

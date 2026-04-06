@@ -53,3 +53,7 @@ pm2 restart my-app --watch --ignore-watch="node_modules logs"
 
 Auto-Deploy
 git push origin main
+
+
+before package instlotion go to this path   
+cd my-backend

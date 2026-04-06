@@ -2,9 +2,11 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 //#endregion
 
 //#region Master Admin Email (Jo .env se aayega)
@@ -370,30 +372,29 @@ exports.register = async (req, res) => {
       });
     }
 
-    // 🔥 DYNAMIC EMAIL PICKER
-    const emailUser = isMaster
-      ? process.env.ADMIN_EMAIL_USER
-      : process.env.SUPPORT_EMAIL_USER;
-    const emailPass = isMaster
-      ? process.env.ADMIN_EMAIL_PASS
-      : process.env.SUPPORT_EMAIL_PASS;
+     // 🔥 DYNAMIC BRANDING & TEMPLATE (Tera Purana Logic)
     const brand = isMaster ? "BR30 Admin" : "BR30 Support";
     const html = isMaster ? adminTemplate(name, otp) : userTemplate(name, otp);
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: emailUser, pass: emailPass },
-    });
+    // ✅ NAYA RESEND API CALL (Ndm ki jagah)
+    try {
+      await resend.emails.send({
+        from: 'onboarding@resend.dev', // Abhi testing ke liye yahi rehne do
+        to: email,
+        subject: `🔐 OTP: ${otp} (${brand})`,
+        html: html, // Tera dynamic template yahan safe hai
+      });
 
-    await transporter.sendMail({
-      from: `"${brand}" <${emailUser}>`,
-      to: email,
-      subject: `🔐 OTP: ${otp}`,
-      html,
-    });
-    await user.save();
-    res.status(201).json({ msg: "OTP Sent!" });
+      await user.save();
+      res.status(201).json({ msg: "OTP Sent!" });
+
+    } catch (sendError) {
+      console.error("❌ Resend Error:", sendError);
+      return res.status(500).json({ error: "Email bhejane mein problem aayi hai." });
+    }
+
   } catch (err) {
+    // Ye main try-catch ka end hai
     res.status(500).json({ error: err.message });
   }
 };
@@ -415,8 +416,11 @@ exports.verifyOTP = async (req, res) => {
     user.otpExpires = undefined;
     await user.save();
 
-    // 2. Welcome Email with Social Links
-    const welcomeHTML = `
+    // 2. Welcome Email Logic (Yahan bhi Resend use hoga)
+    const welcomeHTML = `// Tera welcome template
+    
+    // ... Baki logic
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -540,29 +544,27 @@ exports.verifyOTP = async (req, res) => {
 </html>`;
 
     // Email Config
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.SUPPORT_EMAIL_USER,
-        pass: process.env.SUPPORT_EMAIL_PASS,
-      },
-    });
-
-    transporter
-      .sendMail({
-        from: `"BR30 Support" <${process.env.SUPPORT_EMAIL_USER}>`,
+      // ✅ 2. Welcome Email using Resend (Ndm ki jagah)
+    try {
+      await resend.emails.send({
+        from: 'onboarding@resend.dev', // Testing ke liye yahi rakho
         to: user.email,
         subject: "Welcome to the Family! 🚀",
-        html: welcomeHTML,
-      })
-      .catch((e) => console.log("Mail error: ", e.message));
+        html: welcomeHTML, // Tera purana welcome template
+      });
+      console.log("Welcome Email Sent! ✅");
+    } catch (e) {
+      console.log("Mail error: ", e.message);
+    }
 
     // 3. Final Response (Same as your old code)
     res.json({ msg: "Account verified! ✅" });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 //#endregion
 
 //#region User Login & Forgot Password Functions
@@ -638,47 +640,34 @@ exports.forgotPassword = async (req, res) => {
       : process.env.SUPPORT_EMAIL_PASS;
 
     // 🔥 DYNAMIC TEMPLATE: Admin ke liye Gold/Red, User ke liye Security Red
+    // 🔥 DYNAMIC TEMPLATE (Tera Purana Logic)
     const html = isMaster
       ? adminTemplate(user.name, otp)
-      : forgotPasswordTemplate(user.name, otp); // <--- Ab ye Red Security template uthayega
+      : forgotPasswordTemplate(user.name, otp); 
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",   // ✅ fixed
-      port: 587,
-      secure: false,            // ✅ 587 ke liye false
-      auth: {
-        user: emailUser,
-        pass: emailPass
-      },
-      tls: {
-        rejectUnauthorized: false,
-        servername: "smtp.gmail.com", // ✅ fixed
-        minVersion: "TLSv1.2"
-      }
-    });
+    // ✅ NAYA RESEND API CALL (Ndm aur Transporter ki chutti)
+    try {
+      await resend.emails.send({
+        from: 'onboarding@resend.dev', // Testing ke liye fix rakho
+        to: email,
+        subject: `🔐 Security Alert: Reset OTP is ${otp}`,
+        html: html, // Tera final design safe hai
+      });
 
-    await transporter.sendMail({
-      from: `"BR30 Security" <${emailUser}>`,
-      to: email,
-      subject: `🔐 Security Alert: Reset OTP is ${otp}`,
-      html: html, // Yahan final design jayega
-    });
+      console.log("✅ Security Email sent successfully via Resend");
+      res.json({ msg: "Reset OTP sent to your email!" });
 
-    // 🔍 YE CHECK DALO: Connection check karne ke liye
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.log("❌ Transporter Connection Error:", error);
-      } else {
-        console.log("✅ Transporter is ready to send emails");
-      }
-    });
+    } catch (sendError) {
+      console.error("❌ Resend API Error:", sendError);
+      return res.status(500).json({ error: "Email server block hai, API check karein." });
+    }
 
-    res.json({ msg: "Reset OTP sent to your email!" });
   } catch (err) {
-    console.error("🔥 OTP Error Details:", err); // Isse Render logs mein asli wajah dikhegi
+    console.error("🔥 OTP Error Details:", err); 
     res.status(500).json({ error: err.message });
   }
 };
+
 //#endregion
 
 //#region PROFILE MANAGEMENT FUNCTIONS
