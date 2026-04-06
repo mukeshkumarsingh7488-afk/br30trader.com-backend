@@ -61,47 +61,71 @@ exports.addVideo = async (req, res) => {
 // ✅ 1. UPDATE COURSE (Controller Function)
 exports.updateCourse = async (req, res) => {
   try {
-    console.log("-----------------------------------------");
-    console.log("🚀 Cloudinary Full URL Update Start! ID:", req.params.id);
-    console.log("📦 Body Data Received:", req.body);
+    console.log("=========================================");
+    console.log("🚀 [START] Cloudinary Update Course API");
+    console.log("🆔 Course ID:", req.params.id);
+    console.log("📦 Body Data:", req.body);
 
     const { title, price, videoUrl } = req.body;
-    let updateFields = { title, price };
 
-    // 🎯 1. Video URL Update Logic
+    // 🎯 Step 1: Basic fields set kar rahe hain
+    let updateFields = { title, price };
+    console.log("🧱 Initial Update Fields:", updateFields);
+
+    // 🎯 Step 2: Video URL update logic
     if (videoUrl) {
-      console.log("📹 Updating Video URL...");
+      console.log("📹 Video URL mila -> update kar rahe hain");
       updateFields["videos.0.videoUrl"] = videoUrl;
+    } else {
+      console.log("ℹ️ Video URL nahi mila");
     }
 
-    // 🚀 2. Nayi file select ki hai toh uska handle
+    // 🚀 Step 3: File upload handling
     if (req.file) {
-      console.log("📷 Raw Path from Multer:", req.file.path);
+      console.log("📷 File detect hui:", req.file);
 
-      let finalUrl = req.file.path;
+      let finalUrl = "";
 
-      // 🎯 AGAR PATH FULL NAHI HAI (Sirf 'uploads/...' hai)
-      if (finalUrl && !finalUrl.startsWith("http")) {
-        console.log("⚠️ Converting Relative Path to Full Cloudinary URL...");
+      // 🔥 IMPORTANT: Agar tu Cloudinary use kar raha hai,
+      // to multer ka path use nahi karna chahiye
+      // Cloudinary upload ka result use karo
+
+      // 👉 CASE 1: Agar Cloudinary middleware already use kar raha hai
+      if (req.file.path && req.file.path.startsWith("http")) {
+        console.log("✅ Already Cloudinary URL mila:", req.file.path);
+        finalUrl = req.file.path;
+      }
+
+      // 👉 CASE 2: Agar sirf local path hai (uploads/...)
+      else if (req.file.path) {
+        console.log("⚠️ Local path mila:", req.file.path);
+        console.log("⚠️ Ye Cloudinary URL nahi hai!");
 
         const myCloudName = "dw4imlekm";
 
-        // 🔥 FIX: Sahi URL "https://cloudinary.com" se start hota hai
-        // Aur cloud name ke baad "/" lagana zaroori hai
-        finalUrl = "https://cloudinary.com" + myCloudName + "/image/upload/" + finalUrl;
+        // ✅ Correct Cloudinary URL format
+        finalUrl = `https://res.cloudinary.com/${myCloudName}/image/upload/${req.file.path}`;
+
+        console.log("🔄 Converted to Cloudinary format:", finalUrl);
+        console.log("❗ WARNING: Ye tabhi kaam karega jab file Cloudinary pe exist kare");
       }
 
-      console.log("✅ Final URL for DB:", finalUrl);
+      else {
+        console.log("❌ File object me path hi nahi mila!");
+      }
 
-      // Forcefully String mein convert karo
+      console.log("✅ Final Thumbnail URL:", finalUrl);
+
+      // 🎯 Final assign
       updateFields.thumbnail = String(finalUrl);
     } else {
-      console.log("ℹ️ Nayi file nahi mili, purana thumbnail hi rahega.");
+      console.log("ℹ️ Koi new file upload nahi hui");
     }
 
+    console.log("📦 Final Update Fields going to DB:", updateFields);
 
-    // 💾 3. Database Update
-    console.log("💾 Database update ho raha hai...");
+    // 💾 Step 4: Database update
+    console.log("💾 DB update start...");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
@@ -109,20 +133,30 @@ exports.updateCourse = async (req, res) => {
     );
 
     if (!updatedCourse) {
-      console.log("❌ Error: Course nahi mila!");
-      return res.status(404).json({ success: false, msg: "Course nahi mila!" });
+      console.log("❌ Course nahi mila DB me");
+      return res.status(404).json({
+        success: false,
+        msg: "Course nahi mila!"
+      });
     }
 
-    console.log("🎉 DB mein Full URL (https://) save ho gaya!");
+    console.log("🎉 SUCCESS: Course update ho gaya!");
+    console.log("📊 Updated Data:", updatedCourse);
+
     res.json({
       success: true,
-      msg: "Thumbnail aur Data Cloudinary par Full URL ke saath update ho gaya! 🚀",
+      msg: "Course successfully updated with Cloudinary URL 🚀",
       data: updatedCourse
     });
 
   } catch (err) {
-    console.error("🔥 Error in updateCourse:", err.message);
-    res.status(500).json({ success: false, error: err.message });
+    console.error("🔥 ERROR in updateCourse:");
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
   }
 };
 
