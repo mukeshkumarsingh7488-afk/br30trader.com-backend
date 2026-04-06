@@ -71,27 +71,52 @@ exports.updateCourse = async (req, res) => {
       updateFields["videos.0.videoUrl"] = videoUrl;
     }
 
-    // 🚀 Nayi file select ki hai toh Full Link lo
+// 📁 File: controllers/courseController.js
+
+    // 🚀 Nayi file select ki hai toh Full Link setup karo (Profile style logic)
     if (req.file) {
-      // Multer-Cloudinary 'path' mein pura https link deta hai
-      console.log("📷 Cloudinary Path:", req.file.path);
-      updateFields.thumbnail = req.file.path; 
+      console.log("📷 Cloudinary Raw Path:", req.file.path);
+
+      // 1. Pehle dekho path full hai ya relative (Profile logic style)
+      let finalCloudinaryUrl = req.file.path;
+
+      // 2. AGAR SIRF 'uploads/...' AA RAHA HAI, TOH USE FULL URL BANAAO
+      if (finalCloudinaryUrl && !finalCloudinaryUrl.startsWith("http")) {
+        console.log("⚠️ Relative path detected, converting to Cloudinary Full URL...");
+        const cloudName = process.env.CLOUD_NAME || "dw4imlekm"; // Tera cloud name logs se liya hai
+        finalCloudinaryUrl = `https://cloudinary.com{cloudName}/image/upload/${finalCloudinaryUrl}`;
+      }
+
+      console.log("✅ Final Full URL for DB:", finalCloudinaryUrl);
+      updateFields.thumbnail = finalCloudinaryUrl; 
     }
 
+    // 🎯 3. Final Update Database mein
+    console.log("💾 Database update ho raha hai...");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
       { new: true }
     );
 
-    console.log("🎉 DB mein Full URL save ho gaya!");
-    res.json({ success: true, msg: "Full URL Updated! 🚀", data: updatedCourse });
+    if (!updatedCourse) {
+      console.log("❌ Error: Course nahi mila!");
+      return res.status(404).json({ success: false, msg: "Course nahi mila!" });
+    }
+
+    console.log("🎉 DB mein Full URL (https://) save ho gaya!");
+    res.json({ 
+      success: true, 
+      msg: "Thumbnail aur Data Cloudinary par Full URL ke saath update ho gaya! 🚀",
+      data: updatedCourse 
+    });
 
   } catch (err) {
-    console.error("🔥 Error:", err.message);
+    console.error("🔥 Error in updateCourse:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 
 
 //#endregion
