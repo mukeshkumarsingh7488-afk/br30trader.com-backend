@@ -63,9 +63,7 @@ router.get("/:id", auth, getCourseById);
 router.put("/add-video/:id", auth, admin, addVideo);
 
 // 🚀 8. UPDATE COURSE (Admin Dashboard se Edit ke liye)
-router.put("/update-course/:id", auth, admin, courseUpload.single("image"), updateCourse);
-
-router.put('/update/:id', uploadCloud.single('thumbnail'), updateCourse);
+router.put("/update-course/:id", auth, admin, uploadCloud.single("thumbnail"), updateCourse);
 
 // 🗑️ 9. DELETE COURSE (Admin Dashboard se Delete ke liye)
 router.delete("/delete-course/:id", auth, admin, deleteCourse);

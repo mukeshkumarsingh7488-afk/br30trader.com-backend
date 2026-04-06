@@ -63,17 +63,19 @@ exports.updateCourse = async (req, res) => {
   try {
     console.log("-----------------------------------------");
     console.log("🚀 Cloudinary Full URL Update Start! ID:", req.params.id);
+    console.log("📦 Body Data Received:", req.body);
 
     const { title, price, videoUrl } = req.body;
     let updateFields = { title, price };
 
+    // 🎯 1. Video URL Update Logic
     if (videoUrl) {
+      console.log("📹 Updating Video URL...");
       updateFields["videos.0.videoUrl"] = videoUrl;
     }
 
-// 📁 File: controllers/courseController.js
-
-   if (req.file) {
+    // 🚀 2. Nayi file select ki hai toh uska handle
+    if (req.file) {
       console.log("📷 Raw Path from Multer:", req.file.path);
 
       let finalUrl = req.file.path;
@@ -82,8 +84,8 @@ exports.updateCourse = async (req, res) => {
       if (finalUrl && !finalUrl.startsWith("http")) {
         console.log("⚠️ Converting Relative Path to Full Cloudinary URL...");
         
-        // 🔥 FIX: Backticks (`) ki jagah direct '+' use kar rahe hain taaki koi galti na ho
         const myCloudName = "dw4imlekm"; 
+        // 🔥 FIX: Sahi URL structure (://cloudinary.com)
         finalUrl = "https://cloudinary.com" + myCloudName + "/image/upload/" + finalUrl;
       }
 
@@ -91,15 +93,17 @@ exports.updateCourse = async (req, res) => {
       
       // Forcefully String mein convert karo taaki MongoDB poora save kare
       updateFields.thumbnail = String(finalUrl); 
+    } else {
+      console.log("ℹ️ Nayi file nahi mili, purana thumbnail hi rahega.");
     }
 
-    // 💾 Database Update
+    // 💾 3. Database Update
+    console.log("💾 Database update ho raha hai...");
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
       { new: true }
     );
-
 
     if (!updatedCourse) {
       console.log("❌ Error: Course nahi mila!");
@@ -118,8 +122,6 @@ exports.updateCourse = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
-
-
 
 //#endregion
 
