@@ -73,7 +73,7 @@ exports.updateCourse = async (req, res) => {
 
 // 📁 File: controllers/courseController.js
 
-    if (req.file) {
+   if (req.file) {
       console.log("📷 Raw Path from Multer:", req.file.path);
 
       let finalUrl = req.file.path;
@@ -82,13 +82,15 @@ exports.updateCourse = async (req, res) => {
       if (finalUrl && !finalUrl.startsWith("http")) {
         console.log("⚠️ Converting Relative Path to Full Cloudinary URL...");
         
-        // 🔥 FIX: Cloud Name aur URL structure ekdum sahi kar diya hai
+        // 🔥 FIX: Backticks (`) ki jagah direct '+' use kar rahe hain taaki koi galti na ho
         const myCloudName = "dw4imlekm"; 
-        finalUrl = `https://cloudinary.com{myCloudName}/image/upload/${finalUrl}`;
+        finalUrl = "https://cloudinary.com" + myCloudName + "/image/upload/" + finalUrl;
       }
 
       console.log("✅ Final URL for DB:", finalUrl);
-      updateFields.thumbnail = finalUrl; 
+      
+      // Forcefully String mein convert karo taaki MongoDB poora save kare
+      updateFields.thumbnail = String(finalUrl); 
     }
 
     // 💾 Database Update
