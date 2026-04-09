@@ -52,7 +52,7 @@ exports.sendMarketingMail = async (req, res) => {
 
     // --- 🎨 PROFESSIONAL HTML DESIGNS ---
 
-    // 🏷️ PROFESSIONAL CYBER NEON DISCOUNT TEMPLATE
+    // 🏷️ PROFESSIONAL CYBER NEON Normal user DISCOUNT TEMPLATE
     const offerTemplate = `
 <!DOCTYPE html>
 <html>
@@ -133,7 +133,7 @@ exports.sendMarketingMail = async (req, res) => {
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-                <a href="https://yourwebsite.com" class="login-btn">REDEEM & SAVE ${discountValue}%</a>
+               <a href="https://my-frontend-eight-roan.vercel.app/index.html#coursesection" class="login-btn">REDEEM & SAVE ${discountValue}%</a>
             </div>
             
             <p style="color: #94a3b8 !important; font-size: 14px; text-align: center; margin-top: 35px; font-style: italic;">
@@ -181,7 +181,7 @@ exports.sendMarketingMail = async (req, res) => {
 </div>
             
             <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
-                EST. 2024 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
+                EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
             </div>
         </div>
     </div>
@@ -244,7 +244,7 @@ exports.sendMarketingMail = async (req, res) => {
 
             <div style="text-align: center; margin-top: 20px;">
              <!-- Dashboard par bhejo taaki wo naya course dekh sake -->
-              <a href="https://yourwebsite.com" class="telegram-btn">CHECK NEW UPDATE NOW</a>
+              <a href="https://t.me/+hBAT4kWo63A4ZWY1" class="telegram-btn">CHECK NEW UPDATE NOW</a>
              </div>
 
               <p style="color: #00ff88; font-size: 12px; text-align: center; margin-top: 15px; font-weight: bold; letter-spacing: 1px;">
@@ -296,7 +296,7 @@ exports.sendMarketingMail = async (req, res) => {
 </div>
             
             <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
-                EST. 2024 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
+                EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
             </div>
         </div>
     </div>

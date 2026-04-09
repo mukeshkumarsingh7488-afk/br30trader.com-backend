@@ -127,7 +127,7 @@ const generateProfessionalCert = async (user, fullName, certId, courseName) => {
     .fontSize(22)
     .fillColor(gold)
     .font("Helvetica-Bold")
-    .text("MUKESH KS.", 550, footerY + 35, { align: "right", width: 180 });
+    .text("MUKESH RAJ.", 550, footerY + 35, { align: "right", width: 180 });
 
   doc.end();
 

@@ -289,7 +289,7 @@ Chinta mat kijiye! Humari support team aapki help ke liye taiyar hai taaki aapki
 </div>
 
 <div style="text-align: center; margin-top: 30px;">
-<a href="${process.env.WHATSAPP_LINK}" class="support-btn">
+<a href="https://wa.me/916200986380?text=Hello%20Support%20Team%2C%20mera%20payment%20fail%20ho%20gaya%20hai%2C%20please%20help%20kar%20dijiye." class="support-btn">
 TALK TO SUPPORT ON WHATSAPP
 </a>
 </div>

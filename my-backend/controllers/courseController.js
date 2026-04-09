@@ -332,7 +332,7 @@ exports.purchaseCourse = async (req, res) => {
                 🎉Congratulations! Aapne successfully <b>${course.title}</b> purchase kar liya hai.
                 Aapka <b>VIP BADGE</b> ab active ho gaya hai. 💸
             </div>
-            <a href="http://youtube.com" class="login-btn">START LEARNING NOW</a>
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" class="login-btn">JOIN OUR VIP COMMUNITY</a>
         </div>
 
         <!-- Footer -->
@@ -384,25 +384,30 @@ exports.purchaseCourse = async (req, res) => {
 </html>`;
 
     // Email bhej do
-    const transporter = require("../utils/mailer");
-    transporter
-      .sendMail({
-        from: `"BR30 Premium" <${process.env.SUPPORT_EMAIL_USER}>`,
+    // ✅ NAYA RESEND API CALL (Nodemailer ki jagah)
+    try {
+      await resend.emails.send({
+        from: 'onboarding@resend.dev', // Testing ke liye yahi rehne do
         to: user.email,
         subject: "💎 VIP Status Unlocked: Welcome to the Elite Circle!",
-        html: welcomeHTML,
-      })
-      .catch((e) => console.log("Mail error: ", e.message));
+        html: welcomeHTML, // Tera purana VIP template yahan safe hai
+      });
+      console.log("💎 VIP Welcome Email Sent! ✅");
+    } catch (e) {
+      console.log("Mail error: ", e.message);
+    }
 
     // Final Response
     res.json({
       msg: "Congratulations! Course Purchased & VIP Badge Unlocked! 💎",
       user,
     });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 //#endregion
 
 //#region 7. GET LEADERBOARD (Top VIP Traders)

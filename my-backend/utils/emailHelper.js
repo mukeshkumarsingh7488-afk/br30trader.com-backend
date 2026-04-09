@@ -48,17 +48,50 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
             <p style="color:#6c7a8e; font-size:12px;">Certificate is attached to this email.</p>
         </div>
     </div>
-    <div class="footer">
-        <div style="color:#94a3b8;font-size:13px;">Regards,<br><span class="admin">MUKESH KS.</span><br>BR30 TRADER ACADEMY FOUNDER</div>
-        <p style="color: #6c7a8e !important; font-size: 10px; margin-top: 25px; font-style: italic;">🚫 <b>OFFICIAL NOTE:</b> Do not reply to this email.</p>
-        <div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-            <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">JOIN OUR COMMUNITY 🚀</p>
-            <a href="https://www.youtube.com"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;"></a>
-            <a href="https://www.instagram.com"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;"></a>
-            <a href="https://t.me"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;"></a>
+          <div class="footer">
+            <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
+                Regards,<br>
+                <span class="admin-tag">BR30 Support Team</span><br>
+                Official Support & Security Division
+            </div>
+
+              <!-- No-reply Note -->
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
+            </p>
+
+            <!-- 🚀 Social Links -->
+<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
+    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
+        JOIN OUR COMMUNITY 🚀
+    </p>
+
+               <!-- YouTube -->
+    <a href="https://www.youtube.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
+    </a>
+
+    <!-- Telegram -->
+    <a href="https://t.me" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://chat.whatsapp.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
+    </a>
+</div>
+            
+            <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
+                EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>`,
       attachments: [

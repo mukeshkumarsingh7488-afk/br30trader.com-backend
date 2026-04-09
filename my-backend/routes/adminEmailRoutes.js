@@ -29,7 +29,7 @@ const getAnnouncementHTML = (subject, message) => `
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://ibb.co" alt="BR30 Official Alert" class="banner">
+        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official Alert" class="banner">
         <div class="content">
             <h1 class="alert-title">📢 OFFICIAL ANNOUNCEMENT</h1>
             <h3 style="color: #ffffff !important; font-size: 20px; margin-top: 25px;">${subject}</h3>
@@ -38,17 +38,43 @@ const getAnnouncementHTML = (subject, message) => `
         <div class="footer">
             <div style="color: #64748b; font-size: 13px;">
                 Regards,<br>
-                <span class="admin-tag">MUKESH RAJ (MASTER ADMIN)</span><br>
+                <span class="admin-tag">Mukesh Raj(MASTER ADMIN)</span><br>
                 BR30ᴛʀᴀᴅᴇʀ Professional Services
             </div>
+
+                        <!-- No-reply Note -->
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
+            </p>
+
+            <!-- 🚀 Social Links -->
+<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
+    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
+        JOIN OUR COMMUNITY 🚀
+    </p>
             
-            <!-- 🚀 SOCIAL LINKS (TERE SARE LINKS) -->
-            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">JOIN OUR COMMUNITY 🚀</p>
-                <a href="https://youtube.com" target="_blank"><img src="https://flaticon.com" width="22" style="margin:0 5px;"></a>
-                <a href="https://instagram.com" target="_blank"><img src="https://flaticon.com" width="22" style="margin:0 5px;"></a>
-                <a href="https://t.me" target="_blank"><img src="https://flaticon.com" width="22" style="margin:0 5px;"></a>
-                <a href="https://whatsapp.com" target="_blank"><img src="https://flaticon.com" width="22" style="margin:0 5px;"></a>
+           <a href="https://www.youtube.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
+    </a>
+
+    <!-- Telegram -->
+    <a href="https://t.me" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://chat.whatsapp.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
+    </a>
+</div>
+            
+            <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
+                EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
             </div>
         </div>
     </div>
