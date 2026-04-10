@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const Review = require('./models/Review');
 const mongoose = require('mongoose');
 
-const fakeReviewData = [
+const reviewPool = [
     { name: "Amit K.", comment: "Best trading course ever! Highly recommended.", rating: 5 },
     { name: "Sana S.", comment: "Pehle loss hota tha, ab consistent profit ho raha hai.", rating: 5 },
     { name: "Rahul J.", comment: "Concepts bahut clearly samjhaye gaye hain.", rating: 4 },
@@ -213,10 +213,17 @@ const fakeReviewData = [
 // Har 3 ghante me ek baar chalega (0 */3 * * *)
 
 cron.schedule('* * * * *', async () => {
-    try {
-        // Randomly ek review uthao
+      try {
+        // Pool check
+        if (!reviewPool || reviewPool.length === 0) {
+            console.log("❌ Error: reviewPool khali hai!");
+            return;
+        }
+
+        // Random review pick karo
         const randomData = reviewPool[Math.floor(Math.random() * reviewPool.length)];
         
+        // Direct Database Entry
         await Review.collection.insertOne({
             username: randomData.username,
             name: randomData.username, 
@@ -227,7 +234,7 @@ cron.schedule('* * * * *', async () => {
             createdAt: new Date()
         });
 
-        console.log("✅ Random Auto-Review Posted:", randomData.username);
+        console.log("✅ SUCCESS: Random Review Posted -", randomData.username);
     } catch (err) {
         console.error("❌ DB Error:", err.message);
     }
