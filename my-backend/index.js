@@ -21,7 +21,8 @@ const adminEmailRoutes = require("./routes/adminEmailRoutes");
 const User = require("./models/User");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-
+// Auto-Review System (Har 3 ghante me ek baar fake review post karega)
+require('./autoReview');
 // HTTP server
 const server = http.createServer(app);
 
