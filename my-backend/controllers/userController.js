@@ -165,17 +165,24 @@ exports.sendMarketingMail = async (req, res) => {
     </a>
 
     <!-- Instagram -->
-    <a href="https://www.instagram.com" target="_blank">
+    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
     </a>
 
+    <!-- Facebook -->
+  <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
+       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+       width="17"
+       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+    </a>
+
     <!-- Telegram -->
-    <a href="https://t.me" target="_blank">
+    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
     </a>
 
     <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com" target="_blank">
+    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
     </a>
 </div>
@@ -244,7 +251,7 @@ exports.sendMarketingMail = async (req, res) => {
 
             <div style="text-align: center; margin-top: 20px;">
              <!-- Dashboard par bhejo taaki wo naya course dekh sake -->
-              <a href="https://t.me/+hBAT4kWo63A4ZWY1" class="telegram-btn">CHECK NEW UPDATE NOW</a>
+              <a href="https://t.me/+F8mDhdfiGaI1NDY1/+hBAT4kWo63A4ZWY1" class="telegram-btn">CHECK NEW UPDATE NOW</a>
              </div>
 
               <p style="color: #00ff88; font-size: 12px; text-align: center; margin-top: 15px; font-weight: bold; letter-spacing: 1px;">
@@ -280,17 +287,24 @@ exports.sendMarketingMail = async (req, res) => {
     </a>
 
     <!-- Instagram -->
-    <a href="https://www.instagram.com" target="_blank">
+    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
     </a>
 
+    <!-- Facebook -->
+ <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
+       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+       width="17"
+       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+    </a>
+
     <!-- Telegram -->
-    <a href="https://t.me" target="_blank">
+    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
     </a>
 
     <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com" target="_blank">
+    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
     </a>
 </div>

@@ -211,20 +211,23 @@ const fakeReviewData = [
 ];
 
 // Har 3 ghante me ek baar chalega (0 */3 * * *)
+
 cron.schedule('* * * * *', async () => {
     try {
-        // Direct object bana rahe hain bina array ke loop ke, test karne ke liye
+        // Humne 'username' aur 'name' dono daal diye hain taaki error na aaye
         const newReview = new Review({
-            username: "VIP Trader", // Exact small 'u' username
+            username: "VIP Trader", 
+            name: "VIP Trader",      
             rating: 5,
-            comment: "Amazing signals! Highly profitable.",
-            userId: new mongoose.Types.ObjectId(), // Fresh unique ID
+            comment: "Automatic Seam Review: Excellent Signals!",
+            userId: new mongoose.Types.ObjectId(), 
             status: 'approved'
         });
 
         await newReview.save();
-        console.log("✅ SUCCESS: Fake Review Added to Database!");
+        console.log("✅ SEAM SUCCESS: Review saved in database!");
     } catch (err) {
-        console.error("❌ STILL ERROR:", err.message);
+        console.error("❌ LOG ERROR:", err.message);
     }
 });
+

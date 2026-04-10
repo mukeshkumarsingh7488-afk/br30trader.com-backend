@@ -322,15 +322,21 @@ JOIN OUR COMMUNITY 🚀
 <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22">
 </a>
 
-<a href="https://www.instagram.com" style="margin: 0 10px;">
+<a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" style="margin: 0 10px;">
 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22">
 </a>
 
-<a href="https://t.me" style="margin: 0 10px;">
+<a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
+       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+       width="17"
+       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+    </a>
+
+<a href="https://t.me/+F8mDhdfiGaI1NDY1" style="margin: 0 10px;">
 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22">
 </a>
 
-<a href="https://chat.whatsapp.com" style="margin: 0 10px;">
+<a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" style="margin: 0 10px;">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22">
 </a>
 </div>
