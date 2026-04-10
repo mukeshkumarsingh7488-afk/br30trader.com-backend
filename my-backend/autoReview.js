@@ -371,7 +371,7 @@ const reviewPool = [
 ];
 
 // Har 1 ghante mein ek baar review post hoga (0 * * * *)
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 * * * *', async () => {
     try {
         // Har baar pool se ek random index uthao
         const randomIndex = Math.floor(Math.random() * reviewPool.length);
