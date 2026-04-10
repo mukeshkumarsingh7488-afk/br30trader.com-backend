@@ -43,22 +43,57 @@ exports.postReview = async (req, res) => {
 // ==========================================
 exports.getTopReviews = async (req, res) => {
   try {
-    // Logic: Wo reviews dikhao jo 'approved' hain YA jinme abhi tak status set nahi hua (Old Reviews)
-    const reviews = await Review.find({
-      $or: [
-        { status: "approved" },
-        { status: { $exists: false } } // Purane reviews ke liye
-      ]
-    })
-      .populate("userId", "name profilePic")
-      .sort({ createdAt: -1 })
-      .limit(10);
+    const reviews = await Review.aggregate([
+      {
+        // 1. Sirf approved ya purane reviews uthao
+        $match: {
+          $or: [
+            { status: "approved" },
+            { status: { $exists: false } }
+          ]
+        }
+      },
+      {
+        // 2. Date ke hisab se sort karo taaki naye wale upar rahein
+        $sort: { createdAt: -1 }
+      },
+      {
+        // 3. GROUP BY Username: Har unique naam ka sirf pehla (latest) review uthao
+        $group: {
+          _id: "$username", 
+          latestReview: { $first: "$$ROOT" }
+        }
+      },
+      {
+        // 4. Data ko wapas normal format mein lao
+        $replaceRoot: { newRoot: "$latestReview" }
+      },
+      {
+        // 5. User details populate karne ke liye (Real users ke liye)
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "userId"
+        }
+      },
+      {
+        // 6. UserId array ko object mein badlo
+        $unwind: { path: "$userId", preserveNullAndEmptyArrays: true }
+      },
+      {
+        // 7. Final sorting taaki latest unique reviews sabse upar dikhen
+        $sort: { createdAt: -1 }
+      }
+    ]);
 
     res.status(200).json(reviews);
   } catch (err) {
+    console.error("Aggregation Error:", err);
     res.status(500).json({ error: err.message });
   }
 };
+
 //#endregion
 
 
