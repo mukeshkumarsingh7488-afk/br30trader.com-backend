@@ -210,7 +210,7 @@ const fakeReviewData = [
 ];
 
 // Har 3 ghante me ek baar chalega (0 */3 * * *)
-cron.schedule('0 */3 * * *', async () => {
+cron.schedule('* * * * *', async () => {
     try {
         const randomReview = fakeReviewData[Math.floor(Math.random() * fakeReviewData.length)];
 
