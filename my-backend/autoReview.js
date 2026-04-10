@@ -213,30 +213,27 @@ const reviewPool = [
 // Har 3 ghante me ek baar chalega (0 */3 * * *)
 
 cron.schedule('* * * * *', async () => {
-      try {
-        // Pool check
-        if (!reviewPool || reviewPool.length === 0) {
-            console.log("❌ Error: reviewPool khali hai!");
-            return;
-        }
+    try {
+        // Har baar pool se ek random index uthao
+        const randomIndex = Math.floor(Math.random() * reviewPool.length);
+        const randomReview = reviewPool[randomIndex];
 
-        // Random review pick karo
-        const randomData = reviewPool[Math.floor(Math.random() * reviewPool.length)];
-        
-        // Direct Database Entry
+        console.log(`Attempting to post review for: ${randomReview.name}`);
+
+        // Direct Collection entry validation bypass ke liye
         await Review.collection.insertOne({
-            username: randomData.username,
-            name: randomData.username, 
-            rating: randomData.rating,
-            comment: randomData.comment,
+            username: randomReview.name,
+            name: randomReview.name,
+            rating: randomReview.rating,
+            comment: randomReview.comment,
             userId: new mongoose.Types.ObjectId(),
             status: 'approved',
             createdAt: new Date()
         });
 
-        console.log("✅ SUCCESS: Random Review Posted -", randomData.username);
+        console.log(`✅ SUCCESS: Random Review posted by ${randomReview.name}`);
     } catch (err) {
-        console.error("❌ DB Error:", err.message);
+        console.error("❌ DB SEAM ERROR:", err.message);
     }
 });
 
