@@ -371,7 +371,7 @@ const reviewPool = [
 ];
 
 // Har 1 ghante mein ek baar review post hoga (0 * * * *)
-cron.schedule('0 * * * *', async () => {
+cron.schedule('* * * * *', async () => {
     try {
         // Har baar pool se ek random index uthao
         const randomIndex = Math.floor(Math.random() * reviewPool.length);
@@ -383,6 +383,7 @@ cron.schedule('0 * * * *', async () => {
         await Review.collection.insertOne({
             username: randomReview.name,
             name: randomReview.name,
+            profilePic: randomData.profilePic,
             rating: randomReview.rating,
             comment: randomReview.comment,
             userId: new mongoose.Types.ObjectId(),
