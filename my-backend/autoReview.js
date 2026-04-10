@@ -214,20 +214,22 @@ const fakeReviewData = [
 
 cron.schedule('* * * * *', async () => {
     try {
-        // Humne 'username' aur 'name' dono daal diye hain taaki error na aaye
-        const newReview = new Review({
-            username: "VIP Trader", 
-            name: "VIP Trader",      
-            rating: 5,
-            comment: "Automatic Seam Review: Excellent Signals!",
-            userId: new mongoose.Types.ObjectId(), 
-            status: 'approved'
+        // Randomly ek review uthao
+        const randomData = reviewPool[Math.floor(Math.random() * reviewPool.length)];
+        
+        await Review.collection.insertOne({
+            username: randomData.username,
+            name: randomData.username, 
+            rating: randomData.rating,
+            comment: randomData.comment,
+            userId: new mongoose.Types.ObjectId(),
+            status: 'approved',
+            createdAt: new Date()
         });
 
-        await newReview.save();
-        console.log("✅ SEAM SUCCESS: Review saved in database!");
+        console.log("✅ Random Auto-Review Posted:", randomData.username);
     } catch (err) {
-        console.error("❌ LOG ERROR:", err.message);
+        console.error("❌ DB Error:", err.message);
     }
 });
 
