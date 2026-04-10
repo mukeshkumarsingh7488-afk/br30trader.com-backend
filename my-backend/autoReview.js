@@ -213,20 +213,18 @@ const fakeReviewData = [
 // Har 3 ghante me ek baar chalega (0 */3 * * *)
 cron.schedule('* * * * *', async () => {
     try {
-        const randomReview = fakeReviewData[Math.floor(Math.random() * fakeReviewData.length)];
-        
-        // Model ke hisab se exact fields
+        // Direct object bana rahe hain bina array ke loop ke, test karne ke liye
         const newReview = new Review({
-            username: randomReview.username, // 'username' model me required hai
-            comment: randomReview.comment,
-            rating: randomReview.rating,
-            userId: new mongoose.Types.ObjectId(), // Nayi ID har baar
+            username: "VIP Trader", // Exact small 'u' username
+            rating: 5,
+            comment: "Amazing signals! Highly profitable.",
+            userId: new mongoose.Types.ObjectId(), // Fresh unique ID
             status: 'approved'
         });
 
         await newReview.save();
-        console.log("✅ Auto-Review Posted Success!");
+        console.log("✅ SUCCESS: Fake Review Added to Database!");
     } catch (err) {
-        console.error("❌ Auto-Review Error:", err.message);
+        console.error("❌ STILL ERROR:", err.message);
     }
 });
