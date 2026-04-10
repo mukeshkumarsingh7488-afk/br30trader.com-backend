@@ -219,17 +219,16 @@ cron.schedule('* * * * *', async () => {
             username: randomReview.username,
             comment: randomReview.comment,
             rating: randomReview.rating,
-            // ❌ Required & Unique userId fix: 
-            // Hum ek random Object ID generate kar rahe hain taaki error na aaye
+            // 💡 FIX: Har baar ek nayi unique ID generate hogi
             userId: new mongoose.Types.ObjectId(), 
             status: 'approved',
             createdAt: new Date()
         });
 
         await newReview.save();
-        console.log("✅ Auto-Review Posted Successfully!");
+        console.log("✅ Auto-Review Posted:", randomReview.username);
     } catch (err) {
-        // Agar unique error aaye toh matlab ID repeat ho gayi, fikar mat karo
+        // Agar fir bhi error aaye toh logs mein dikhega
         console.error("❌ Auto-Review Error:", err.message);
     }
 });
