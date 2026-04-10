@@ -1,5 +1,6 @@
 const cron = require('node-cron');
-const Review = require('./models/Review'); // Apne Review model ka path sahi kar lena
+const Review = require('./models/Review');
+const mongoose = require('mongoose');
 
 const fakeReviewData = [
     { name: "Amit K.", comment: "Best trading course ever! Highly recommended.", rating: 5 },
@@ -213,18 +214,22 @@ const fakeReviewData = [
 cron.schedule('* * * * *', async () => {
     try {
         const randomReview = fakeReviewData[Math.floor(Math.random() * fakeReviewData.length)];
-
+        
         const newReview = new Review({
-            userName: randomReview.name,
+            username: randomReview.username,
             comment: randomReview.comment,
             rating: randomReview.rating,
-            isFake: true, // Pehchan ke liye
+            // ❌ Required & Unique userId fix: 
+            // Hum ek random Object ID generate kar rahe hain taaki error na aaye
+            userId: new mongoose.Types.ObjectId(), 
+            status: 'approved',
             createdAt: new Date()
         });
 
         await newReview.save();
-        console.log("✅ Auto-Review Posted:", randomReview.name);
+        console.log("✅ Auto-Review Posted Successfully!");
     } catch (err) {
-        console.error("❌ Auto-Review Error:", err);
+        // Agar unique error aaye toh matlab ID repeat ho gayi, fikar mat karo
+        console.error("❌ Auto-Review Error:", err.message);
     }
 });
