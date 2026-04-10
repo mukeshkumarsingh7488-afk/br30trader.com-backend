@@ -4,6 +4,8 @@ const User = require("../models/User");
 const fs = require('fs');
 const path = require('path');
 const cloudinary = require('cloudinary').v2;
+const fakeVips = require('../fakeusers'); // File path check kar lena (../../ etc.)
+const jwt = require('jsonwebtoken');
 //#endregion
 
 //#region Create Course (Admin Create Course Pannel)
@@ -411,16 +413,51 @@ exports.purchaseCourse = async (req, res) => {
 //#endregion
 
 //#region 7. GET LEADERBOARD (Top VIP Traders)
-// 🏆 7. GET LEADERBOARD (Top VIP Traders)
+// 🏆 7. GET LEADERBOARD (Updated with Fake Users & Personalization)
 exports.getLeaderboard = async (req, res) => {
+  console.log("Fake Users Loaded:", fakeVips.length);
+
   try {
-    const topTraders = await User.find({ badge: "vip" })
-      .select("name monthlyProfit profilePic badge")
+    // 1. Database se real VIP users uthao
+    let topTraders = await User.find({ badge: "vip" })
+      .select("name monthlyProfit profilePic badge isVip")
       .sort({ monthlyProfit: -1 })
-      .limit(10);
-    res.json(topTraders);
+      .limit(15) // Thode zyada real users le lo taaki list bhari lage
+      .lean();
+
+    // 2. Real users ke saath Fake users mix karo
+    let combinedList = [...topTraders, ...fakeVips];
+
+    // 3. JWT se logged-in user ko Rank 1 par lane ka logic
+    const authHeader = req.headers.authorization;
+    if (authHeader) {
+      try {
+        const token = authHeader.split(" ")[1]; // Bearer Token format
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Apni Secret Key check karna
+        const loggedInUserId = decoded.id;
+
+        // Check karo ki logged-in user list mein hai ya nahi
+        const userIndex = combinedList.findIndex(u => u._id && u._id.toString() === loggedInUserId);
+
+        if (userIndex !== -1) {
+          const myProfile = combinedList[userIndex];
+          // Agar user VIP hai, toh use utha kar Index 0 (Rank 1) par daal do
+          if (myProfile.badge === "vip" || myProfile.isVip) {
+            combinedList.splice(userIndex, 1); // Purani rank se hatao
+            combinedList.unshift(myProfile);  // Rank 1 par daalo
+          }
+        }
+      } catch (jwtErr) {
+        // Token galat ho toh normal list dikhao, error mat do
+      }
+    }
+
+    // 4. Final list bhej do
+    res.json(combinedList);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 //#endregion
