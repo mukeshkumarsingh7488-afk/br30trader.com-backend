@@ -375,6 +375,7 @@ cron.schedule('* * * * *', async () => {
     try {
         // Har baar pool se ek random index uthao
         const randomIndex = Math.floor(Math.random() * reviewPool.length);
+        const randomData = reviewPool[randomIndex];
         const randomReview = reviewPool[randomIndex];
 
         console.log(`Attempting to post review for: ${randomReview.name}`);
