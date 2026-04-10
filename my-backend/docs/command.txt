@@ -51,7 +51,22 @@ pm2 restart my-app --watch --ignore-watch="node_modules logs"
 //#endregion
 
 
-Auto-Deploy
+push github cmd     git push origin main --force
+
+Ctrl + Shift + P    Developer: Reload Window
+
+
+frondate push to github   
+# 1. Check current status
+git status
+
+# 2. Stage all changes
+git add .
+
+# 3. Commit with message
+git commit -m "*"
+
+# 4. Push to main branch (ya master, jaisa repo me hai)
 git push origin main
 
 
