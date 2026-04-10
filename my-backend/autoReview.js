@@ -215,20 +215,18 @@ cron.schedule('* * * * *', async () => {
     try {
         const randomReview = fakeReviewData[Math.floor(Math.random() * fakeReviewData.length)];
         
+        // Model ke hisab se exact fields
         const newReview = new Review({
-            username: randomReview.username,
+            username: randomReview.username, // 'username' model me required hai
             comment: randomReview.comment,
             rating: randomReview.rating,
-            // 💡 FIX: Har baar ek nayi unique ID generate hogi
-            userId: new mongoose.Types.ObjectId(), 
-            status: 'approved',
-            createdAt: new Date()
+            userId: new mongoose.Types.ObjectId(), // Nayi ID har baar
+            status: 'approved'
         });
 
         await newReview.save();
-        console.log("✅ Auto-Review Posted:", randomReview.username);
+        console.log("✅ Auto-Review Posted Success!");
     } catch (err) {
-        // Agar fir bhi error aaye toh logs mein dikhega
         console.error("❌ Auto-Review Error:", err.message);
     }
 });

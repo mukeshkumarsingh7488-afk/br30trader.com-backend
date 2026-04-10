@@ -15,6 +15,7 @@ const connectDB = require("./config/db");
 const mongoose = require("mongoose");
 const whatsappRoute = require("./routes/whatsapp");
 const tradeRoutes = require("./routes/trades");
+const Review = require('./models/Review');
 const reviewRoutes = require("./routes/reviewRoutes");
 const notificationRoutes = require("./routes/notifications");
 const adminEmailRoutes = require("./routes/adminEmailRoutes");
