@@ -4,7 +4,8 @@ const User = require("../models/User");
 const fs = require('fs');
 const path = require('path');
 const cloudinary = require('cloudinary').v2;
-const fakeVips = require('../fakeusers'); // File path check kar lena (../../ etc.)
+const fakeVips = require('../fakeUsers'); 
+
 const jwt = require('jsonwebtoken');
 //#endregion
 
