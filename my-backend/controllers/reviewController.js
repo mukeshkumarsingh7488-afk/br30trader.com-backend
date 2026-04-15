@@ -47,26 +47,23 @@ exports.getTopReviews = async (req, res) => {
       {
         // 1. Sirf approved ya purane reviews uthao
         $match: {
-          $or: [
-            { status: "approved" },
-            { status: { $exists: false } }
-          ]
-        }
+          $or: [{ status: "approved" }, { status: { $exists: false } }],
+        },
       },
       {
         // 2. Date ke hisab se sort karo taaki naye wale upar rahein
-        $sort: { createdAt: -1 }
+        $sort: { createdAt: -1 },
       },
       {
         // 3. GROUP BY Username: Har unique naam ka sirf pehla (latest) review uthao
         $group: {
-          _id: "$username", 
-          latestReview: { $first: "$$ROOT" }
-        }
+          _id: "$username",
+          latestReview: { $first: "$$ROOT" },
+        },
       },
       {
         // 4. Data ko wapas normal format mein lao
-        $replaceRoot: { newRoot: "$latestReview" }
+        $replaceRoot: { newRoot: "$latestReview" },
       },
       {
         // 5. User details populate karne ke liye (Real users ke liye)
@@ -74,17 +71,17 @@ exports.getTopReviews = async (req, res) => {
           from: "users",
           localField: "userId",
           foreignField: "_id",
-          as: "userId"
-        }
+          as: "userId",
+        },
       },
       {
         // 6. UserId array ko object mein badlo
-        $unwind: { path: "$userId", preserveNullAndEmptyArrays: true }
+        $unwind: { path: "$userId", preserveNullAndEmptyArrays: true },
       },
       {
         // 7. Final sorting taaki latest unique reviews sabse upar dikhen
-        $sort: { createdAt: -1 }
-      }
+        $sort: { createdAt: -1 },
+      },
     ]);
 
     res.status(200).json(reviews);
@@ -95,7 +92,6 @@ exports.getTopReviews = async (req, res) => {
 };
 
 //#endregion
-
 
 //#region ADMIN REVIEW MANAGEMENT (Admin Panel ke liye APIs)
 // 1. GET ALL REVIEWS (Admin Panel ke liye saara data)
@@ -121,11 +117,14 @@ exports.updateReview = async (req, res) => {
     const updatedReview = await Review.findByIdAndUpdate(
       id,
       { status, adminReply },
-      { new: true }
+      { new: true },
     );
 
-    if (!updatedReview) return res.status(404).json({ message: "Review nahi mila!" });
-    res.status(200).json({ message: "Review Update Ho Gaya! ✅", updatedReview });
+    if (!updatedReview)
+      return res.status(404).json({ message: "Review nahi mila!" });
+    res
+      .status(200)
+      .json({ message: "Review Update Ho Gaya! ✅", updatedReview });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -139,7 +138,10 @@ exports.deleteReview = async (req, res) => {
     const { id } = req.params;
     const deletedReview = await Review.findByIdAndDelete(id);
 
-    if (!deletedReview) return res.status(404).json({ message: "Review pehle hi delete ho chuka hai!" });
+    if (!deletedReview)
+      return res
+        .status(404)
+        .json({ message: "Review pehle hi delete ho chuka hai!" });
     res.status(200).json({ message: "Review Parmanent Delete Kar Diya! 🗑️" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -158,14 +160,14 @@ exports.toggleReviewStatus = async (req, res) => {
     if (!review) return res.status(404).json({ message: "Review nahi mila!" });
 
     // Agar 'approved' hai toh 'hidden' kar do, aur vice versa
-    const newStatus = review.status === 'approved' ? 'hidden' : 'approved';
+    const newStatus = review.status === "approved" ? "hidden" : "approved";
 
     review.status = newStatus;
     await review.save();
 
     res.status(200).json({
       message: `Review ab ${newStatus} ho gaya hai! ✅`,
-      status: newStatus
+      status: newStatus,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

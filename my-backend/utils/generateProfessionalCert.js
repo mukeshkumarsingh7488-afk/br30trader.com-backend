@@ -1,5 +1,5 @@
 //#region Certificate Generator Utility
-// Ye utility function humare certificate generate karne ke liye hai. Isme hum PDFKit ka use karke ek professional certificate design karenge, jisme student ka naam, course ka naam, date, aur ek unique certificate ID hoga. 
+// Ye utility function humare certificate generate karne ke liye hai. Isme hum PDFKit ka use karke ek professional certificate design karenge, jisme student ka naam, course ka naam, date, aur ek unique certificate ID hoga.
 // Jab bhi koi user course complete karega, toh yeh function call hoke uske liye ek personalized certificate generate karega, jise wo download kar sakta hai aur apne achievements ko showcase kar sakta hai.
 const PDFDocument = require("pdfkit");
 const fs = require("fs");
@@ -21,7 +21,7 @@ const generateProfessionalCert = async (user, fullName, certId, courseName) => {
   const filePath = path.join(certFolder, fileName);
 
   // 📱 3. QR Link for Verification
-  const qrData = `http://localhost:5000/verify.html?id=${certId}`;
+  const qrData = `${window.API_BASE_URL}/verify.html?id=${certId}`;
   const qrImage = await QRCode.toDataURL(qrData);
 
   const doc = new PDFDocument({ layout: "landscape", size: "A4", margin: 0 });
@@ -45,13 +45,10 @@ const generateProfessionalCert = async (user, fullName, certId, courseName) => {
   doc
     .fontSize(11)
     .text("MSME REGISTERED ACADEMY ✓", 550, 95, { align: "right", width: 220 });
-  doc
-    .fontSize(10)
-    .fillColor(gold)
-    .text(`CERTIFICATE NO: ${certId}`, 550, 110, {
-      align: "right",
-      width: 220,
-    });
+  doc.fontSize(10).fillColor(gold).text(`CERTIFICATE NO: ${certId}`, 550, 110, {
+    align: "right",
+    width: 220,
+  });
   doc
     .fontSize(8)
     .fillColor("#64748b")
