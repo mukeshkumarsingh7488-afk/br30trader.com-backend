@@ -3,7 +3,7 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const fs = require("fs");
 const path = require("path");
-const { purchaseTemplate } = require("../utils/emailHelper");
+const { sendEmail, purchaseTemplate } = require("../utils/emailHelper");
 const cloudinary = require("cloudinary").v2;
 const fakeVips = require("../fakeUsers");
 
@@ -187,7 +187,7 @@ exports.purchaseCourse = async (req, res) => {
     try {
       const html = purchaseTemplate(user.name, course.title);
 
-      await resend.emails.send({
+      await sendEmail({
         from: "onboarding@resend.dev",
         to: user.email,
         subject: "💎 VIP Status Unlocked: Welcome to the Elite Circle!",

@@ -10,7 +10,6 @@ const {
   paymentFailUserTemplate,
 } = require("../utils/emailHelper");
 const Coupon = require("../models/Coupon");
-const sendEmail = require("../utils/sendEmail"); // 🔥 File ka sahi naam 'sendEmail' rakhein
 //#endregion
 
 //#region Rozorpay key_id And Key_Secret Process.env file

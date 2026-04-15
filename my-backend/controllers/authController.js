@@ -4,13 +4,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const {
+  sendEmail,
   otpTemplate,
   welcomeTemplate,
   forgotOtpTemplate,
 } = require("../utils/emailHelper");
 const path = require("path");
-const { Resend } = require("resend");
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 //#endregion
 
@@ -62,7 +61,7 @@ exports.register = async (req, res) => {
     // 🔥 TEMPLATE CALL
     const html = otpTemplate(name, otp, isMaster);
 
-    await resend.emails.send({
+    await sendEmail({
       from: "onboarding@resend.dev",
       to: email,
       subject: `🔐 OTP: ${otp}`,
@@ -108,7 +107,7 @@ exports.verifyOTP = async (req, res) => {
 
     // 📩 SEND EMAIL
     try {
-      await resend.emails.send({
+      await sendEmail({
         from: "onboarding@resend.dev",
         to: user.email,
         subject: "Welcome to the Family! 🚀",
@@ -203,7 +202,7 @@ exports.forgotPassword = async (req, res) => {
 
     // 5. Send mail
     try {
-      await resend.emails.send({
+      await sendEmail({
         from: "onboarding@resend.dev",
         to: email,
         subject: isMaster

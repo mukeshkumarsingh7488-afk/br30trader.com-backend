@@ -1,8 +1,11 @@
 //#region Imports
 const User = require("../models/User");
-const sendEmail = require("../utils/sendEmail");
 const Coupon = require("../models/Coupon");
-const { offerTemplate, vipTemplate } = require("../utils/emailHelper");
+const {
+  sendEmail,
+  offerTemplate,
+  vipTemplate,
+} = require("../utils/emailHelper");
 //#endregion
 
 //#region GET USER STATS (Admin Panel ke liye user stats dikhane ke liye)
@@ -79,7 +82,7 @@ exports.sendMarketingMail = async (req, res) => {
     const emailList = targetUsers.map((u) => u.email);
 
     // --- SEND EMAIL (RESEND ONLY) ---
-    await resend.emails.send({
+    await sendEmail({
       from: "onboarding@resend.dev",
       bcc: emailList,
       subject:
