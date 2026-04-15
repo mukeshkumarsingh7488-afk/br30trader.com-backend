@@ -372,7 +372,7 @@ router.post("/claim-certificate", auth, async (req, res) => {
     res.status(200).json({
       success: true,
       certId: certId,
-      downloadUrl: `${window.API_BASE_URL}/certificates/${result.fileName}`,
+      downloadUrl: `${process.env.API_BASE_URL}/certificates/${result.fileName}`,
     });
 
     // 📧 8. MAIL: Background mein mail bhej do (Iska response ka wait mat karo)
