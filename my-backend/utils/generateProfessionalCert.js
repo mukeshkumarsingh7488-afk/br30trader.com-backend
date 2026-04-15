@@ -21,7 +21,9 @@ const generateProfessionalCert = async (user, fullName, certId, courseName) => {
   const filePath = path.join(certFolder, fileName);
 
   // 📱 3. QR Link for Verification
-  const qrData = `${process.env.FRONTEND_URL}/verify.html?id=${certId}`;
+  const frontendBase =
+    process.env.FRONTEND_URL || "https://my-frontend-eight-roan.vercel.app";
+  const qrData = `${frontendBase}/verify.html?id=${certId}`;
   const qrImage = await QRCode.toDataURL(qrData);
 
   const doc = new PDFDocument({ layout: "landscape", size: "A4", margin: 0 });
