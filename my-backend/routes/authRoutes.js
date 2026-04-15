@@ -372,7 +372,8 @@ router.post("/claim-certificate", auth, async (req, res) => {
     res.status(200).json({
       success: true,
       certId: certId,
-      downloadUrl: `${process.env.API_BASE_URL}/certificates/${result.fileName}`,
+      // Backup URL add kiya hai taaki 'undefined' na aaye
+      downloadUrl: `${process.env.API_BASE_URL || "https://my-backend-1-avpd.onrender.com"}/certificates/${result.fileName}`,
     });
 
     // 📧 8. MAIL: Background mein mail bhej do (Iska response ka wait mat karo)
@@ -398,13 +399,13 @@ router.get("/verify-certificate/:id", async (req, res) => {
     if (!cert) {
       return res.status(404).json({ success: false, msg: "Invalid ID! ❌" });
     }
-
     res.json({
       success: true,
       studentName: cert.name,
       course: cert.course,
       issueDate: cert.date,
-      downloadUrl: `${process.env.API_BASE_URL}/certificates/${cert.fileName}`,
+      // Agar variable na mile toh direct URL use ho jaye
+      downloadUrl: `${process.env.API_BASE_URL || "https://my-backend-1-avpd.onrender.com"}/certificates/${cert.fileName}`,
     });
   } catch (err) {
     res.status(400).json({ success: false });
