@@ -21,7 +21,7 @@ const generateProfessionalCert = async (user, fullName, certId, courseName) => {
   const filePath = path.join(certFolder, fileName);
 
   // 📱 3. QR Link for Verification
-  const qrData = `${window.location.origin}/verify.html?id=${certId}`;
+  const qrData = `${process.env.FRONTEND_URL}/verify.html?id=${certId}`;
   const qrImage = await QRCode.toDataURL(qrData);
 
   const doc = new PDFDocument({ layout: "landscape", size: "A4", margin: 0 });
