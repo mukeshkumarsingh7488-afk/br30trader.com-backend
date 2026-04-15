@@ -372,7 +372,7 @@ router.post("/claim-certificate", auth, async (req, res) => {
     res.status(200).json({
       success: true,
       certId: certId,
-      downloadUrl: `http://localhost:5000/certificates/${result.fileName}`,
+      downloadUrl: `${window.API_BASE_URL}/certificates/${result.fileName}`,
     });
 
     // 📧 8. MAIL: Background mein mail bhej do (Iska response ka wait mat karo)
@@ -404,7 +404,7 @@ router.get("/verify-certificate/:id", async (req, res) => {
       studentName: cert.name,
       course: cert.course,
       issueDate: cert.date,
-      downloadUrl: `http://localhost:5000/certificates/${cert.fileName}`,
+      downloadUrl: `${window.API_BASE_URL}/certificates/${cert.fileName}`,
     });
   } catch (err) {
     res.status(400).json({ success: false });
