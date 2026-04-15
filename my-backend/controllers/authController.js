@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
-const { Resend } = require('resend');
+const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 //#endregion
@@ -359,86 +359,86 @@ const forgotPasswordTemplate = (name, otp) => `
 // ==========================================
 
 exports.register = async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        if (!email || !password)
-            return res.status(400).json({ msg: "Email/Pass missing!" });
+  try {
+    const { name, email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ msg: "Email/Pass missing!" });
 
-        const isMaster = email.toLowerCase() === MASTER_ADMIN_EMAIL.toLowerCase();
-        const assignedRole = isMaster ? "admin" : "student";
+    const isMaster = email.toLowerCase() === MASTER_ADMIN_EMAIL.toLowerCase();
+    const assignedRole = isMaster ? "admin" : "student";
 
-        // OTP & Hashing
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+    // OTP & Hashing
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-        let user = await User.findOne({ email });
-        if (user && user.isVerified)
-            return res.status(400).json({ msg: "Already verified." });
+    let user = await User.findOne({ email });
+    if (user && user.isVerified)
+      return res.status(400).json({ msg: "Already verified." });
 
-        if (user) {
-            user.name = name;
-            user.password = hashedPassword;
-            user.otp = otp;
-            user.role = assignedRole;
-            user.otpExpires = Date.now() + 600000;
-        } else {
-            user = new User({
-                name,
-                email,
-                password: hashedPassword,
-                otp,
-                role: assignedRole,
-                otpExpires: Date.now() + 600000,
-            });
-        }
-
-        // 🔥 DYNAMIC BRANDING & TEMPLATE (Tera Purana Logic)
-        const brand = isMaster ? "BR30 Admin" : "BR30 Support";
-        const html = isMaster ? adminTemplate(name, otp) : userTemplate(name, otp);
-
-        // ✅ NAYA RESEND API CALL (Ndm ki jagah)
-        try {
-            await resend.emails.send({
-                from: 'onboarding@resend.dev', // Abhi testing ke liye yahi rehne do
-                to: email,
-                subject: `🔐 OTP: ${otp} (${brand})`,
-                html: html, // Tera dynamic template yahan safe hai
-            });
-
-            await user.save();
-            res.status(201).json({ msg: "OTP Sent!" });
-
-        } catch (sendError) {
-            console.error("❌ Resend Error:", sendError);
-            return res.status(500).json({ error: "Email bhejane mein problem aayi hai." });
-        }
-
-    } catch (err) {
-        // Ye main try-catch ka end hai
-        res.status(500).json({ error: err.message });
+    if (user) {
+      user.name = name;
+      user.password = hashedPassword;
+      user.otp = otp;
+      user.role = assignedRole;
+      user.otpExpires = Date.now() + 600000;
+    } else {
+      user = new User({
+        name,
+        email,
+        password: hashedPassword,
+        otp,
+        role: assignedRole,
+        otpExpires: Date.now() + 600000,
+      });
     }
+
+    // 🔥 DYNAMIC BRANDING & TEMPLATE (Tera Purana Logic)
+    const brand = isMaster ? "BR30 Admin" : "BR30 Support";
+    const html = isMaster ? adminTemplate(name, otp) : userTemplate(name, otp);
+
+    // ✅ NAYA RESEND API CALL (Ndm ki jagah)
+    try {
+      await resend.emails.send({
+        from: "onboarding@resend.dev", // Abhi testing ke liye yahi rehne do
+        to: email,
+        subject: `🔐 OTP: ${otp} (${brand})`,
+        html: html, // Tera dynamic template yahan safe hai
+      });
+
+      await user.save();
+      res.status(201).json({ msg: "OTP Sent!" });
+    } catch (sendError) {
+      console.error("❌ Resend Error:", sendError);
+      return res
+        .status(500)
+        .json({ error: "Email bhejane mein problem aayi hai." });
+    }
+  } catch (err) {
+    // Ye main try-catch ka end hai
+    res.status(500).json({ error: err.message });
+  }
 };
 
 exports.verifyOTP = async (req, res) => {
-    try {
-        const { email, otp } = req.body;
-        const user = await User.findOne({
-            email,
-            otp,
-            otpExpires: { $gt: Date.now() },
-        });
+  try {
+    const { email, otp } = req.body;
+    const user = await User.findOne({
+      email,
+      otp,
+      otpExpires: { $gt: Date.now() },
+    });
 
-        if (!user) return res.status(400).json({ msg: "Invalid/Expired OTP!" });
+    if (!user) return res.status(400).json({ msg: "Invalid/Expired OTP!" });
 
-        // 1. Account Verify Logic
-        user.isVerified = true;
-        user.otp = undefined;
-        user.otpExpires = undefined;
-        await user.save();
+    // 1. Account Verify Logic
+    user.isVerified = true;
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
 
-        // 2. Welcome Email Logic (Yahan bhi Resend use hoga)
-        const welcomeHTML = `// Tera welcome template
+    // 2. Welcome Email Logic (Yahan bhi Resend use hoga)
+    const welcomeHTML = `// Tera welcome template
     
     // ... Baki logic
 
@@ -582,129 +582,128 @@ exports.verifyOTP = async (req, res) => {
 </body>
 </html>`;
 
-        // Email Config
-        // ✅ 2. Welcome Email using Resend (Ndm ki jagah)
-        try {
-            await resend.emails.send({
-                from: 'onboarding@resend.dev', // Testing ke liye yahi rakho
-                to: user.email,
-                subject: "Welcome to the Family! 🚀",
-                html: welcomeHTML, // Tera purana welcome template
-            });
-            console.log("Welcome Email Sent! ✅");
-        } catch (e) {
-            console.log("Mail error: ", e.message);
-        }
-
-        // 3. Final Response (Same as your old code)
-        res.json({ msg: "Account verified! ✅" });
-
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    // Email Config
+    // ✅ 2. Welcome Email using Resend (Ndm ki jagah)
+    try {
+      await resend.emails.send({
+        from: "onboarding@resend.dev", // Testing ke liye yahi rakho
+        to: user.email,
+        subject: "Welcome to the Family! 🚀",
+        html: welcomeHTML, // Tera purana welcome template
+      });
+      console.log("Welcome Email Sent! ✅");
+    } catch (e) {
+      console.log("Mail error: ", e.message);
     }
+
+    // 3. Final Response (Same as your old code)
+    res.json({ msg: "Account verified! ✅" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 //#endregion
 
 //#region User Login & Forgot Password Functions
 exports.login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-        // 1. User ko database mein dhoondo
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ msg: "Register first." });
+    // 1. User ko database mein dhoondo
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ msg: "Register first." });
 
-        // 🔥 2. Sabse Pehle BLOCK CHECK Karo (Password se bhi pehle)
-        if (user.isBlocked === true) {
-            return res.status(403).json({
-                success: false,
-                msg: "🚫 Your account has been suspended. Please contact the Support Team for assistance.",
-            });
-        }
-
-        // 3. Admin Auto-Role Logic (Jo pehle se tha)
-        if (user.email === MASTER_ADMIN_EMAIL && user.role !== "admin") {
-            user.role = "admin";
-            await user.save();
-        }
-
-        // 4. Password Match Check
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ msg: "Wrong Password." });
-
-        // 5. Email Verification Check
-        if (!user.isVerified)
-            return res.status(401).json({ msg: "Verify email first." });
-
-        // 6. Token Generate Karo
-        const token = jwt.sign(
-            { id: user._id, role: user.role },
-            process.env.JWT_SECRET || "test_secret",
-            { expiresIn: "1d" },
-        );
-
-        res.json({
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                role: user.role,
-                email: user.email,
-            },
-        });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    // 🔥 2. Sabse Pehle BLOCK CHECK Karo (Password se bhi pehle)
+    if (user.isBlocked === true) {
+      return res.status(403).json({
+        success: false,
+        msg: "🚫 Your account has been suspended. Please contact the Support Team for assistance.",
+      });
     }
+
+    // 3. Admin Auto-Role Logic (Jo pehle se tha)
+    if (user.email === MASTER_ADMIN_EMAIL && user.role !== "admin") {
+      user.role = "admin";
+      await user.save();
+    }
+
+    // 4. Password Match Check
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ msg: "Wrong Password." });
+
+    // 5. Email Verification Check
+    if (!user.isVerified)
+      return res.status(401).json({ msg: "Verify email first." });
+
+    // 6. Token Generate Karo
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET || "test_secret",
+      { expiresIn: "1d" },
+    );
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        role: user.role,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // --- 2. UPDATED FORGOT PASSWORD FUNCTION ---
 exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ msg: "Email not found!" });
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.otp = otp;
+    user.otpExpires = Date.now() + 300000; // 5 Minutes
+    await user.save();
+
+    const isMaster = email.toLowerCase() === MASTER_ADMIN_EMAIL.toLowerCase();
+    const emailUser = isMaster
+      ? process.env.ADMIN_EMAIL_USER
+      : process.env.SUPPORT_EMAIL_USER;
+    const emailPass = isMaster
+      ? process.env.ADMIN_EMAIL_PASS
+      : process.env.SUPPORT_EMAIL_PASS;
+
+    // 🔥 DYNAMIC TEMPLATE: Admin ke liye Gold/Red, User ke liye Security Red
+    // 🔥 DYNAMIC TEMPLATE (Tera Purana Logic)
+    const html = isMaster
+      ? adminTemplate(user.name, otp)
+      : forgotPasswordTemplate(user.name, otp);
+
+    // ✅ NAYA RESEND API CALL (Ndm aur Transporter ki chutti)
     try {
-        const { email } = req.body;
-        const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ msg: "Email not found!" });
+      await resend.emails.send({
+        from: "onboarding@resend.dev", // Testing ke liye fix rakho
+        to: email,
+        subject: `🔐 Security Alert: Reset OTP is ${otp}`,
+        html: html, // Tera final design safe hai
+      });
 
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        user.otp = otp;
-        user.otpExpires = Date.now() + 300000; // 5 Minutes
-        await user.save();
-
-        const isMaster = email.toLowerCase() === MASTER_ADMIN_EMAIL.toLowerCase();
-        const emailUser = isMaster
-            ? process.env.ADMIN_EMAIL_USER
-            : process.env.SUPPORT_EMAIL_USER;
-        const emailPass = isMaster
-            ? process.env.ADMIN_EMAIL_PASS
-            : process.env.SUPPORT_EMAIL_PASS;
-
-        // 🔥 DYNAMIC TEMPLATE: Admin ke liye Gold/Red, User ke liye Security Red
-        // 🔥 DYNAMIC TEMPLATE (Tera Purana Logic)
-        const html = isMaster
-            ? adminTemplate(user.name, otp)
-            : forgotPasswordTemplate(user.name, otp);
-
-        // ✅ NAYA RESEND API CALL (Ndm aur Transporter ki chutti)
-        try {
-            await resend.emails.send({
-                from: 'onboarding@resend.dev', // Testing ke liye fix rakho
-                to: email,
-                subject: `🔐 Security Alert: Reset OTP is ${otp}`,
-                html: html, // Tera final design safe hai
-            });
-
-            console.log("✅ Security Email sent successfully via Resend");
-            res.json({ msg: "Reset OTP sent to your email!" });
-
-        } catch (sendError) {
-            console.error("❌ Resend API Error:", sendError);
-            return res.status(500).json({ error: "Email server block hai, API check karein." });
-        }
-
-    } catch (err) {
-        console.error("🔥 OTP Error Details:", err);
-        res.status(500).json({ error: err.message });
+      console.log("✅ Security Email sent successfully via Resend");
+      res.json({ msg: "Reset OTP sent to your email!" });
+    } catch (sendError) {
+      console.error("❌ Resend API Error:", sendError);
+      return res
+        .status(500)
+        .json({ error: "Email server block hai, API check karein." });
     }
+  } catch (err) {
+    console.error("🔥 OTP Error Details:", err);
+    res.status(500).json({ error: err.message });
+  }
 };
 
 //#endregion
@@ -716,61 +715,65 @@ exports.forgotPassword = async (req, res) => {
 
 // 1. GET PROFILE (Profile Data Fetch Karne ke Liye)
 exports.getProfile = async (req, res) => {
-    try {
-        // req.user.id auth middleware se aa rahi hai
-        const user = await User.findById(req.user.id).select("-password");
-        if (!user) return res.status(404).json({ msg: "User nahi mila!" });
+  try {
+    // req.user.id auth middleware se aa rahi hai
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) return res.status(404).json({ msg: "User nahi mila!" });
 
-        res.json(user);
-    } catch (err) {
-        console.error("Get Profile Error:", err.message);
-        res
-            .status(500)
-            .json({ error: "Server Error: Profile fetch nahi ho payi." });
-    }
+    res.json(user);
+  } catch (err) {
+    console.error("Get Profile Error:", err.message);
+    res
+      .status(500)
+      .json({ error: "Server Error: Profile fetch nahi ho payi." });
+  }
 };
 
 // 2. UPDATE PROFILE (Name Edit aur Photo Upload)
 exports.updateProfile = async (req, res) => {
-    try {
-        console.log("🚀 Incoming File Data:", req.file);
-        const user = await User.findById(req.user.id);
+  try {
+    console.log("🚀 Incoming File Data:", req.file);
+    const user = await User.findById(req.user.id);
 
-        if (!user) {
-            return res.status(404).json({ success: false, message: "❌ User nahi mila! (msr pro)" });
-        }
-
-        // 1. Name update logic
-        user.name = req.body.name || user.name;
-
-        // 2. Agar Cloudinary par nayi file upload hui hai
-        if (req.file) {
-            // Cloudinary ka direct URL 'req.file.path' mein hota hai
-            user.profilePic = req.file.path;
-            console.log("✅ Nayi Cloudinary URL DB mein save ho gayi:", req.file.path);
-        }
-
-        const updatedUser = await user.save();
-
-        // 3. Frontend ko Success Response bhejo
-        res.json({
-            success: true,
-            message: "🎉 Profile Update Ho Gayi Hai! (msr pro)",
-            user: {
-                id: updatedUser._id,
-                name: updatedUser.name,
-                email: updatedUser.email,
-                profilePic: updatedUser.profilePic // Pura URL jayega frontend ko
-            },
-        });
-
-    } catch (err) {
-        console.error("❌ Update Error (msr pro):", err.message);
-        res.status(500).json({
-            success: false,
-            message: "❌ Server Error: Profile update fail ho gaya (msr pro)",
-        });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "❌ User nahi mila! (msr pro)" });
     }
+
+    // 1. Name update logic
+    user.name = req.body.name || user.name;
+
+    // 2. Agar Cloudinary par nayi file upload hui hai
+    if (req.file) {
+      // Cloudinary ka direct URL 'req.file.path' mein hota hai
+      user.profilePic = req.file.path;
+      console.log(
+        "✅ Nayi Cloudinary URL DB mein save ho gayi:",
+        req.file.path,
+      );
+    }
+
+    const updatedUser = await user.save();
+
+    // 3. Frontend ko Success Response bhejo
+    res.json({
+      success: true,
+      message: "🎉 Profile Update Ho Gayi Hai! (msr pro)",
+      user: {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        profilePic: updatedUser.profilePic, // Pura URL jayega frontend ko
+      },
+    });
+  } catch (err) {
+    console.error("❌ Update Error (msr pro):", err.message);
+    res.status(500).json({
+      success: false,
+      message: "❌ Server Error: Profile update fail ho gaya (msr pro)",
+    });
+  }
 };
 
 //#endregion
@@ -778,27 +781,27 @@ exports.updateProfile = async (req, res) => {
 //#region Reset Password Function (OTP Verify ke Baad Naya Password Set Karne ke Liye)
 // 3. RESET PASSWORD (Forgot Password ke Baad Naya Password Set Karne ke Liye)
 exports.resetPassword = async (req, res) => {
-    try {
-        const { email, otp, newPassword } = req.body;
+  try {
+    const { email, otp, newPassword } = req.body;
 
-        const user = await User.findOne({
-            email,
-            otp,
-            otpExpires: { $gt: Date.now() },
-        });
+    const user = await User.findOne({
+      email,
+      otp,
+      otpExpires: { $gt: Date.now() },
+    });
 
-        if (!user)
-            return res.status(400).json({ msg: "Invalid ya Expired OTP! ❌" });
+    if (!user)
+      return res.status(400).json({ msg: "Invalid ya Expired OTP! ❌" });
 
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);
-        user.otp = undefined;
-        user.otpExpires = undefined;
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    user.otp = undefined;
+    user.otpExpires = undefined;
 
-        await user.save();
-        res.json({ msg: "Password successfully change ho gaya! 🔐" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    await user.save();
+    res.json({ msg: "Password successfully change ho gaya! 🔐" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 //#endregion

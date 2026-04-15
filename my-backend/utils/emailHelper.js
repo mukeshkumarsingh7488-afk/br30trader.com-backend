@@ -1,6 +1,6 @@
 //#region EMAIL HELPER (VIP CERTIFICATE)
-const { Resend } = require('resend');
-const fs = require('fs'); // File read karne ke liye
+const { Resend } = require("resend");
+const fs = require("fs"); // File read karne ke liye
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**

@@ -1,12 +1,12 @@
 //#region IMPORTS
 const Course = require("../models/Course");
 const User = require("../models/User");
-const fs = require('fs');
-const path = require('path');
-const cloudinary = require('cloudinary').v2;
-const fakeVips = require('../fakeUsers'); 
+const fs = require("fs");
+const path = require("path");
+const cloudinary = require("cloudinary").v2;
+const fakeVips = require("../fakeUsers");
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 //#endregion
 
 //#region Create Course (Admin Create Course Pannel)
@@ -90,7 +90,7 @@ exports.updateCourse = async (req, res) => {
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       { $set: updateFields },
-      { new: true }
+      { new: true },
     );
 
     console.log("🎉 Update Success");
@@ -99,7 +99,6 @@ exports.updateCourse = async (req, res) => {
       success: true,
       data: updatedCourse,
     });
-
   } catch (err) {
     console.error("🔥 ERROR:", err);
     res.status(500).json({ error: err.message });
@@ -397,7 +396,7 @@ exports.purchaseCourse = async (req, res) => {
     // ✅ NAYA RESEND API CALL (Nodemailer ki jagah)
     try {
       await resend.emails.send({
-        from: 'onboarding@resend.dev', // Testing ke liye yahi rehne do
+        from: "onboarding@resend.dev", // Testing ke liye yahi rehne do
         to: user.email,
         subject: "💎 VIP Status Unlocked: Welcome to the Elite Circle!",
         html: welcomeHTML, // Tera purana VIP template yahan safe hai
@@ -412,7 +411,6 @@ exports.purchaseCourse = async (req, res) => {
       msg: "Congratulations! Course Purchased & VIP Badge Unlocked! 💎",
       user,
     });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -445,14 +443,16 @@ exports.getLeaderboard = async (req, res) => {
         const loggedInUserId = decoded.id;
 
         // Check karo ki logged-in user list mein hai ya nahi
-        const userIndex = combinedList.findIndex(u => u._id && u._id.toString() === loggedInUserId);
+        const userIndex = combinedList.findIndex(
+          (u) => u._id && u._id.toString() === loggedInUserId,
+        );
 
         if (userIndex !== -1) {
           const myProfile = combinedList[userIndex];
           // Agar user VIP hai, toh use utha kar Index 0 (Rank 1) par daal do
           if (myProfile.badge === "vip" || myProfile.isVip) {
             combinedList.splice(userIndex, 1); // Purani rank se hatao
-            combinedList.unshift(myProfile);  // Rank 1 par daalo
+            combinedList.unshift(myProfile); // Rank 1 par daalo
           }
         }
       } catch (jwtErr) {
@@ -462,7 +462,6 @@ exports.getLeaderboard = async (req, res) => {
 
     // 4. Final list bhej do
     res.json(combinedList);
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

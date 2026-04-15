@@ -7,7 +7,7 @@ const path = require("path");
 const auth = require("../middleware/auth"); // Tera auth middleware yahan hai
 
 // ✅ RESEND API SETUP
-const { Resend } = require('resend');
+const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // 🔥 FULL HTML TEMPLATE (With All Your Social Links)
@@ -90,44 +90,49 @@ const getAnnouncementHTML = (subject, message) => `
 
 // 🚀 YE RAHA TERA ROUTE (Bina kisi galti ke)
 router.post("/send-all-email", auth, async (req, res) => {
-    const { subject, message } = req.body;
+  const { subject, message } = req.body;
 
-    if (!subject || !message) {
-        return res.status(400).json({ msg: "Subject aur message dono chahiye bhai!" });
+  if (!subject || !message) {
+    return res
+      .status(400)
+      .json({ msg: "Subject aur message dono chahiye bhai!" });
+  }
+
+  try {
+    const users = await User.find(
+      { email: { $exists: true, $ne: "" } },
+      "email",
+    );
+
+    if (users.length === 0) {
+      return res.status(404).json({ msg: "Database khali hai!" });
     }
 
-    try {
-        const users = await User.find({ email: { $exists: true, $ne: "" } }, "email");
-        
-        if (users.length === 0) {
-            return res.status(404).json({ msg: "Database khali hai!" });
-        }
+    const emailList = users.map((user) => user.email);
 
-        const emailList = users.map((user) => user.email);
+    // Template logic
+    let emailTemplate = getAnnouncementHTML(subject, message);
+    const templatePath = path.join(__dirname, "../views/email.html");
 
-        // Template logic
-        let emailTemplate = getAnnouncementHTML(subject, message);
-        const templatePath = path.join(__dirname, "../views/email.html");
-
-        if (fs.existsSync(templatePath)) {
-            let fileContent = fs.readFileSync(templatePath, "utf-8");
-            emailTemplate = fileContent.replace("{{message}}", message);
-        }
-
-        // Resend API Call
-        await resend.emails.send({
-            from: 'onboarding@resend.dev',
-            to: emailList,
-            subject: `📢 ${subject}`,
-            html: emailTemplate,
-        });
-
-        res.status(200).json({ msg: `Mast! ${emailList.length} users ko mail chala gaya.` });
-
-    } catch (err) {
-        console.error("🔥 Error:", err);
-        res.status(500).json({ error: err.message });
+    if (fs.existsSync(templatePath)) {
+      let fileContent = fs.readFileSync(templatePath, "utf-8");
+      emailTemplate = fileContent.replace("{{message}}", message);
     }
+
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: validEmails, // always correct format
+      subject: `📢 ${subject || "Notification"}`,
+      html: emailTemplate || "<p>No content</p>",
+    });
+
+    res
+      .status(200)
+      .json({ msg: `Mast! ${emailList.length} users ko mail chala gaya.` });
+  } catch (err) {
+    console.error("🔥 Error:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;
