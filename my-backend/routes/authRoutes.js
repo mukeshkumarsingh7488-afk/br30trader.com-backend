@@ -1,6 +1,6 @@
 //#region Auth Routes
-// Ye routes humare authentication aur user management ke liye hain. Isme hum registration, login, password reset, profile update, aur admin ke liye kuch special routes banayenge. 
-// Jab bhi koi user register ya login karega, toh uska data yahan se process hoke database me save hoga, aur JWT token generate hoke user ko diya jayega. 
+// Ye routes humare authentication aur user management ke liye hain. Isme hum registration, login, password reset, profile update, aur admin ke liye kuch special routes banayenge.
+// Jab bhi koi user register ya login karega, toh uska data yahan se process hoke database me save hoga, aur JWT token generate hoke user ko diya jayega.
 // Admin ke liye bhi kuch special routes honge jisse wo users ko block/unblock kar sake, VIP status de sake, aur marketing emails bhej sake.
 const express = require("express");
 const User = require("../models/User");
@@ -8,7 +8,6 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const auth = require("../middleware/auth");
-const sendEmail = require("../utils/sendEmail");
 const { sendVipCertEmail } = require("../utils/emailHelper");
 const Certificate = require("../models/Certificate");
 
