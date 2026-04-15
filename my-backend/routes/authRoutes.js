@@ -404,7 +404,7 @@ router.get("/verify-certificate/:id", async (req, res) => {
       studentName: cert.name,
       course: cert.course,
       issueDate: cert.date,
-      downloadUrl: `${window.API_BASE_URL}/certificates/${cert.fileName}`,
+      downloadUrl: `${process.env.API_BASE_URL}/certificates/${cert.fileName}`,
     });
   } catch (err) {
     res.status(400).json({ success: false });
