@@ -5,8 +5,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 /* ---------------- SEND EMAIL CORE ---------------- */
 const sendEmail = async (options) => {
-  console.log(`📧 Sending email TO: ${to}`);
   try {
+    console.log(`📧 Sending email TO: ${to}`);
     console.log("Resend API Trigger ho raha hai..."); // Testing ke liye
     const data = await resend.emails.send({
       from: "onboarding@resend.dev",
