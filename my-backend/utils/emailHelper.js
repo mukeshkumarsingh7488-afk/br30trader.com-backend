@@ -135,7 +135,7 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
 };
 
 /* welcome templet */
-exports.welcomeTemplate = {
+const welcomeTemplate = (user, coupon) => {
   // 🎉 WELCOME TEMPLATE (FULL SAFE - NOTHING REMOVED)
   welcome: (user, coupon = {}) => {
     console.log("📩 Welcome Template Triggered:", user?.email);
@@ -279,10 +279,10 @@ exports.welcomeTemplate = {
     </div>
 </body>
 </html>`;
-  },
+  };
 };
 /* user and admin register otp templet */
-exports.otpTemplate = (name, otp, isMaster) => {
+const otpTemplate = (name, otp, isMaster) => {
   console.log("📩 OTP Template Triggered:", name, isMaster);
 
   // 👑 ADMIN TEMPLATE
@@ -503,7 +503,7 @@ exports.otpTemplate = (name, otp, isMaster) => {
 };
 
 /* admin and user reset otp templet */
-exports.forgotOtpTemplate = (name, otp, isMaster) => {
+const forgotOtpTemplate = (name, otp, isMaster) => {
   if (isMaster) {
     return `ADMIN RESET TEMPLATE`;
   }
@@ -623,7 +623,7 @@ exports.forgotOtpTemplate = (name, otp, isMaster) => {
 };
 
 /* Purchase course templet (Vip welcome mail) templet*/
-exports.purchaseTemplate = (name, courseName) => {
+const purchaseTemplate = (name, courseName) => {
   return `
      <!DOCTYPE html>
 <html>
@@ -838,7 +838,7 @@ exports.purchaseTemplate = (name, courseName) => {
 };
 
 // 🚨 ADMIN ALERT TEMPLATE (Payment Fail)
-exports.paymentFailAdminTemplate = (user, course, reason) => {
+const paymentFailAdminTemplate = (user, course, reason) => {
   return `
    <!DOCTYPE html>
 <html>
@@ -925,7 +925,7 @@ exports.paymentFailAdminTemplate = (user, course, reason) => {
 };
 
 // 👤 USER TEMPLATE (Payment Fail Help)
-exports.paymentFailUserTemplate = (user, course, reason) => {
+const paymentFailUserTemplate = (user, course, reason) => {
   return `
    <!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 .email-body { background-color: #000000; padding: 40px 20px; font-family: sans-serif; margin: 0; }
@@ -1036,7 +1036,7 @@ Security Division Alert System
 };
 
 // 💰 OFFER TEMPLATE (Normal users)
-exports.offerTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
+const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
   return `
  <!DOCTYPE html>
 <html>
@@ -1182,7 +1182,7 @@ exports.offerTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
 };
 
 // 💎 VIP TEMPLATE
-exports.vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
+const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
   return `
   <!DOCTYPE html>
 <html>
@@ -1306,7 +1306,7 @@ exports.vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
 };
 
 // Official email templet
-exports.getAnnouncementHTML = (subject, message) => {
+const getAnnouncementHTML = (subject, message) => {
   return `
 <!DOCTYPE html>
 <html>
