@@ -207,14 +207,14 @@ exports.handlePaymentFailure = async (req, res) => {
 
     // 🔥 1. ADMIN ALERT MAIL
     await sendEmail({
-      to: process.env.SUPPORT_EMAIL_USER,
+      to: process.env.MASTER_ADMIN_EMAIL,
       subject: `⚠️ Payment Failed: ${user.name}`,
       html: paymentFailAdminTemplate(user, course, reason),
     });
 
     // 🔥 2. USER HELP MAIL
     await sendEmail({
-      to: user.email,
+      to: process.env.MASTER_ADMIN_EMAIL,
       subject: `Payment Issue - ${course.title}`,
       html: paymentFailUserTemplate(user, course, reason),
     });
