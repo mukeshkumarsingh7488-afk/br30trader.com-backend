@@ -10,7 +10,6 @@ const {
   paymentFailAdminTemplate,
   paymentFailUserTemplate,
 } = require("../utils/emailHelper");
-const Coupon = require("../models/Coupon");
 //#endregion
 
 //#region Rozorpay key_id And Key_Secret Process.env file
