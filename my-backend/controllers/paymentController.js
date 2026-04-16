@@ -20,100 +20,74 @@ const razorpay = new Razorpay({
 //#endregion
 
 // Create payment order (Ultra Pro Version)
+// 🔥 ULTRA PRO VERSION (With Security & Logging)
 exports.createOrder = async (req, res) => {
   try {
     const { courseId, couponCode } = req.body;
+    console.log(
+      `🚀 Creating order for: ${courseId} with Coupon: ${couponCode || "None"}`,
+    );
 
-    // 1. Course Fetch & Validation
     const course = await Course.findById(courseId);
-    if (!course) {
+    if (!course)
       return res.status(404).json({ success: false, msg: "Course nahi mila" });
-    }
 
-    let originalPrice = Number(course.price);
-    let finalPrice = originalPrice;
+    let finalPrice = Number(course.price);
     let isApplied = false;
     let discountInfo = 0;
 
-    // 2. 🛡️ ULTRA PRO COUPON LOGIC
     if (couponCode) {
       const cleanCode = couponCode.trim().toUpperCase();
-
-      // Coupon dhoondo aur check karo ki wo Active hai ya nahi
       const validCoupon = await Coupon.findOne({ code: cleanCode });
 
+      // Check karo ki coupon mila aur wo valid hai
       if (validCoupon) {
-        // PRO CHECK: Expiry Date check (Agar aapke schema mein expiryDate hai)
+        // Expiry check (Extra Safety)
         const isExpired =
           validCoupon.expiryDate &&
           new Date() > new Date(validCoupon.expiryDate);
 
-        if (isExpired) {
-          console.log(`⚠️ Coupon Expired: ${cleanCode}`);
-        } else {
-          // Calculation
-          const discountAmount =
-            (finalPrice * Number(validCoupon.discount)) / 100;
+        if (!isExpired) {
+          // Calculation Logic
+          const discountPercent = Number(validCoupon.discount); // 🔥 Safety: Number conversion
+          const discountAmount = (finalPrice * discountPercent) / 100;
           finalPrice = finalPrice - discountAmount;
+
           isApplied = true;
-          discountInfo = validCoupon.discount;
-          console.log(
-            `✅ Promo Applied: ${cleanCode} | Saved: ₹${discountAmount}`,
-          );
+          discountInfo = discountPercent;
+          console.log(`✅ Coupon Match: -${discountPercent}% Applied!`);
         }
       }
     }
 
-    // 3. Security Check: Amount rules
-    if (finalPrice <= 0) finalPrice = 1;
-
-    // 4. Razorpay Options (Standard Format)
+    // Razorpay amount humesha round hona chahiye (No decimals)
     const options = {
-      amount: Math.round(finalPrice * 100), // convert to paise & ensure integer
+      amount: Math.round(finalPrice * 100),
       currency: "INR",
-      receipt: `rcpt_${Date.now()}_${courseId.substring(0, 5)}`,
-      notes: {
-        course_id: courseId,
-        coupon_used: isApplied ? couponCode : "NONE",
-        original_price: originalPrice,
-        discount_given: `${discountInfo}%`,
-      },
+      receipt: `rcpt_${Date.now()}`,
+      notes: { courseId, couponCode: isApplied ? couponCode : "NONE" },
     };
 
     const order = await razorpay.orders.create(options);
 
-    // 5. ✨ FULL PRO RESPONSE
     res.status(200).json({
       success: true,
-      order: order, // Frontend will use order.id
-      key: process.env.RAZORPAY_KEY_ID, // No more hardcoding on frontend!
-      amount: order.amount,
-      currency: order.currency,
+      order: order,
+      key: process.env.RAZORPAY_KEY_ID,
       finalPrice: finalPrice,
       discountApplied: isApplied,
-      couponStatus: isApplied
-        ? "VALID"
-        : couponCode
-          ? "INVALID_OR_EXPIRED"
-          : "NONE",
       msg: isApplied
-        ? `🎉 Booyah! ${discountInfo}% discount applied.`
-        : couponCode
-          ? "Oops! Invalid coupon code."
-          : "Order initiated.",
+        ? `Success! ₹${finalPrice} ka payment hai.`
+        : "Order Created",
     });
   } catch (err) {
-    console.error("❌ CRITICAL RAZORPAY ERROR:", err);
-    res.status(500).json({
-      success: false,
-      msg: "Payment Gateway busy hai, thodi der baad try karein.",
-      error:
-        process.env.NODE_ENV === "development"
-          ? err.message
-          : "Internal Server Error",
-    });
+    console.error("❌ RAZORPAY ERROR:", err);
+    res
+      .status(500)
+      .json({ success: false, msg: "Order Error", error: err.message });
   }
 };
+
 //#endregion
 // Razorpay instance import karna mat bhulna jo apne config mein banaya hoga
 // const razorpay = require("../config/razorpay");
