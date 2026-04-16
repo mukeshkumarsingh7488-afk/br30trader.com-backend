@@ -6,14 +6,17 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 /* ---------------- SEND EMAIL CORE ---------------- */
 const sendEmail = async (options) => {
   try {
-    console.log(`📧 Sending email TO: ${to}`);
-    console.log("Resend API Trigger ho raha hai..."); // Testing ke liye
+    // 🔥 FIX 1: 'to' ki jagah 'options.to' use karo console mein
+    console.log(`📧 Sending email TO: ${options.to}`);
+    console.log("Resend API Trigger ho raha hai...");
+
     const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: options.email,
+      from: "onboarding@resend.dev", // Jab tak domain verify na ho, yahi rehne do
+      to: options.to, // 🔥 FIX 2: 'options.email' ko 'options.to' karo
       subject: options.subject,
-      html: options.message,
+      html: options.html, // 🔥 FIX 3: 'options.message' ko 'options.html' karo
     });
+
     console.log("Email Sent Success:", data);
     return data;
   } catch (error) {
