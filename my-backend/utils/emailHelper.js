@@ -1305,6 +1305,7 @@ exports.vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
   `;
 };
 
+// Official email templet
 exports.getAnnouncementHTML = (subject, message) => {
   return `
 <!DOCTYPE html>
@@ -1383,5 +1384,16 @@ exports.getAnnouncementHTML = (subject, message) => {
 </body>
 </html>`;
 };
-module.exports = { sendVipCertEmail };
+module.exports = {
+  sendVipCertEmail,
+  welcomeTemplate,
+  otpTemplate,
+  forgotOtpTemplate,
+  purchaseTemplate,
+  paymentFailAdminTemplate,
+  paymentFailUserTemplate,
+  offerTemplate,
+  vipTemplate,
+  getAnnouncementHTML,
+};
 //#endregion

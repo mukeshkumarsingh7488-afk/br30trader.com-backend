@@ -118,7 +118,6 @@ exports.createOrder = async (req, res) => {
 //#endregion
 // Razorpay instance import karna mat bhulna jo apne config mein banaya hoga
 // const razorpay = require("../config/razorpay");
-
 exports.verifyPayment = async (req, res) => {
   try {
     const {
