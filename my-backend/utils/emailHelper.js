@@ -1385,6 +1385,7 @@ const getAnnouncementHTML = (subject, message) => {
 </html>`;
 };
 module.exports = {
+  sendEmail,
   sendVipCertEmail,
   welcomeTemplate,
   otpTemplate,
