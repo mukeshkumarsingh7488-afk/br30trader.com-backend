@@ -33,10 +33,6 @@ const reviewSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  replyMessage: {
-    type: String,
-    default: "",
-  },
 
   createdAt: { type: Date, default: Date.now },
 });

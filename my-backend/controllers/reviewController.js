@@ -179,10 +179,13 @@ exports.toggleReviewStatus = async (req, res) => {
 // 👉 DB update (yaha apna real DB logic laga)
 async function saveReply(reviewId, message) {
   try {
-    await Review.findByIdAndUpdate(reviewId, {
-      replyMessage: message,
-      replied: true,
-    });
+    await Review.findOneAndUpdate(
+      { _id: reviewId, adminReply: { $in: ["", null] } }, // 🔥 overwrite na kare
+      {
+        adminReply: message, // ✅ yahi field use kar
+        replied: true,
+      },
+    );
 
     console.log("✅ Reply saved:", reviewId);
   } catch (err) {
@@ -201,13 +204,14 @@ exports.handleAutoReply = async (req, res) => {
       const reply = generateSmartReply(review);
 
       if (!reply) {
-        console.log("⚠️ Manual needed:", review.id);
+        console.log("⚠️ Manual needed:", review._id); // ✅ fix
         continue;
       }
 
       const finalReply = reply + "\n— Team BR30 Trader Academy 🚀";
 
-      await saveReply(review.id, finalReply);
+      // 🔥 FIXED (id → _id)
+      await saveReply(review._id, finalReply);
     }
 
     res.json({ success: true, message: "Auto replies processed 🚀" });
