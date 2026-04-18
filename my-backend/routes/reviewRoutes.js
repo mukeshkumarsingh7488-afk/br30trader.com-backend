@@ -3,8 +3,7 @@
 // Jab bhi koi user course complete karega, toh uska review yahan se add hoke database me save hoga, aur future me wo review top reviews me dikhai dega.
 const express = require("express");
 const router = express.Router();
-const reviewController,
-  handleAutoReply = require("../controllers/reviewController");
+const reviewController = require("../controllers/reviewController");
 
 // --- User Routes (Pehle se jo hain) ---
 router.post("/add", reviewController.postReview);
@@ -25,6 +24,6 @@ router.patch("/status/:id", reviewController.toggleReviewStatus);
 router.delete("/delete/:id", reviewController.deleteReview);
 
 // auto replay review
-router.post("/auto-reply", handleAutoReply);
+router.post("/auto-reply", reviewController.handleAutoReply);
 module.exports = router;
 //#endregion
