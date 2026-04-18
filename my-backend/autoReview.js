@@ -2228,7 +2228,14 @@ cron.schedule("*/15 * * * *", async () => {
 
 // 🔥 RUN
 async function run() {
-  const reviews = await Review.find({ replied: false });
+  const reviews = await Review.find({
+    $or: [
+      { replied: false },
+      { replied: { $exists: false } }, // 🔥 ye main fix hai
+    ],
+  });
+
+  console.log("📊 Found Reviews:", reviews.length); // 👈 debug ke liye
 
   // fake req, res (simple)
   const req = { body: { reviews } };
@@ -2238,7 +2245,6 @@ async function run() {
     status: () => ({ json: (data) => console.log("ERROR", data) }),
   };
 
-  // ✅ yahi main fix hai
   await reviewController.handleAutoReply(req, res);
 }
 
