@@ -309,20 +309,19 @@ router.post("/claim-certificate", auth, async (req, res) => {
       return res.status(404).json({ success: false, msg: "User nahi mila!" });
     }
 
-    // 📘 2. DYNAMIC COURSE: Frontend se aane wala course name (Ya default)
+    // 📘 2. DYNAMIC COURSE
     const courseName =
       req.body.courseName || "ADVANCED CRYPTO & OPTION TRADING MASTERCLASS";
 
-    // ✨ 3. UNIQUE ID: User ID ke last 6 characters (e.g., BR30-978424)
+    // ✨ 3. UNIQUE ID
     const certId = `BR30-${user._id.toString().substring(18).toUpperCase()}`;
     const fullName = user.name;
 
-    // 🔍 4. DATABASE CHECK: Pehle se exist karta hai? (ID se dhoondho taaki galti na ho)
-    // Hum certId se dhoond rahe hain taaki agar user naam badle tab bhi duplicate na bane
+    // 🔍 4. DATABASE CHECK (Certificate Collection)
     let existingCert = await Certificate.findOne({ certId: certId });
 
     if (existingCert) {
-      // 🗑️ FILE DELETE: Purani file ko uda do taaki storage 'blast' na ho
+      // 🗑️ FILE DELETE: Purani file backup cleanup
       const oldPath = path.join(
         process.cwd(),
         "certificates",
@@ -333,13 +332,12 @@ router.post("/claim-certificate", auth, async (req, res) => {
           fs.unlinkSync(oldPath);
           console.log("🗑️ Purani file delete ki gayi:", existingCert.fileName);
         } catch (err) {
-          console.log("⚠️ File busy thi, par overwrite ho jayegi.");
+          console.log("⚠️ File overwrite ho jayegi.");
         }
       }
     }
 
-    // 📄 5. GENERATE PDF: Naya PDF banao (ID ko hi file name bana kar)
-    // Note: generateProfessionalCert ke andar ab 'fileName = certId + ".pdf"' hona chahiye
+    // 📄 5. GENERATE PDF (Aapka purana utility function)
     const result = await generateProfessionalCert(
       user,
       fullName,
@@ -347,16 +345,17 @@ router.post("/claim-certificate", auth, async (req, res) => {
       courseName,
     );
 
-    // 💾 6. UPSERT LOGIC: Database entry update ya naya create
+    // 🔗 Download URL taiyar karo
+    const downloadUrl = `${process.env.API_BASE_URL || "https://my-backend-1-avpd.onrender.com"}/certificates/${result.fileName}`;
+
+    // 💾 6. CERTIFICATE COLLECTION UPDATE
     if (existingCert) {
-      // Agar pehle se hai, toh sirf data update karo
-      existingCert.fileName = result.fileName; // Naya file name (BR30-XXXXXX.pdf)
-      existingCert.course = courseName; // Naya course name agar change hua ho
+      existingCert.fileName = result.fileName;
+      existingCert.course = courseName;
       existingCert.date = new Date();
       await existingCert.save();
-      console.log("📝 Record Update ho gaya: " + certId);
+      console.log("📝 Certificate Record Updated!");
     } else {
-      // Pehli baar hai toh naya certificate save karo
       const newCert = new Certificate({
         name: fullName,
         certId: certId,
@@ -365,23 +364,39 @@ router.post("/claim-certificate", auth, async (req, res) => {
         fileName: result.fileName,
       });
       await newCert.save();
-      console.log("✅ Naya Certificate record ban gaya!");
+      console.log("✅ New Certificate Record Created!");
     }
 
-    // ✅ 7. RESPONSE: Frontend ko turant reply do (Ab error nahi aayega response ka)
+    // 🔥 🔥 🔥 7. ASLI FIX: USER MODEL UPDATE (YE MISSING THA)
+    // Isse aapka 'User' folder (collection) update hoga
+    user.isCertified = true;
+    user.certificateData = {
+      fullName: fullName,
+      certId: certId,
+      issueDate: new Date(),
+      downloadUrl: downloadUrl, // Response wala same link
+      mobile: user.certificateData?.mobile || "", // Purana mobile data safe rakho
+      photoUrl: user.certificateData?.photoUrl || "",
+    };
+
+    // NESTED OBJECT FIX: Mongoose ko force karo save karne ke liye
+    user.markModified("certificateData");
+    await user.save();
+    console.log("💾 USER MODEL UPDATED IN ATLAS!");
+
+    // ✅ 8. RESPONSE
     res.status(200).json({
       success: true,
       certId: certId,
-      // Backup URL add kiya hai taaki 'undefined' na aaye
-      downloadUrl: `${process.env.API_BASE_URL || "https://my-backend-1-avpd.onrender.com"}/certificates/${result.fileName}`,
+      downloadUrl: downloadUrl,
     });
 
-    // 📧 8. MAIL: Background mein mail bhej do (Iska response ka wait mat karo)
+    // 📧 9. MAIL
     sendVipCertEmail(user, result.fileName, result.filePath).catch((err) =>
       console.error("❌ Mail Error:", err.message),
     );
   } catch (err) {
-    console.error("❌ Storage/Route Error:", err.message);
+    console.error("❌ Critical Error:", err.message);
     if (!res.headersSent) {
       res.status(500).json({ success: false, msg: "Server Side Issue!" });
     }

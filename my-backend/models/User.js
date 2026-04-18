@@ -1,5 +1,5 @@
 //#region User Model
-// Ye model humare users ke liye hai. Isme hum user ka naam, email, password, aur other details store karenge. 
+// Ye model humare users ke liye hai. Isme hum user ka naam, email, password, aur other details store karenge.
 // Jab bhi koi user register hoga, toh iska record yahan save ho jayega, taki hum future me usko access kar sakein.
 
 const mongoose = require("mongoose");
@@ -58,8 +58,10 @@ const userSchema = new mongoose.Schema(
     certificateData: {
       fullName: { type: String, default: "" },
       mobile: { type: String, default: "" },
-      photoUrl: { type: String, default: "" }, // Certificate par student ki photo ke liye
+      photoUrl: { type: String, default: "" },
       issueDate: { type: Date },
+      certId: { type: String, default: "" },
+      downloadUrl: { type: String, default: "" },
     },
     // -------------------------------------------------------
 

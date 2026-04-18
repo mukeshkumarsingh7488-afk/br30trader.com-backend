@@ -53,9 +53,6 @@ exports.sendMarketingMail = async (req, res) => {
       { upsert: true, new: true },
     );
 
-    // --- IMPORT TEMPLATES FROM UTILS ---
-    const { offerTemplate, vipTemplate } = require("../utils/emailHelper");
-
     // --- TARGET USERS ---
     let filter = {};
     let finalHtml = "";

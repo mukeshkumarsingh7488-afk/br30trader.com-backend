@@ -5,7 +5,7 @@ const User = require("../models/User");
 const fs = require("fs");
 const path = require("path");
 const auth = require("../middleware/auth"); // Tera auth middleware yahan hai
-const { sendEmail } = require("../utils/emailHelper");
+const { sendEmail, getAnnouncementHTML } = require("../utils/emailHelper");
 
 // 🚀 YE RAHA TERA ROUTE (Bina kisi galti ke)
 router.post("/send-all-email", auth, async (req, res) => {
