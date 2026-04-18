@@ -1,7 +1,9 @@
 const cron = require("node-cron");
 const Review = require("./models/Review");
 const mongoose = require("mongoose");
+const reviewController = require("./controllers/reviewController");
 
+//#region auto review
 const reviewPool = [
   {
     name: "Amit K.",
@@ -2194,9 +2196,10 @@ const reviewPool = [
     profilePic: "https://i.pravatar.cc/150?u=jyoti",
   },
 ];
+//#endregion end auto review
 
-// Har 1 ghante mein ek baar review post hoga (0 * * * *)
-cron.schedule("0 * * * *", async () => {
+// Har 15 minuts mein ek baar review post hoga (0 * * * *)
+cron.schedule("*/15 * * * *", async () => {
   try {
     // Har baar pool se ek random index uthao
     const randomIndex = Math.floor(Math.random() * reviewPool.length);
