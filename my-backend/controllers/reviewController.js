@@ -1,6 +1,7 @@
 //#region Imports
 const Review = require("../models/Review");
 const User = require("../models/User");
+const { generateReply } = require("../utils/reviewReply");
 //#endregion
 
 //#region POST REVIEW (Show Web Page)
@@ -174,3 +175,44 @@ exports.toggleReviewStatus = async (req, res) => {
   }
 };
 //#endregion
+
+// 👉 DB update (yaha apna real DB logic laga)
+async function saveReply(reviewId, message) {
+  try {
+    await Review.findByIdAndUpdate(reviewId, {
+      replyMessage: message,
+      replied: true,
+    });
+
+    console.log("✅ Reply saved:", reviewId);
+  } catch (err) {
+    console.error("❌ Error saving reply:", err);
+  }
+}
+
+// 🔥 AUTO (API ke liye bhi aur reuse bhi ho sakta hai)
+exports.handleAutoReply = async (req, res) => {
+  try {
+    const reviews = req.body.reviews;
+
+    for (let review of reviews) {
+      if (review.replied) continue; // ❌ skip already replied
+
+      const reply = generateSmartReply(review);
+
+      if (!reply) {
+        console.log("⚠️ Manual needed:", review.id);
+        continue;
+      }
+
+      const finalReply = reply + "\n— Team BR30 Trader Academy 🚀";
+
+      await saveReply(review.id, finalReply);
+    }
+
+    res.json({ success: true, message: "Auto replies processed 🚀" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};

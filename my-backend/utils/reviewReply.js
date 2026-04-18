@@ -1,0 +1,35 @@
+// germet review replay
+function generateSmartReply({ username = "", rating, comment }) {
+  const text = comment.toLowerCase(); // ✅ yaha fix
+
+  const positiveWords = [
+    "good",
+    "great",
+    "best",
+    "amazing",
+    "love",
+    "excellent",
+  ];
+
+  const negativeWords = ["bad", "worst", "scam", "poor", "refund", "not good"];
+
+  const isNegative = negativeWords.some((w) => text.includes(w));
+  const userName = username ? ` ${username}` : ""; // ✅ yaha fix
+
+  if (rating >= 4 && !isNegative) {
+    const replies = [
+      `Thank you${userName}! 🙏 We're glad you loved the experience. 🚀`,
+      `Appreciate your feedback${userName}! 😊`,
+      `Thanks a lot${userName}! Your support means everything 💯`,
+    ];
+    return replies[Math.floor(Math.random() * replies.length)];
+  }
+
+  if (rating === 3 && !isNegative) {
+    return `Thank you${userName}! 🙏 We’re working to improve your experience.`;
+  }
+
+  return null; // negative = manual
+}
+
+module.exports = { generateSmartReply };

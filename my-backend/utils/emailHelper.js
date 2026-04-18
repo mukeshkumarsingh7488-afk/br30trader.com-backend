@@ -285,340 +285,319 @@ const welcomeTemplate = (user, coupon) => {
 </html>`;
   };
 };
-/* user and admin register otp templet */
+// 🔐 UPGRADED REGISTER OTP TEMPLATE (User & Admin) v2.5
 const otpTemplate = (name, otp, isMaster) => {
-  console.log("📩 OTP Template Triggered:", name, isMaster);
+  const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
 
-  // 👑 ADMIN TEMPLATE
+  // 👑 1. ADMIN TEMPLATE (GOLD THEME)
   if (isMaster) {
     return `
-      <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
+<!DOCTYPE html><html><head><meta charset="UTF-8">
     <style>
-        /* Web & Laptop Clarity Fix */
-        .email-body { 
-            background-color: #000000; 
-            padding: 40px 20px; 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            -webkit-font-smoothing: antialiased;
-            margin: 0; 
-        }
-        .card { max-width: 500px; margin: auto; background: #0a0a0a; border-radius: 24px; border: 2px solid #d4af37; overflow: hidden; box-shadow: 0 0 40px rgba(212, 175, 55, 0.2); }
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .card { max-width: 500px; margin: auto; background: #050505; border-radius: 24px; border: 2px solid #d4af37; overflow: hidden; box-shadow: 0 0 40px rgba(212, 175, 55, 0.2); }
         .banner { width: 100%; height: auto; display: block; border-bottom: 2px solid #d4af37; }
-        
-        /* Premium Content Styling */
         .content { padding: 40px 30px; text-align: center; color: #ffffff !important; }
-        .admin-header { color: #d4af37 !important; font-size: 22px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 2px; }
-        
-        /* Gold/Red OTP Box */
-        .otp-box { background: rgba(212, 175, 55, 0.05); border: 1px dashed #d4af37; border-radius: 16px; padding: 25px; margin: 30px 0; }
-        .otp-code { 
-            margin: 0; 
-            font-size: 38px; 
-            letter-spacing: 10px; 
-            color: #ff4d4d !important; /* Admin OTP in Red for Alert feel */
-            font-weight: 800; 
-            text-shadow: 0 0 15px rgba(255, 77, 77, 0.4); 
-            word-break: break-all;
-        }
-        
-        .footer { background: #000000; padding: 30px; text-align: center; border-top: 1px solid #1a1a1a; }
-        .signature { color: #64748b !important; font-size: 13px; line-height: 1.6; }
+        .otp-box { background: linear-gradient(145deg, rgba(212, 175, 55, 0.05), rgba(0, 0, 0, 1)); border: 1px dashed #d4af37; border-radius: 16px; padding: 25px; margin: 30px 0; }
+        .otp-code { margin: 0; font-size: 38px; letter-spacing: 10px; color: #ff4d4d !important; font-weight: 800; text-shadow: 0 0 15px rgba(255, 77, 77, 0.4); }
+        .footer { background: #010101; padding: 30px; text-align: center; border-top: 1px solid #1a1a1a; }
         .admin-tag { color: #d4af37 !important; font-weight: 700; font-size: 15px; letter-spacing: 1px; }
-    </style>
-</head>
+    </style></head>
 <body class="email-body">
     <div class="card">
-        <!-- Master Admin Gold Banner -->
-        <img src="https://i.ibb.co/chKP57C1/gold-burner-jpg.jpg" alt="Admin Premium Access" class="banner">
-        
+        <img src="https://i.ibb.co/chKP57C1/gold-burner-jpg.jpg" alt="Admin Access" class="banner">
         <div class="content">
-            <div class="admin-header">👑 Master Admin Authentication</div>
-            
-            <!-- Professional Admin Message -->
-            <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6;">
-                Hello <b>Dear Mukesh Raj</b>,<br> 
-                A secure login or credential reset has been initiated for the Master Admin account. Please use the high-security verification code below:
+            <div style="color: #d4af37; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">👑 Master Admin Auth</div>
+            <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6; margin-top: 15px;">
+                Hello <b>Dear Mukesh Raj</b>,<br>A secure login or credential reset has been initiated for the Master Admin account.
             </p>
-            
             <div class="otp-box">
                 <h1 class="otp-code">${otp}</h1>
             </div>
-            
-            <p style="color: #ff4d4d !important; font-size: 12px; font-weight: bold; letter-spacing: 1px;">
-                ⚠️ CONFIDENTIAL: DO NOT SHARE THIS CODE.
-            </p>
+            <p style="color: #ff4d4d !important; font-size: 12px; font-weight: bold;">⚠️ CONFIDENTIAL: DO NOT SHARE THIS CODE.</p>
+            <div style="display:none;">Trace: ${syncId}</div>
         </div>
-
         <div class="footer">
-            <div class="signature">
-                Regards,<br>
-                <span class="admin-tag">BR30 Support Team</span><br>
-                System Master Admin Access 
-            </div>
-
-           <!-- ROOT AUTHENTICATION NOTE (VVIP Feel) -->
-<p style="color: #ffd700 !important; font-size: 11px; margin-top: 25px; font-weight: bold; letter-spacing: 1.5px; text-align: center; text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);">
-    🛡️ ROOT AUTHENTICATION: Verified Master Admin Login Detected.
-</p>
-
-    <!-- No-reply Note -->
-            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
-                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
-            </p>
-
-
- <!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
-
-
-    <!-- YouTube -->
-    <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Facebook -->
- <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
-
-            <div style="margin-top: 25px; font-size: 10px; color: #576172; text-align: center;">
-                © 2026 BR30 Global Service. Secure Access Guaranteed.
+            <div style="color: #64748b; font-size: 13px;">Regards,<br><span class="admin-tag">BR30 Support Team</span><br>System Master Admin Access</div>
+            <p style="color: #ffd700 !important; font-size: 11px; margin-top: 20px; font-weight: bold; letter-spacing: 1.5px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);">🛡️ ROOT AUTHENTICATION VERIFIED</p>
+            ${getSocialLinksHTML()}
+            <div style="margin-top: 25px; font-size: 10px; color: #444; text-align: center;">
+                © 2026 BR30 Global Service | Session Hash: ${syncId.substring(0, 6)}
             </div>
         </div>
     </div>
-</body>
-</html>`;
+</body></html>`;
   }
 
-  // 👤 USER TEMPLATE
+  // 🎓 2. USER TEMPLATE (GREEN THEME)
   return `
-    <!DOCTYPE html>
-<html>
-<head>
+<!DOCTYPE html><html><head><meta charset="UTF-8">
     <style>
-        .email-body { background-color: #0f172a; padding: 40px 20px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; }
-        .card { max-width: 500px; margin: auto; background: #1e293b; border-radius: 24px; border: 1px solid #3b82f6; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .banner { width: 100%; height: auto; display: block; border-bottom: 2px solid #3b82f6; }
-        .content { padding: 40px 30px; text-align: center; color: #ffffff; }
-        .welcome-txt { color: #3b82f6; font-size: 22px; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .otp-box { background: #0f172a; border: 1px dashed #3b82f6; border-radius: 16px; padding: 25px; margin: 30px 0; }
-        .otp-code { margin: 0; font-size: 35px; letter-spacing: 8px; color: #3b82f6; font-weight: 800; text-shadow: 0 0 10px rgba(59, 130, 246, 0.4); word-break: break-all;}
-        .warning-txt { color: #f87171; font-size: 13px; font-weight: 600; margin-top: 20px; }
-        .footer { background: #111827; padding: 25px; text-align: center; border-top: 1px solid #334155; }
-        .signature { color: #94a3b8; font-size: 13px; line-height: 1.6; }
-        .brand-name { color: #3b82f6; font-weight: 700; font-size: 15px; }
-    </style>
-</head>
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .card { max-width: 500px; margin: auto; background: #050505; border-radius: 24px; border: 2px solid #00ff88; overflow: hidden; box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
+        .banner { width: 100%; height: auto; display: block; border-bottom: 2px solid #00ff88; }
+        .content { padding: 40px 30px; text-align: center; color: #ffffff !important; }
+        .otp-box { background: linear-gradient(145deg, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 1)); border: 1px dashed #00ff88; border-radius: 16px; padding: 25px; margin: 30px 0; }
+        .otp-code { margin: 0; font-size: 38px; letter-spacing: 10px; color: #00ff88 !important; font-weight: 800; text-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
+        .footer { background: #010101; padding: 30px; text-align: center; border-top: 1px solid #1a1a1a; }
+        .brand-tag { color: #00ff88 !important; font-weight: 800; font-size: 15px; letter-spacing: 1px; }
+    </style></head>
 <body class="email-body">
     <div class="card">
-        <!-- Register Banner Link Yahan Dalna -->
-        <img src="https://i.ibb.co/3VzZ21W/blue-burner-jpg.jpg" alt="BR30 Welcome Banner" class="banner">
-        
+        <img src="https://i.ibb.co/3VzZ21W/blue-burner-jpg.jpg" alt="Welcome to BR30" class="banner">
         <div class="content">
-            <div class="welcome-txt">Welcome to BR30ᴛʀᴀᴅᴇʀ</div>
-            <p style="color: #94a3b8; font-size: 15px;">Hi <b>${name}</b>, your journey to professional trading starts here. Use the secure code below to verify your account.</p>
-            
+            <div style="color: #00ff88; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Welcome to BR30ᴛʀᴀᴅᴇʀ</div>
+            <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6; margin-top: 15px;">
+                Hi <b>${name}</b>, your journey to professional trading starts here. Use the secure code below to verify your account.
+            </p>
             <div class="otp-box">
                 <h1 class="otp-code">${otp}</h1>
             </div>
-            
-            <p class="warning-txt">⚠️ Valid for 10 minutes. Do not share this with anyone.</p>
-            <p style="color: #555; font-size: 11px; margin-top: 10px;">
-
+            <p style="color: #ff4d4d !important; font-size: 12px; font-weight: bold;">⚠️ VALID FOR 10 MINUTES ONLY.</p>
+            <div style="display:none;">Trace: ${syncId} | Node: ${timestamp}</div>
         </div>
-
-             <div class="footer">
-            <div class="signature">
-                Regards,<br>
-                <span class="brand-name">BR30 Support Team</span><br>
-                Official Support & Security Division
-            </div>
-
-            <!-- 1. NO-REPLY MESSAGE (Auto-generated alert) -->
-            <p style="color: #b9acac; font-size: 10px; margin-top: 20px; font-style: italic; text-align: center;">
-                🚫 <b>Note:</b> This is an auto-generated email. Please <b>do not reply</b> to this message.
-            </p>
-
-<!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
-
-    <!-- YouTube -->
-    <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Facebook -->
-  <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
-
-           <div style="margin-top: 25px; font-size: 10px; color: #576172; text-align: center;">
-                © 2026 BR30 Global Service. Secure Access Guaranteed.
-            </div>
+        <div class="footer">
+            <div style="color: #64748b; font-size: 13px;">Regards,<br><span class="brand-tag">BR30 Support Team</span><br>Official Onboarding Division</div>
+            ${getSocialLinksHTML()}
+            <div style="margin-top: 20px; font-size: 10px; color: #444;">ID: ${syncId} | © 2026 BR30 Global</div>
         </div>
-    </div> <!-- Ye Card wala div band ho raha hai -->
-</body>
-</html>`;
+    </div>
+</body></html>`;
 };
 
-/* admin and user reset otp templet */
+// Helper function to keep code clean
+function getSocialLinksHTML() {
+  return `
+    <div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
+        <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">JOIN OUR COMMU&#8203;NITY 🚀</p>
+        <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;"></a>
+        <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;"></a>
+        <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;"></a>
+        <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;"></a>
+        <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;"></a>
+    </div>`;
+}
+
+// 🔐 UPGRADED FORGOT OTP TEMPLATE (User & Admin) v2.5
 const forgotOtpTemplate = (name, otp, isMaster) => {
-  if (isMaster) {
-    return `ADMIN RESET TEMPLATE`;
-  }
-  // user forgot otp templet
-  return `<!DOCTYPE html>
-<html>
-<head>
+  const traceId = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
+
+  // Content change hoga based on isMaster
+  const mainTitle = isMaster
+    ? "🚨 ADMIN ACCESS RESET"
+    : "🔐 PASSWORD RESET REQUEST";
+  const welcomeMsg = isMaster
+    ? `Hi <b>Master Admin</b>, a request has been made to reset your administrative credentials. Please use this highly secure code to proceed:`
+    : `Hi <b>${name}</b>, we received a request to reset your password. Use the secure verification code below to proceed.`;
+
+  return `
+<!DOCTYPE html><html><head>
     <meta charset="UTF-8">
     <style>
-        /* Web & Laptop Rendering Fix (Laptop par text saaf dikhne ke liye) */
-        .email-body { 
-            background-color: #000000; 
-            padding: 40px 20px; 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            -webkit-font-smoothing: antialiased;
-            margin: 0; 
-        }
-        .card { max-width: 500px; margin: auto; background: #0a0a0a; border-radius: 24px; border: 2px solid #ff4d4d; overflow: hidden; box-shadow: 0 0 30px rgba(255, 77, 77, 0.2); }
-        .banner { width: 100%; height: auto; display: block; border-bottom: 2px solid #ff4d4d; }
-        
-        /* Content Styling - Force White on Web */
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .card { max-width: 500px; margin: auto; background: #050505; border-radius: 24px; border: 2px solid #ff4d4d; overflow: hidden; box-shadow: 0 0 30px rgba(255, 77, 77, 0.2); }
+        .banner { width: 100%; display: block; border-bottom: 2px solid #ff4d4d; }
         .content { padding: 40px 30px; text-align: center; color: #ffffff !important; }
-        .security-txt { color: #ff4d4d !important; font-size: 22px; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Mobile OTP Box Fix */
-        .otp-box { background: rgba(255, 77, 77, 0.05); border: 1px dashed #ff4d4d; border-radius: 16px; padding: 25px; margin: 30px 0; }
-        .otp-code { 
-            margin: 0; 
-            font-size: 35px; 
-            letter-spacing: 8px; 
-            color: #ff4d4d !important; 
-            font-weight: 800; 
-            text-shadow: 0 0 15px rgba(255, 77, 77, 0.5); 
-            word-break: break-all;
+        .otp-box { 
+            background: linear-gradient(145deg, rgba(255, 77, 77, 0.05), rgba(0, 0, 0, 1)); 
+            border: 1px dashed #ff4d4d; border-radius: 16px; padding: 25px; margin: 30px 0; 
         }
-        
-        .footer { background: #000000; padding: 30px; text-align: center; border-top: 1px solid #1a1a1a; }
-        .security-tag { color: #ff4d4d !important; font-weight: 700; font-size: 14px; }
-        .signature { color: #64748b !important; font-size: 13px; line-height: 1.6; }
+        .otp-code { 
+            margin: 0; font-size: 38px; letter-spacing: 10px; color: #ff4d4d !important; 
+            font-weight: 900; text-shadow: 0 0 15px rgba(255, 77, 77, 0.5); 
+        }
+
+        .footer { background: #010101; padding: 30px; text-align: center; border-top: 1px solid #1a1a1a; }
+        .security-tag { color: #ff4d4d !important; font-weight: 800; font-size: 14px; letter-spacing: 1px; }
     </style>
 </head>
 <body class="email-body">
     <div class="card">
         <!-- Security Banner -->
-        <img src="https://i.ibb.co/ns0Ww0gg/red-burner-jpg.jpg" alt="Security Banner" class="banner">
+        <img src="https://i.ibb.co/ns0Ww0gg/red-burner-jpg.jpg" alt="Security Lockdown" class="banner">
         
         <div class="content">
-            <div class="security-txt">Password Reset Request</div>
+            <div style="color: #ff4d4d; font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">
+                ${mainTitle}
+            </div>
             
-            <!-- Pro English & Web Clear Text -->
-            <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6;">
-                Hi <b>${name}</b>, we received a request to reset your password. Use the secure verification code below to proceed.
+            <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6; margin-top: 15px;">
+                ${welcomeMsg}
             </p>
             
             <div class="otp-box">
                 <h1 class="otp-code">${otp}</h1>
+                <p style="color: #64748b; font-size: 11px; margin-top: 10px; font-weight: bold; text-transform: uppercase;">
+                    Expires in 5 Minutes
+                </p>
             </div>
             
-            <p style="color: #ff4d4d !important; font-size: 12px; font-weight: bold;">
-                ⚠️ Valid for 5 minutes only.
+            <p style="color: #64748b; font-size: 12px; font-style: italic;">
+                If you didn't request this, please secure your account immediately. ✅
             </p>
+
+            <!-- Invisible trace bridge for Gmail -->
+            <div style="display:none; white-space:nowrap; font-size:0px; line-height:0px;">
+              Security-Protocol: ${traceId} | Sync-Stamp: ${timestamp}
+            </div>
         </div>
 
         <div class="footer">
-            <div class="signature">
+            <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
                 Regards,<br>
-                <span class="security-tag">BR30 Support Team</span><br>
+                <span class="security-tag">BR30 Security Team</span><br>
                 Official Support & Security Division
             </div>
 
-            <!-- OFFICIAL NO-REPLY NOTE -->
-            <p style="color: #475569 !important; font-size: 10px; margin-top: 20px; font-style: italic; text-align: center;">
-                🚫 <b>Note:</b> This is an automated security email. Please <b>do not reply</b> to this message.
+            <p style="color: #475569 !important; font-size: 10px; margin-top: 20px; font-style: italic;">
+                🚫 <b>Note:</b> Dispatched at ${timestamp} (Ref: ${traceId})
             </p>
 
-<!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
+            <!-- 🚀 Social Links (Neon Green Community Section) -->
+            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
+                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
+                    JOIN OUR COMMU&#8203;NITY 🚀
+                </p>
+                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+                </a>
+                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
+                </a>
+            </div>
 
-    <!-- YouTube -->
-    <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
+            <div style="margin-top: 20px; font-size: 10px; color: #444; text-align: center; letter-spacing: 1px;">
+                SECURE AUTH NODE: ${traceId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
+            </div>
+        </div>
+    </div>
+</body></html>`;
+};
 
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
+// 💎 UPGRADED PURCHASE/VIP WELCOME TEMPLATE v2.5
+const purchaseTemplate = (name, courseName) => {
+  // Gmail collapsing bypass & Tracking logic
+  const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
 
-    <!-- Facebook -->
-  <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        
+        .card { 
+            max-width: 600px; margin: auto; background: #0a0a0a; border-radius: 30px; 
+            border: 2px solid #00ff88; overflow: hidden; 
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.2); 
+        }
 
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
+        .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
+        
+        .content { padding: 45px 35px; text-align: center; color: #ffffff !important; }
 
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
+        .alert-title { 
+            color: #00ff88 !important; font-size: 28px; font-weight: 900; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            text-shadow: 0 0 15px #00ff88; margin-bottom: 25px;
+        }
 
-           <div style="margin-top: 25px; font-size: 10px; color: #576172; text-align: center;">
-                © 2026 BR30 Global Service. Secure Access Guaranteed.
+        .message-box { 
+            background: linear-gradient(145deg, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 1));
+            border-left: 5px solid #00ff88; padding: 25px; border-radius: 12px; 
+            color: #e2e8f0; font-size: 16px; margin-bottom: 25px; text-align: left;
+            line-height: 1.8;
+        }
+
+        .login-btn {
+            display: inline-block; padding: 15px 35px; background: #00ff88; 
+            color: #000000 !important; font-weight: 900; text-decoration: none; 
+            border-radius: 10px; box-shadow: 0 0 20px #00ff88; text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer { background: #010101; padding: 35px; text-align: center; border-top: 1px solid #111; }
+        
+        .admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; letter-spacing: 1px; }
+    </style>
+</head>
+
+<body class="email-body">
+    <div class="card">
+        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official" class="banner">
+
+        <div class="content">
+            <h1 class="alert-title">💎 VIP ACCESS UNLOCKED🚀</h1>
+            
+            <div class="message-box">
+                Hi <b>${name}</b>,<br><br>
+                🎉 Congratulations! Aapne successfully <b>${courseName}</b> purchase kar liya hai.
+                Aapka <b>VIP BADGE</b> ab active ho gaya hai aur premium content unlock ho chuka hai. 💸
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="https://t.me/+F8mDhdfiGaI1NDY1/+hBAT4kWo63A4ZWY1" class="login-btn">JOIN OUR VIP COMMUNITY</a>
+            </div>
+
+            <p style="color: #94a3b8 !important; font-size: 13px; margin-top: 40px; font-style: italic;">
+                <b>Exclusive Member:</b> Your Elite Trading Journey Starts Now. ✅
+            </p>
+
+            <!-- Invisible trace bridge for Gmail auto-show -->
+            <div style="display:none; white-space:nowrap; font-size:0px; line-height:0px;">
+              VIP-Activation-ID: ${syncId} | Timestamp: ${timestamp}
+            </div>
+        </div>
+
+        <div class="footer">
+            <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
+                Regards,<br>
+                <span class="admin-tag">BR30 Support Team</span><br>
+                Official Support & Security Division
+            </div>
+
+            <p style="color: #65748a; font-size: 10px; margin-top: 20px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>OFFICIAL NOTE:</b> Transaction logged at ${timestamp} (Ref: ${syncId})
+            </p>
+
+            <!-- 🚀 Social Links -->
+            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
+                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
+                    JOIN OUR COMMU&#8203;NITY 🚀
+                </p>
+                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+                </a>
+                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
+                </a>
+            </div>
+
+            <div style="margin-top: 15px; font-size: 10px; color: #64748b; letter-spacing: 1px;">
+                SECURE AUTH NODE: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
             </div>
         </div>
     </div>
@@ -626,258 +605,47 @@ const forgotOtpTemplate = (name, otp, isMaster) => {
 </html>`;
 };
 
-/* Purchase course templet (Vip welcome mail) templet*/
-const purchaseTemplate = (name, courseName) => {
-  return `
-     <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <style>
-        /* ================= GLOBAL ================= */
-        .email-body {
-            background-color: #000;
-            padding: 40px 20px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .card {
-            max-width: 600px;
-            margin: auto;
-            background: #0a0a0a;
-            border-radius: 30px;
-            border: 2px solid #00ff88;
-            overflow: hidden;
-            box-shadow: 0 0 40px rgba(0, 255, 136, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 60px rgba(0, 255, 136, 0.5);
-        }
-
-        /* ================= BANNER ================= */
-        .banner {
-            width: 100%;
-            display: block;
-            border-bottom: 3px solid #00ff88;
-        }
-
-        /* ================= CONTENT ================= */
-        .content {
-            padding: 45px 35px;
-            text-align: center;
-            color: #fff;
-        }
-
-        .alert-title {
-            color: #00ff88;
-            font-size: 28px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px #00ff88;
-            margin-bottom: 25px;
-        }
-
-        .message-box {
-            background: rgba(0, 255, 136, 0.05);
-            border-left: 5px solid #00ff88;
-            padding: 25px;
-            border-radius: 12px;
-            color: #e2e8f0;
-            font-size: 16px;
-            margin-bottom: 25px;
-            text-align: left;
-        }
-
-        /* ================= BUTTON ================= */
-        .login-btn {
-            display: inline-block;
-            padding: 15px 35px;
-            background: #00ff88;
-            color: #000;
-            font-weight: 900;
-            text-decoration: none;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #00ff88;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background: transparent;
-            color: #00ff88;
-            border: 2px solid #00ff88;
-            box-shadow: 0 0 25px #00ff88;
-        }
-
-        /* ================= FOOTER ================= */
-        .footer {
-            background: #000;
-            padding: 35px;
-            text-align: center;
-            border-top: 1px solid #111;
-            color: #64748b;
-            font-size: 13px;
-        }
-
-        .admin-tag {
-            color: #00ff88;
-            font-weight: 800;
-            font-size: 16px;
-            letter-spacing: 1px;
-        }
-
-        /* ================= SOCIAL ICONS ================= */
-        .social-links a {
-            margin: 0 10px;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .social-links a img {
-            width: 24px;
-            height: 24px;
-            display: inline-block;
-            border-radius: 5px;
-        }
-
-        .social-links a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 15px #00ff88;
-        }
-
-        /* ================= MOBILE ================= */
-        @media only screen and (max-width: 480px) {
-            .alert-title {
-                font-size: 22px;
-            }
-
-            .content {
-                padding: 30px 20px;
-            }
-
-            .login-btn {
-                padding: 12px 25px;
-            }
-        }
-    </style>
-</head>
-
-<body class="email-body">
-    <div class="card">
-        <!-- Banner -->
-        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official" class="banner">
-
-        <!-- Content -->
-        <div class="content">
-            <h1 class="alert-title">💎 VIP ACCESS UNLOCKED🚀</h1>
-            <div class="message-box">
-                Hi <b>${user.name}</b>,<br><br>
-                🎉Congratulations! Aapne successfully <b>${course.title}</b> purchase kar liya hai.
-                Aapka <b>VIP BADGE</b> ab active ho gaya hai. 💸
-            </div>
-            <a href="https://t.me/+F8mDhdfiGaI1NDY1/+hBAT4kWo63A4ZWY1" class="login-btn">JOIN OUR VIP COMMUNITY</a>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            Regards,<br>
-            <span class="admin-tag">BR30 Support Team</span><br>
-            Official Support & Security Division
-
-                <!-- No-reply Note -->
-            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
-                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
-            </p>
-
-            <!-- Social Links -->
-     <!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
-
-    <!-- YouTube -->
-    <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Facebook -->
-  <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
-
-            <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px;">
-                EST. 2024 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
-            </div>
-        </div>
-    </div>
-</body>
-
-</html>
-  `;
-};
-
-// 🚨 ADMIN ALERT TEMPLATE (Payment Fail)
+// 🚨 ADMIN ALERT TEMPLATE (Payment Fail) v2.5
 const paymentFailAdminTemplate = (user, course, reason) => {
+  // Gmail collapsing bypass logic
+  const alertId = Math.random().toString(36).substring(2, 10).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
+
   return `
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000; padding: 40px 20px; font-family: sans-serif; margin: 0; }
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', sans-serif; margin: 0; }
         .card { 
-            max-width: 600px; margin: auto; background: #050505; border-radius: 20px; 
-            border: 1px solid #ff3e3e; overflow: hidden; 
-            box-shadow: 0 0 30px rgba(255, 62, 62, 0.1); 
+            max-width: 600px; margin: auto; background: #050505; border-radius: 25px; 
+            border: 1px solid rgba(255, 62, 62, 0.5); overflow: hidden; 
+            box-shadow: 0 0 40px rgba(255, 62, 62, 0.15); 
         }
-        .header { background: #ff3e3e; color: #ffffff; padding: 15px; text-align: center; font-weight: 900; letter-spacing: 2px; }
-        .content { padding: 30px; color: #ffffff !important; }
+        .header { background: #ff3e3e; color: #ffffff; padding: 18px; text-align: center; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; font-size: 16px; }
+        .content { padding: 35px; color: #ffffff !important; }
         
-        .info-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .info-table td { padding: 12px; border-bottom: 1px solid #1a1a1a; font-size: 14px; }
-        .label { color: #00ff88; font-weight: bold; width: 35%; }
-        .value { color: #ffffff; }
+        .info-table { width: 100%; border-collapse: collapse; margin-top: 25px; background: rgba(255,255,255,0.02); border-radius: 12px; overflow: hidden; }
+        .info-table td { padding: 15px; border-bottom: 1px solid #1a1a1a; font-size: 14px; }
+        .label { color: #00ff88; font-weight: bold; width: 35%; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+        .value { color: #ffffff; font-weight: 500; }
 
         .action-box { 
-            background: rgba(0, 255, 136, 0.05); border: 1px dashed #00ff88; 
-            padding: 25px; border-radius: 15px; margin-top: 25px; text-align: center;
+            background: linear-gradient(145deg, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 1)); 
+            border: 1px dashed #00ff88; 
+            padding: 30px; border-radius: 20px; margin-top: 30px; text-align: center;
         }
         
-        /* 🔥 NEW QUICK REPLY BUTTON */
         .reply-btn {
-            display: inline-block; padding: 12px 25px; background: #00ff88; 
+            display: inline-block; padding: 15px 30px; background: #00ff88; 
             color: #000000 !important; font-weight: 900; font-size: 14px; 
-            text-decoration: none; border-radius: 8px; text-transform: uppercase;
-            letter-spacing: 1px; box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-            margin-top: 15px;
+            text-decoration: none; border-radius: 10px; text-transform: uppercase;
+            letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
         }
 
-        .footer { background: #000000; padding: 20px; text-align: center; color: #444; font-size: 11px; }
+        .footer { background: #000000; padding: 25px; text-align: center; color: #64748b; font-size: 11px; line-height: 1.6; border-top: 1px solid #1a1a1a; }
+        .id-tag { color: #333; font-size: 9px; margin-top: 10px; }
     </style>
 </head>
 <body class="email-body">
@@ -885,7 +653,7 @@ const paymentFailAdminTemplate = (user, course, reason) => {
         <div class="header">🚨 INTERNAL ALERT: PAYMENT FAILURE</div>
         
         <div class="content">
-            <p style="font-size: 16px;">Bhai, ek user ka payment fail ho gaya hai. Sale close karne ke liye niche button pe click karke turant reply karein!</p>
+            <p style="font-size: 15px; line-height: 1.6; color: #e2e8f0;">Team, ek user ka payment attempt fail ho gaya hai. Sale recover karne ke liye turant reply karein!</p>
             
             <table class="info-table">
                 <tr>
@@ -901,184 +669,202 @@ const paymentFailAdminTemplate = (user, course, reason) => {
                     <td class="value">${course.title}</td>
                 </tr>
                 <tr>
-                    <td class="label">FAILURE REASON:</td>
-                    <td class="value" style="color: #ff3e3e;">${reason || "Technical Issue / Cancelled"}</td>
+                    <td class="label">REASON:</td>
+                    <td class="value" style="color: #ff3e3e; font-weight: bold;">${reason || "Technical Issue / Cancelled"}</td>
                 </tr>
             </table>
 
             <div class="action-box">
-                <p style="color: #00ff88; margin: 0; font-weight: bold;">DIRECT ACTION PANEL</p>
+                <p style="color: #00ff88; margin-bottom: 15px; font-weight: 800; font-size: 13px;">DIRECT ACTION PANEL</p>
                 
-                <!-- 🔥 Mailto Link: User ki email automatically bhar jayegi -->
-                <a href="mailto:${user.email}?subject=Regarding your interest in ${course.title}&body=Hi ${user.name}, humne dekha ki aapka payment fail ho gaya hai..." class="reply-btn">
-                   📧 SEND EMAIL TO USER
+                <a href="mailto:${user.email}?subject=Assistance Required: Regarding your interest in ${course.title}&body=Hi ${user.name}, we noticed your payment was incomplete for ${course.title}. Need any help?" class="reply-btn">
+                   📧 SEND RECOVERY EMAIL
                 </a>
                 
-                <p style="font-size: 12px; margin-top: 10px; color: #64748b;">one click mein user ko email compose karein.</p>
+                <p style="font-size: 12px; margin-top: 15px; color: #64748b;">Click karne par user ko seedha email compose ho jayega.</p>
+            </div>
+
+            <!-- Invisible unique bridge for Gmail -->
+            <div style="display:none; white-space:nowrap; font-size:0px; line-height:0px;">
+              Internal-Log-ID: ${alertId} | Time: ${timestamp}
             </div>
         </div>
 
         <div class="footer">
             BR30 TRADER AUTOMATED SYSTEM v2.5<br>
-            Security Division Alert System
+            Security & Support Division<br>
+            <div class="id-tag">
+                Log ID: ${alertId} | Generated at: ${timestamp}
+            </div>
         </div>
     </div>
 </body>
-</html>
-  `;
+</html>`;
 };
 
-// 👤 USER TEMPLATE (Payment Fail Help)
+// 👤 UPGRADED USER TEMPLATE (Payment Fail Help) v2.5
 const paymentFailUserTemplate = (user, course, reason) => {
+  // Gmail collapsing bypass & Tracking
+  const traceId = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
+
+  // WhatsApp pre-filled message encoding
+  const waMsg = encodeURIComponent(
+    `Hello Support Team, mera payment fail ho gaya hai for "${course.title}". Please help me! (Ref: ${traceId})`,
+  );
+
   return `
-   <!DOCTYPE html><html><head><meta charset="UTF-8"><style>
-.email-body { background-color: #000000; padding: 40px 20px; font-family: sans-serif; margin: 0; }
-.card { max-width: 600px; margin: auto; background: #050505; border-radius: 30px; border: 1px solid rgba(0, 255, 136, 0.4); overflow: hidden; box-shadow: 0 0 50px rgba(0, 255, 136, 0.15); }
-.banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
-.content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
-.alert-title { color: #ff3e3e !important; font-size: 22px; font-weight: 900; text-shadow: 0 0 15px rgba(255, 62, 62, 0.4); letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-.thanks-note { color: #00ff88 !important; font-size: 18px; font-weight: 700; margin-bottom: 10px; display: block; text-shadow: 0 0 5px rgba(0, 255, 136, 0.3); }
-.message-box { background: linear-gradient(145deg, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 1)); border-left: 5px solid #00ff88; padding: 25px; border-radius: 15px; box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.05); line-height: 1.8; color: #e2e8f0 !important; font-size: 16px; margin: 25px 0; }
-.support-btn { display: inline-block; padding: 15px 35px; background: #00ff88; color: #000000 !important; font-weight: 900; font-size: 16px; text-decoration: none; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); margin-top: 10px; }
-.footer { background: #000000; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
-.admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; text-shadow: 0 0 5px #00ff88; letter-spacing: 1px; }
+<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+  .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', sans-serif; margin: 0; }
+  .card { max-width: 600px; margin: auto; background: #050505; border-radius: 30px; border: 1px solid rgba(0, 255, 136, 0.4); overflow: hidden; box-shadow: 0 0 50px rgba(0, 255, 136, 0.15); }
+  .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
+  .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
+  .alert-title { color: #ff3e3e !important; font-size: 22px; font-weight: 900; text-shadow: 0 0 15px rgba(255, 62, 62, 0.4); letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+  .thanks-note { color: #00ff88 !important; font-size: 18px; font-weight: 700; margin-bottom: 10px; display: block; text-shadow: 0 0 5px rgba(0, 255, 136, 0.3); }
+  
+  .message-box { 
+    background: linear-gradient(145deg, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 1)); 
+    border-left: 5px solid #00ff88; padding: 25px; border-radius: 15px; 
+    line-height: 1.8; color: #e2e8f0 !important; font-size: 16px; margin: 25px 0; 
+  }
+  
+  .support-btn { 
+    display: inline-block; padding: 15px 35px; background: #00ff88; color: #000000 !important; 
+    font-weight: 900; font-size: 16px; text-decoration: none; border-radius: 12px; 
+    text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); margin-top: 10px; 
+  }
+  
+  .footer { background: #010101; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
+  .admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; text-shadow: 0 0 5px #00ff88; letter-spacing: 1px; }
 </style></head>
 
 <body class="email-body">
 <div class="card">
-
 <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official" class="banner">
 
 <div class="content">
-<span class="thanks-note">Hi ${user.name}, Thank you for your interest! 🚀</span>
-<h1 class="alert-title">⚠️ PAYMENT NOT COMPLETED</h1>
+  <span class="thanks-note">Hi ${user.name}, We're here to help! 🚀</span>
+  <h1 class="alert-title">⚠️ PAYMENT NOT COMPLETED</h1>
 
-<h3 style="color: #ffffff !important; font-size: 18px; margin-top: 20px; margin-bottom: 5px;">
-Important Order Status Update
-</h3>
+  <h3 style="color: #ffffff !important; font-size: 18px; margin-top: 20px; margin-bottom: 5px;">
+    Important Order Status Update
+  </h3>
 
-<div class="message-box">
-Sabse pehle, <b>${course.title}</b> mein interest dikhane ke liye bahut-bahut shukriya!
-Hum aapko apne saath dekhne ke liye excited hain.<br><br>
+  <div class="message-box">
+    Sabse pehle, <b>${course.title}</b> mein interest dikhane ke liye shukriya! 
+    Humne dekha ki aapka purchase process poora nahi ho paaya.<br><br>
 
-Lekin humne dekha ki aapka purchase process poora nahi ho paaya.
-Shayad network error ya bank server ki wajah se payment fail ho gaya hai.<br><br>
+    Shayad network issue ya bank server ki wajah se payment fail ho gaya hai.<br><br>
 
-<span style="color: #ff3e3e;">
-<b>Status:</b> ${reason || "Action Required"}
-</span><br><br>
+    <span style="color: #ff3e3e; font-weight: bold;">
+    <b>Status:</b> ${reason || "Action Required / Payment Pending"}
+    </span><br><br>
 
-Chinta mat kijiye! Humari support team aapki help ke liye taiyar hai taaki aapki learning na ruke.
-<b>Abhi contact kare niche diye gaye whatsapp Link pe...</b>
-</div>
+    Chinta mat kijiye! Humari support team aapki help ke liye taiyar hai taaki aapki learning na ruke.
+    <b>Abhi niche diye gaye button par click karke WhatsApp par judein:</b>
+  </div>
 
-<div style="text-align: center; margin-top: 30px;">
-<a href="https://wa.me/916200986380?text=Hello%20Support%20Team%2C%20mera%20payment%20fail%20ho%20gaya%20hai%2C%20please%20help%20kar%20dijiye." class="support-btn">
-TALK TO SUPPORT ON WHATSAPP
-</a>
-</div>
-
-<p style="color: #94a3b8 !important; font-size: 13px; text-align: center; margin-top: 35px; font-style: italic;">
-Humari team 24/7 aapki help ke liye available hai. ✅
-</p>
-</div>
-
-<!-- ✅ FOOTER START -->
-<div class="footer">
-
-<div style="color: #64748b; font-size: 13px; line-height: 1.6;">
-Regards,<br>
-<span class="admin-tag">BR30 Support Team</span><br>
-Official Support & Security Division
-</div>
-
-<p style="color: #b1a5a5; font-size: 10px; margin-top: 20px; font-style: italic;">
-🚫 <b>Note:</b> Auto-generated alert. Please <b>do not reply</b>.
-</p>
-
-<!-- SOCIAL LINKS -->
-<div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111;">
-<p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 15px;">
-JOIN OUR COMMUNITY 🚀
-</p>
-
-<a href="https://www.youtube.com" style="margin: 0 10px;">
-<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22">
-</a>
-
-<a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" style="margin: 0 10px;">
-<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22">
-</a>
-
-<a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="https://wa.me{waMsg}" class="support-btn">
+      TALK TO SUPPORT ON WHATSAPP
     </a>
+  </div>
 
-<a href="https://t.me/+F8mDhdfiGaI1NDY1" style="margin: 0 10px;">
-<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22">
-</a>
+  <p style="color: #94a3b8 !important; font-size: 13px; text-align: center; margin-top: 35px; font-style: italic;">
+    Humari team 24/7 aapki help ke liye available hai. ✅
+  </p>
 
-<a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" style="margin: 0 10px;">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22">
-</a>
+  <!-- Invisible trace bridge for Gmail -->
+  <div style="display:none; white-space:nowrap; font-size:0px; line-height:0px;">
+    Incident-Trace: ${traceId} | Sync-Stamp: ${timestamp}
+  </div>
 </div>
 
-<!-- 🔥 FINAL FOOTER (SOCIAL KE NICHE) -->
-<div style="margin-top:20px; color:#64748b; font-size:12px;">
-BR30 TRADER AUTOMATED SYSTEM v2.5<br>
-Security Division Alert System
-</div>
+<div class="footer">
+  <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
+    Regards,<br>
+    <span class="admin-tag">BR30 Support Team</span><br>
+    Official Support & Security Division
+  </div>
 
-</div>
-<!-- ✅ FOOTER END -->
+  <p style="color: #b1a5a5; font-size: 10px; margin-top: 20px; font-style: italic;">
+    🚫 <b>Note:</b> Alert logged at ${timestamp} (Ref: ${traceId}). Please <b>do not reply</b>.
+  </p>
 
+  <!-- SOCIAL LINKS -->
+  <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #1a1a1a;">
+    <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 15px;">
+      JOIN OUR COMMU&#8203;NITY 🚀
+    </p>
+
+    <a href="https://www.youtube.com" target="_blank" style="text-decoration:none; margin: 0 10px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22">
+    </a>
+    <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none; margin: 0 10px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22">
+    </a>
+    <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
+       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+    </a>
+    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none; margin: 0 10px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22">
+    </a>
+    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none; margin: 0 10px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22">
+    </a>
+  </div>
+
+  <div style="margin-top:20px; color:#64748b; font-size:10px;">
+    BR30 TRADER AUTOMATED SYSTEM v2.5<br>
+    Session ID: ${traceId} | Security Division
+  </div>
+</div>
 </div>
 </body></html>
   `;
 };
 
-// 💰 OFFER TEMPLATE (Normal users)
-const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
+// 💰 UPGRADED OFFER TEMPLATE v2.5
+const offerTemplate = ({
+  discountValue,
+  dynamicCoupon,
+  htmlContent,
+  userName = "Trader",
+}) => {
+  // Gmail collapsing bypass & Tracking
+  const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
+
   return `
  <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <style>
-        /* Cyber Neon Glow Upgrade */
-        .email-body { background-color: #000000; padding: 40px 20px; font-family: sans-serif; margin: 0; }
-        
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { 
             max-width: 600px; margin: auto; background: #050505; border-radius: 30px; 
             border: 1px solid rgba(0, 255, 136, 0.4); overflow: hidden; 
             box-shadow: 0 0 50px rgba(0, 255, 136, 0.15); 
         }
-
         .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
         .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
-
         .alert-title { 
             color: #00ff88 !important; font-size: 26px; font-weight: 900; 
             text-shadow: 0 0 15px rgba(0, 255, 136, 0.6); 
             letter-spacing: 3px; text-transform: uppercase; margin: 0;
         }
-
-        /* 🏷️ DYNAMIC DISCOUNT BOX */
         .discount-box { 
             background: linear-gradient(145deg, rgba(0,255,136,0.08), rgba(0,0,0,1));
             border: 2px dashed #00ff88; padding: 30px; border-radius: 20px; 
             text-align: center; margin: 25px 0;
         }
-
         .coupon-code {
             background: #00ff88; color: #000000 !important; font-size: 32px; 
             font-weight: 900; padding: 10px 20px; border-radius: 12px;
             display: inline-block; margin: 15px 0; letter-spacing: 4px;
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
         }
-
         .login-btn {
             display: inline-block; padding: 15px 35px; background: #00ff88; 
             color: #000000 !important; font-weight: 900; font-size: 16px; 
@@ -1086,13 +872,8 @@ const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
             letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
             margin-top: 10px;
         }
-
-        .footer { background: #000000; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
-        
-        .admin-tag { 
-            color: #00ff88 !important; font-weight: 800; font-size: 16px; 
-            text-shadow: 0 0 5px #00ff88; letter-spacing: 1px;
-        }
+        .footer { background: #010101; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
+        .admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; letter-spacing: 1px; }
     </style>
 </head>
 <body class="email-body">
@@ -1103,7 +884,7 @@ const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
             <h1 class="alert-title">📢 SPECIAL OFFER</h1>
             
             <h3 style="color: #ffffff !important; font-size: 20px; margin-top: 25px; margin-bottom: 10px;">
-                Exclusive Trader Discount! 🚀
+                Hi ${userName}, Exclusive Trader Discount! 🚀
             </h3>
             
             <div class="discount-box">
@@ -1123,77 +904,73 @@ const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
             <div style="text-align: center; margin-top: 30px;">
                <a href="https://my-frontend-eight-roan.vercel.app/index.html#coursesection" class="login-btn">REDEEM & SAVE ${discountValue}%</a>
             </div>
-            
-            <p style="color: #94a3b8 !important; font-size: 14px; text-align: center; margin-top: 35px; font-style: italic;">
-                <b>Official Member:</b> Personalized Trading Offer Applied. ✅
-            </p>
+
+            <!-- Invisible trace bridge for Gmail -->
+            <div style="display:none; white-space:nowrap; font-size:0px; line-height:0px;">
+              Offer-Sync-ID: ${syncId} | Timestamp: ${timestamp}
+            </div>
         </div>
 
         <div class="footer">
             <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
                 Regards,<br>
                 <span class="admin-tag">BR30 Support Team</span><br>
-                Official Support & Security Division
+                Official Sales & Strategy Division
             </div>
 
-              <!-- No-reply Note -->
             <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
-                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
+                🚫 <b>OFFICIAL NOTE:</b> Personalized offer dispatched at ${timestamp} (Ref: ${syncId})
             </p>
 
             <!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
-
-               <!-- YouTube -->
-    <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Facebook -->
-  <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
+            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
+                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
+                    JOIN OUR COMMU&#8203;NITY 🚀
+                </p>
+                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+                </a>
+                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
+                </a>
+            </div>
             
-            <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
-                EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
+            <div style="margin-top: 15px; font-size: 10px; color: #64748b; letter-spacing: 1px; text-align: center;">
+                SECURE BATCH ID: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
             </div>
         </div>
     </div>
 </body>
-</html>
-  `;
+</html>`;
 };
 
-// 💎 VIP TEMPLATE
-const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
+// 💎 UPGRADED VIP TEMPLATE v2.5
+const vipTemplate = ({
+  discountValue,
+  dynamicCoupon,
+  htmlContent,
+  userName = "VIP Trader",
+}) => {
+  // Gmail collapsing bypass logic
+  const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
+
   return `
   <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000; padding: 40px 20px; font-family: sans-serif; margin: 0; }
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { max-width: 600px; margin: auto; background: #050505; border-radius: 30px; border: 2px solid #00ff88; overflow: hidden; box-shadow: 0 0 50px rgba(0, 255, 136, 0.2); }
         .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
         .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
@@ -1214,7 +991,7 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
             margin-top: 10px;
         }
 
-        .footer { background: #000000; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
+        .footer { background: #010101; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
         .admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; text-shadow: 0 0 5px #00ff88; }
     </style>
 </head>
@@ -1230,7 +1007,7 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
             </h3>
             
             <div class="vip-box">
-                Hi VIP Trader, aap hamari premium community ke top member hain. Aapke liye ek naya **Course/Update** live ho gaya hai!<br><br>
+                Hi <b>${userName}</b>, aap hamari premium community ke top member hain. Aapke liye ek naya **Course/Update** live ho gaya hai!<br><br>
                 <span style="color: #00ff88; font-weight: bold;">
                     📣 Update: ${htmlContent || "Naya exclusive strategy video upload ho gaya hai. Abhi check karein!"}
                 </span>
@@ -1240,7 +1017,6 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
             </p>
 
             <div style="text-align: center; margin-top: 20px;">
-             <!-- Dashboard par bhejo taaki wo naya course dekh sake -->
               <a href="https://t.me/+F8mDhdfiGaI1NDY1/+hBAT4kWo63A4ZWY1" class="telegram-btn">CHECK NEW UPDATE NOW</a>
              </div>
 
@@ -1251,6 +1027,11 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
             <p style="color: #94a3b8 !important; font-size: 13px; text-align: center; margin-top: 40px; font-style: italic;">
                 <b>Exclusive Access:</b> VIP Benefits Active for your Account. ✅
             </p>
+
+            <!-- Invisible trace bridge for Gmail -->
+            <div style="display:none; white-space:nowrap; font-size:0px; line-height:0px;">
+              Protocol-Sync: ${syncId} | Time: ${timestamp}
+            </div>
         </div>
 
         <div class="footer">
@@ -1260,134 +1041,131 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent }) => {
                 VIP Support & Strategy Division
             </div>
 
-              <!-- No-reply Note -->
             <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
-                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
+                🚫 <b>OFFICIAL NOTE:</b> Broadcasted at ${timestamp} (Ref: ${syncId})
             </p>
 
-
-            <!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
-             <!-- YouTube -->
-    <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Facebook -->
- <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
-            
-            <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
-                EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
+            <!-- 🚀 Social Links (UNCHANGED) -->
+            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
+                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
+                    JOIN OUR COMMU&#8203;NITY 🚀
+                </p>
+                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+                </a>
+                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
+                </a>
             </div>
-        </div>
-    </div>
-</body>
-</html>
-  `;
-};
-
-// Official email templet
-const getAnnouncementHTML = (subject, message) => {
-  return `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        .email-body { background-color: #000000; padding: 40px 20px; font-family: sans-serif; margin: 0; }
-        .card { max-width: 600px; margin: auto; background: #0a0a0a; border-radius: 30px; border: 2px solid #00ff88; overflow: hidden; box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
-        .banner { width: 100%; height: auto; display: block; border-bottom: 3px solid #00ff88; }
-        .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
-        .alert-title { color: #00ff88 !important; font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
-        .message-box { background: rgba(0, 255, 136, 0.03); border-left: 5px solid #00ff88; padding: 25px; border-radius: 12px; line-height: 1.8; color: #e2e8f0 !important; font-size: 16px; margin: 25px 0; }
-        .footer { background: #000000; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
-        .admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; }
-    </style>
-</head>
-<body class="email-body">
-    <div class="card">
-        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official Alert" class="banner">
-        <div class="content">
-            <h1 class="alert-title">📢 OFFICIAL ANNOUNCEMENT</h1>
-            <h3 style="color: #ffffff !important; font-size: 20px; margin-top: 25px;">${subject}</h3>
-            <div class="message-box">${message}</div>
-        </div>
-        <div class="footer">
-            <div style="color: #64748b; font-size: 13px;">
-                Regards,<br>
-                <span class="admin-tag">Mukesh Raj(MASTER ADMIN)</span><br>
-                BR30ᴛʀᴀᴅᴇʀ Professional Services
-            </div>
-
-                        <!-- No-reply Note -->
-            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
-                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
-            </p>
-
-            <!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
             
-           <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- Facebook -->
-   <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
-            
-            <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
-                EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
+            <div style="margin-top: 10px; font-size: 10px; color: #64748b; letter-spacing: 1px; text-align: center;">
+                SECURE VIP NODE: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
             </div>
         </div>
     </div>
 </body>
 </html>`;
 };
+
+// 📢 UPGRADED OFFICIAL ANNOUNCEMENT TEMPLATE v2.5
+const getAnnouncementHTML = (subject, message) => {
+  // Gmail collapsing bypass & Security tracking
+  const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const timestamp = new Date().toLocaleString("en-IN");
+
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .card { max-width: 600px; margin: auto; background: #0a0a0a; border-radius: 30px; border: 2px solid #00ff88; overflow: hidden; box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
+        .banner { width: 100%; height: auto; display: block; border-bottom: 3px solid #00ff88; }
+        .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
+        .alert-title { color: #00ff88 !important; font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin: 0; text-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+        
+        .message-box { 
+            background: linear-gradient(145deg, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 1));
+            border-left: 5px solid #00ff88; padding: 25px; border-radius: 12px; 
+            line-height: 1.8; color: #e2e8f0 !important; font-size: 16px; margin: 25px 0; 
+        }
+
+        .footer { background: #010101; padding: 35px; text-align: center; border-top: 1px solid #1a1a1a; }
+        .admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; letter-spacing: 1px; }
+    </style>
+</head>
+<body class="email-body">
+    <div class="card">
+        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official Alert" class="banner">
+        
+        <div class="content">
+            <h1 class="alert-title">📢 OFFICIAL ANNOUNCEMENT</h1>
+            <h3 style="color: #ffffff !important; font-size: 20px; margin-top: 25px; border-bottom: 1px solid #1a1a1a; padding-bottom: 10px;">
+                ${subject}
+            </h3>
+            
+            <div class="message-box">
+                ${message}
+            </div>
+
+            <!-- Invisible unique trace for Gmail -->
+            <div style="display:none; white-space:nowrap; font-size:0px; line-height:0px;">
+              Broadcast-ID: ${syncId} | Global-Sync: ${timestamp}
+            </div>
+        </div>
+
+        <div class="footer">
+            <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
+                Regards,<br>
+                <span class="admin-tag">Mukesh Raj (MASTER ADMIN)</span><br>
+                BR30ᴛʀᴀᴅᴇʀ Professional Services
+            </div>
+
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>OFFICIAL NOTE:</b> Dispatched at ${timestamp} (Ref: ${syncId})
+            </p>
+
+            <!-- 🚀 Social Links -->
+            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
+                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
+                    JOIN OUR COMMU&#8203;NITY 🚀
+                </p>
+                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
+                </a>
+                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
+                </a>
+                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
+                </a>
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 10px; color: #64748b; letter-spacing: 1px; text-align: center;">
+                SYSTEM NODE: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+};
+
 module.exports = {
   sendEmail,
   sendVipCertEmail,

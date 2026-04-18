@@ -1,9 +1,10 @@
 //#region Review Routes
-// Ye routes humare reviews ke liye hain. Isme hum review add karna, top reviews dekhna, aur admin ke liye review manage karne ke routes banayenge. 
+// Ye routes humare reviews ke liye hain. Isme hum review add karna, top reviews dekhna, aur admin ke liye review manage karne ke routes banayenge.
 // Jab bhi koi user course complete karega, toh uska review yahan se add hoke database me save hoga, aur future me wo review top reviews me dikhai dega.
 const express = require("express");
 const router = express.Router();
-const reviewController = require("../controllers/reviewController");
+const reviewController,
+  handleAutoReply = require("../controllers/reviewController");
 
 // --- User Routes (Pehle se jo hain) ---
 router.post("/add", reviewController.postReview);
@@ -23,5 +24,7 @@ router.patch("/status/:id", reviewController.toggleReviewStatus);
 // 4. Review ko permanent delete karne ke liye
 router.delete("/delete/:id", reviewController.deleteReview);
 
+// auto replay review
+router.post("/auto-reply", handleAutoReply);
 module.exports = router;
 //#endregion
