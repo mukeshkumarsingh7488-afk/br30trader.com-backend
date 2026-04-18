@@ -1,7 +1,7 @@
 //#region Imports
 const Review = require("../models/Review");
 const User = require("../models/User");
-const { generateReply } = require("../utils/reviewReply");
+const { generateSmartReply } = require("../utils/reviewReply");
 //#endregion
 
 //#region POST REVIEW (Show Web Page)
