@@ -2238,7 +2238,8 @@ async function run() {
     status: () => ({ json: (data) => console.log("ERROR", data) }),
   };
 
-  await handleAutoReply(req, res);
+  // ✅ yahi main fix hai
+  await reviewController.handleAutoReply(req, res);
 }
 
 run();
