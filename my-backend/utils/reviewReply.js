@@ -1,5 +1,10 @@
 // germet review replay
-function generateSmartReply({ username = "", rating, comment }) {
+function generateSmartReply({
+  username = "",
+  rating,
+  comment,
+  customReply = "",
+}) {
   const text = comment.toLowerCase(); // ✅ yaha fix
 
   const positiveWords = [
