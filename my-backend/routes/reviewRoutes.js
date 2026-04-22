@@ -25,5 +25,15 @@ router.delete("/delete/:id", reviewController.deleteReview);
 
 // auto replay review
 router.post("/auto-reply", reviewController.handleAutoReply);
+
+// review count inline top review
+exports.getTotalReviewCount = async (req, res) => {
+  try {
+    const totalCount = await Review.countDocuments();
+    res.status(200).json({ success: true, count: totalCount });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
 module.exports = router;
 //#endregion

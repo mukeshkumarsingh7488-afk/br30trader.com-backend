@@ -10,32 +10,44 @@ exports.postReview = async (req, res) => {
   try {
     const { rating, comment, userId } = req.body;
 
-    // Check if user already reviewed
+    // 1. Check if user already reviewed
     const existingReview = await Review.findOne({ userId: userId });
     if (existingReview) {
       return res
         .status(400)
-        .json({ message: "Bhai, aap pehle hi review de chuke ho!" });
+        .json({ message: "You have already submitted a review!" });
     }
 
-    // User ki details nikal lo (Name ke liye)
+    // 2. User ki details nikal lo
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User nahi mila!" });
 
     const newReview = new Review({
       userId,
-      username: user.name, // Humesha latest name lo
+      username: user.name,
       rating,
       comment,
-      // ProfilePic yahan save karne ki zaroorat nahi, populate se aayegi
     });
 
     await newReview.save();
-    res.status(201).json({ message: "Review Saved Successfully! ✅" });
+
+    // 🔥 3. Naya Count nikal kar sabhi users ko bhej do (Real-time)
+    const updatedCount = await Review.countDocuments();
+
+    // Check karo agar 'io' accessible hai (usually global ya req.app.get se)
+    if (req.app.get("socketio")) {
+      req.app.get("socketio").emit("updateReviewCount", updatedCount);
+    }
+
+    res.status(201).json({
+      message: "Review Saved Successfully! ✅",
+      totalCount: updatedCount, // Saath mein count bhi bhej rahe hain
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 //#endregion
 
 //#region GET USER REVIEWS (User ke apne reviews dekhne ke liye)
@@ -44,30 +56,24 @@ exports.postReview = async (req, res) => {
 // ==========================================
 exports.getTopReviews = async (req, res) => {
   try {
+    // 1. पेहले टोटल काउंट निकाल लो (बिना किसी फ़िल्टर के)
+    const totalReviewCount = await Review.countDocuments();
+
     const reviews = await Review.aggregate([
       {
-        // 1. Sirf approved ya purane reviews uthao
         $match: {
           $or: [{ status: "approved" }, { status: { $exists: false } }],
         },
       },
+      { $sort: { createdAt: -1 } },
       {
-        // 2. Date ke hisab se sort karo taaki naye wale upar rahein
-        $sort: { createdAt: -1 },
-      },
-      {
-        // 3. GROUP BY Username: Har unique naam ka sirf pehla (latest) review uthao
         $group: {
           _id: "$username",
           latestReview: { $first: "$$ROOT" },
         },
       },
+      { $replaceRoot: { newRoot: "$latestReview" } },
       {
-        // 4. Data ko wapas normal format mein lao
-        $replaceRoot: { newRoot: "$latestReview" },
-      },
-      {
-        // 5. User details populate karne ke liye (Real users ke liye)
         $lookup: {
           from: "users",
           localField: "userId",
@@ -75,17 +81,16 @@ exports.getTopReviews = async (req, res) => {
           as: "userId",
         },
       },
-      {
-        // 6. UserId array ko object mein badlo
-        $unwind: { path: "$userId", preserveNullAndEmptyArrays: true },
-      },
-      {
-        // 7. Final sorting taaki latest unique reviews sabse upar dikhen
-        $sort: { createdAt: -1 },
-      },
+      { $unwind: { path: "$userId", preserveNullAndEmptyArrays: true } },
+      { $sort: { createdAt: -1 } },
     ]);
 
-    res.status(200).json(reviews);
+    // 🔥 यहाँ बदलाव है: डेटा और काउंट दोनों साथ भेजो
+    res.status(200).json({
+      success: true,
+      totalCount: totalReviewCount, // यह रहा आपका DB का टोटल काउंट
+      reviews: reviews, // यह रही आपकी रिव्यूज की लिस्ट
+    });
   } catch (err) {
     console.error("Aggregation Error:", err);
     res.status(500).json({ error: err.message });
