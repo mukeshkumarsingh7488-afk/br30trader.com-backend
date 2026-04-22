@@ -56,24 +56,17 @@ exports.postReview = async (req, res) => {
 // ==========================================
 exports.getTopReviews = async (req, res) => {
   try {
-    // 1. पेहले टोटल काउंट निकाल लो (बिना किसी फ़िल्टर के)
     const totalReviewCount = await Review.countDocuments();
 
     const reviews = await Review.aggregate([
       {
+        // 1. Filter Approved Reviews
         $match: {
           $or: [{ status: "approved" }, { status: { $exists: false } }],
         },
       },
-      { $sort: { createdAt: -1 } },
       {
-        $group: {
-          _id: "$username",
-          latestReview: { $first: "$$ROOT" },
-        },
-      },
-      { $replaceRoot: { newRoot: "$latestReview" } },
-      {
+        // 2. Lookup Users (for photos)
         $lookup: {
           from: "users",
           localField: "userId",
@@ -82,14 +75,17 @@ exports.getTopReviews = async (req, res) => {
         },
       },
       { $unwind: { path: "$userId", preserveNullAndEmptyArrays: true } },
-      { $sort: { createdAt: -1 } },
+      {
+        // 3. Sort by Newest First
+        $sort: { createdAt: -1 },
+      },
+      // 🔥 GROUPING HATA DI HAI TAAKI SAARE REVIEWS DIKHEN
     ]);
 
-    // 🔥 यहाँ बदलाव है: डेटा और काउंट दोनों साथ भेजो
     res.status(200).json({
       success: true,
-      totalCount: totalReviewCount, // यह रहा आपका DB का टोटल काउंट
-      reviews: reviews, // यह रही आपकी रिव्यूज की लिस्ट
+      totalCount: totalReviewCount,
+      reviews: reviews,
     });
   } catch (err) {
     console.error("Aggregation Error:", err);
