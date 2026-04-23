@@ -360,7 +360,6 @@ router.post("/claim-certificate", auth, async (req, res) => {
         name: fullName,
         certId: certId,
         course: courseName,
-        date: new Date(),
         fileName: result.fileName,
       });
       await newCert.save();
