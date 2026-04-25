@@ -1,7 +1,4 @@
-//#region Auth Routes
-// Ye routes humare authentication aur user management ke liye hain. Isme hum registration, login, password reset, profile update, aur admin ke liye kuch special routes banayenge.
-// Jab bhi koi user register ya login karega, toh uska data yahan se process hoke database me save hoga, aur JWT token generate hoke user ko diya jayega.
-// Admin ke liye bhi kuch special routes honge jisse wo users ko block/unblock kar sake, VIP status de sake, aur marketing emails bhej sake.
+//#region ━━━━━ 🚀 WELCOME DEVELOPER | SYSTEM INITIALIZED ━━━━━
 const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
@@ -49,8 +46,7 @@ router.post("/reset-password", resetPassword);
 // 🏷️ COUPON & DISCOUNT ROUTES (Auto Expiry & Tracking)
 // ==========================================
 
-// 1. Latest Active Coupon Load karna (Frontend Countdown ke liye)
-// --- ⏳ UPDATED: Latest Coupon with Active Check & Expiry ---
+// 1. ⏱️ LOAD ACTIVE COUPON | LOGIC: FETCHING LATEST OFFERS FOR FRONTEND COUNTDOWN
 router.get("/latest-coupon", async (req, res) => {
   try {
     const Coupon = require("../models/Coupon");
@@ -103,26 +99,26 @@ router.get("/latest-coupon", async (req, res) => {
 // 🔐 PRIVATE ROUTES (Sirf Logged-in Users ke liye)
 // ==========================================
 
-// Profile data lene ke liye
+// 2. 👤 FETCH USER DATA | LOGIC: RETRIEVING FULL PROFILE DATA FOR DASHBOARD SYNC
 router.get("/me", auth, getProfile);
 
-// Name EDIT aur PHOTO UPLOAD dono isi EK route se honge
+// 3. 🔄 MULTI-PART PROFILE UPDATE | LOGIC: SYNCING NAME EDIT & PHOTO UPLOAD IN A SINGLE ROUTE
 router.put("/update-profile", auth, upload.single("profilePic"), updateProfile);
 
-// Razorpay Order Create karna (Isme 'auth' zaruri hai)
+// 4. 💳 CREATE RAZORPAY ORDER | LOGIC: INITIATING SECURE TRANSACTION VIA AUTH SESSION
 router.post("/create-order", auth, paymentController.createOrder);
 
 // ==========================================
 // 👨‍✈️ ADMIN ONLY ROUTES (Sirf Admin control kar sakta hai)
 // ==========================================
 
-// 1. Bulk Email bhejke Coupon generate karna
+// 5. 📧 BULK COUPON DISPATCH | LOGIC: GENERATING PROMO CODES & BROADCASTING VIA EMAIL
 router.post("/send-offers", auth, userController.sendMarketingMail);
 
-// 2. Dashboard Stats (Total, VIP, Normal Users)
+// 6. 📊 FETCH DASHBOARD ANALYTICS | LOGIC: AGGREGATING TOTAL, VIP, AND STANDARD USER METRICS
 router.get("/user-stats", auth, userController.getUserStats);
 
-// 3. 🚫 Active Coupon ko Manually CANCEL karna (New Feature)
+// 7. 🚫 TERMINATE ACTIVE COUPON | LOGIC: MANUALLY REVOKING LIVE PROMOTIONAL OFFERS
 router.post("/cancel-coupon", auth, async (req, res) => {
   try {
     const Coupon = require("../models/Coupon");
@@ -145,7 +141,7 @@ router.post("/cancel-coupon", auth, async (req, res) => {
   }
 });
 
-// 📋 1. GET ALL USERS (Full Merged: Users + VIP + Block + Certificate)
+// 8. 📂 FETCH MERGED USER DIRECTORY | LOGIC: AGGREGATING PROFILES, VIP STATUS, BLOCK HISTORY & CERTIFICATES
 router.get("/all-users", auth, async (req, res) => {
   try {
     const User = require("../models/User");
@@ -190,7 +186,7 @@ router.get("/all-users", auth, async (req, res) => {
   }
 });
 
-// 🔄 2. VIP Status Toggle
+// 9. 💎 VIP STATUS TOGGLE | LOGIC: INSTANT MEMBERSHIP TIER SWITCHING (STANDARD ↔ VIP)
 router.put("/update-vip/:id", auth, async (req, res) => {
   try {
     const User = require("../models/User");
@@ -209,7 +205,7 @@ router.put("/update-vip/:id", auth, async (req, res) => {
   }
 });
 
-// 🗑️ 3. Delete User
+// 10. 🗑️ PERMANENT USER DELETION | LOGIC: TERMINATING ACCOUNT & WIPING ASSOCIATED DATA
 router.delete("/delete-user/:id", auth, async (req, res) => {
   try {
     const User = require("../models/User");
@@ -222,7 +218,7 @@ router.delete("/delete-user/:id", auth, async (req, res) => {
   }
 });
 
-// 🚫 4. Block/Unblock Toggle (SINGLE ROUTE)
+// 11. 🚫 BLOCK/UNBLOCK TOGGLE | LOGIC: MANAGING USER ACCESS VIA SINGLE SECURE ROUTE
 router.put("/block-user/:id", auth, async (req, res) => {
   try {
     const User = require("../models/User");
@@ -245,8 +241,7 @@ router.put("/block-user/:id", auth, async (req, res) => {
   }
 });
 
-// 💰 1. Saari Sales ki History mangwana (Admin Only)
-// 💰 ADMIN SALES HISTORY: Calendar Range & Best Seller Logic
+// 12. 💰 ADMIN SALES HISTORY | LOGIC: CALENDAR RANGE FILTERING & BEST SELLER ANALYTICS
 router.get("/sales-history", auth, async (req, res) => {
   try {
     const Order = require("../models/Order");
@@ -300,7 +295,7 @@ router.get("/sales-history", auth, async (req, res) => {
   }
 });
 
-// 🎓 GENERATE CERTIFICATE (Final Updated: Single File + ID Based Matching)
+// 13. 🎓 GENERATE CERTIFICATE | LOGIC: ID-BASED DATA MATCHING & DYNAMIC PDF ISSUANCE
 router.post("/claim-certificate", auth, async (req, res) => {
   try {
     // 👤 1. User ka data database se nikalo
@@ -402,7 +397,7 @@ router.post("/claim-certificate", auth, async (req, res) => {
   }
 });
 
-// 🔍 2. VERIFY CERTIFICATE (Certificate Model se dhoondo)
+// 14. 🔍 VERIFY CERTIFICATE | LOGIC: AUTHENTICATING CREDENTIALS VIA CERTIFICATE MODEL
 router.get("/verify-certificate/:id", async (req, res) => {
   try {
     const certId = req.params.id;
@@ -426,6 +421,9 @@ router.get("/verify-certificate/:id", async (req, res) => {
   }
 });
 
-// ✅ ये लाइन हमेशा सबसे नीचे होनी चाहिए
 module.exports = router;
 //#endregion
+// ==========================================
+// ✅ AUTH & USER ROUTES ORGANIZED.
+// 🚀 Ready for Production!
+// ==========================================

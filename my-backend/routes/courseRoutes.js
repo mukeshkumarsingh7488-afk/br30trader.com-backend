@@ -1,5 +1,4 @@
-//#region Course Routes
-
+//#region ━━━━━ 🚀 WELCOME DEVELOPER | SYSTEM INITIALIZED ━━━━━
 const express = require("express");
 const router = express.Router();
 
@@ -7,7 +6,7 @@ const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 
 // ✅ ONLY CLOUDINARY
-const uploadCloud = require('../middleware/multerCloudinary');
+const uploadCloud = require("../middleware/multerCloudinary");
 
 const {
   createCourse,
@@ -20,7 +19,6 @@ const {
   updateCourse,
   deleteCourse,
 } = require("../controllers/courseController");
-
 
 // 1. Leaderboard
 router.get("/leaderboard", getLeaderboard);
@@ -46,12 +44,15 @@ router.put(
   auth,
   admin,
   uploadCloud.single("thumbnail"),
-  updateCourse
+  updateCourse,
 );
 
 // 🗑️ 9. DELETE COURSE
 router.delete("/delete-course/:id", auth, admin, deleteCourse);
 
 module.exports = router;
-
 //#endregion
+// ==========================================
+// ✅ COURSE ROUTES ORGANIZED.
+// 🚀 Ready for Production!
+// ==========================================

@@ -1,6 +1,4 @@
-//#region Course Model
-// Ye model humare courses ke liye hai. Isme hum course ka title, description, price, thumbnail, instructor, aur videos store karenge. 
-// Jab bhi koi course create hoga, toh iska record yahan save ho jayega, taki hum future me usko access kar sakein.
+//#region ━━━━━ 🚀 WELCOME DEVELOPER | COURSE MODEL INITIALIZED ━━━━━
 const mongoose = require("mongoose");
 
 const courseSchema = new mongoose.Schema(
@@ -27,3 +25,8 @@ const courseSchema = new mongoose.Schema(
 const Course = mongoose.model("Course", courseSchema);
 module.exports = Course;
 //#endregion
+// ==========================================================================
+// ✅ MODEL STATUS: COURSE SCHEMA ORGANIZED & VALIDATED.
+// 🎬 CONTENT: VIDEO MAPPING & ASSET INTEGRITY CHECKS ACTIVE.
+// 🚀 DEPLOYMENT: READY FOR DYNAMIC CONTENT DELIVERY!
+// ==========================================================================

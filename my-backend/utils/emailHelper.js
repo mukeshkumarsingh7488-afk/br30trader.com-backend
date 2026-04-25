@@ -1,4 +1,4 @@
-//#region EMAIL HELPER (VIP CERTIFICATE)
+//#region ━━━━━ 🚀 WELCOME DEVELOPER | SYSTEM INITIALIZED ━━━━━
 const { Resend } = require("resend");
 const fs = require("fs"); // File read karne ke liye
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -57,7 +57,7 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
 </head>
 <body class="email-body">
 <div class="card">
-    <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" class="banner">
+    <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" class="banner">
     <div class="content">
         <h1 class="title">💎 VIP CERTIFICATE UNLOCKED</h1>
         <h3 style="margin-top:25px; color:#fff;">Priority Member Alert 🚀</h3>
@@ -168,7 +168,7 @@ const welcomeTemplate = (user, coupon) => {
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official" class="banner">
+        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
         <div class="content">
             <h1 class="alert-title">📢 ACCESS GRANTED</h1>
             <h3 style="color: #ffffff !important; font-size: 20px; margin-top: 25px; margin-bottom: 10px;">
@@ -306,7 +306,7 @@ const otpTemplate = (name, otp, isMaster) => {
     </style></head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/chKP57C1/gold-burner-jpg.jpg" alt="Admin Access" class="banner">
+        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="Admin Access" class="banner">
         <div class="content">
             <div style="color: #d4af37; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">👑 Master Admin Auth</div>
             <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6; margin-top: 15px;">
@@ -417,7 +417,7 @@ const forgotOtpTemplate = (name, otp, isMaster) => {
 <body class="email-body">
     <div class="card">
         <!-- Security Banner -->
-        <img src="https://i.ibb.co/ns0Ww0gg/red-burner-jpg.jpg" alt="Security Lockdown" class="banner">
+        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="Security Lockdown" class="banner">
         
         <div class="content">
             <div style="color: #ff4d4d; font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">
@@ -538,7 +538,7 @@ const purchaseTemplate = (name, courseName) => {
 
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official" class="banner">
+        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
 
         <div class="content">
             <h1 class="alert-title">💎 VIP ACCESS UNLOCKED🚀</h1>
@@ -740,7 +740,7 @@ const paymentFailUserTemplate = (user, course, reason) => {
 
 <body class="email-body">
 <div class="card">
-<img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official" class="banner">
+<img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
 
 <div class="content">
   <span class="thanks-note">Hi ${user.name}, We're here to help! 🚀</span>
@@ -878,7 +878,7 @@ const offerTemplate = ({
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official" class="banner">
+        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
         
         <div class="content">
             <h1 class="alert-title">📢 SPECIAL OFFER</h1>
@@ -997,7 +997,7 @@ const vipTemplate = ({
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 VIP Official" class="banner">
+        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 VIP Official" class="banner">
         
         <div class="content">
             <h1 class="alert-title">💎 VIP PRIVATE UPDATE</h1>
@@ -1106,7 +1106,7 @@ const getAnnouncementHTML = (subject, message) => {
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/wZS4wvv1/Green-burner-jpg.jpg" alt="BR30 Official Alert" class="banner">
+        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official Alert" class="banner">
         
         <div class="content">
             <h1 class="alert-title">📢 OFFICIAL ANNOUNCEMENT</h1>
@@ -1180,3 +1180,7 @@ module.exports = {
   getAnnouncementHTML,
 };
 //#endregion
+// ==========================================================================
+// ✅ UTILS STATUS: EMAIL TEMPLATES ORGANIZED & VALIDATED.
+// 🚀 DISPATCH SYSTEM: READY FOR PRODUCTION DELIVERY!
+// ==========================================================================

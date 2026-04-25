@@ -1,13 +1,13 @@
-//#region Admin Email Route
+//#region ━━━━━ 🚀 WELCOME DEVELOPER | SYSTEM INITIALIZED ━━━━━
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const fs = require("fs");
 const path = require("path");
-const auth = require("../middleware/auth"); // Tera auth middleware yahan hai
+const auth = require("../middleware/auth");
 const { sendEmail, getAnnouncementHTML } = require("../utils/emailHelper");
 
-// 🚀 YE RAHA TERA ROUTE (Bina kisi galti ke)
+//  📢 OFFICIAL ANNOUNCEMENT EMAIL | LOGIC: DISPATCHING GLOBAL UPDATES TO ALL USERS
 router.post("/send-all-email", auth, async (req, res) => {
   const { subject, message } = req.body;
 
@@ -48,3 +48,8 @@ router.post("/send-all-email", auth, async (req, res) => {
 
 module.exports = router;
 //#endregion
+// ==========================================================================
+// ✅ BROADCAST STATUS: ANNOUNCEMENT SYSTEM ORGANIZED & REFACTORED.
+// 📢 DISPATCH: GLOBAL COMMUNICATION CHANNELS READY.
+// 🚀 DEPLOYMENT: READY FOR PRODUCTION BROADCAST!
+// ==========================================================================
