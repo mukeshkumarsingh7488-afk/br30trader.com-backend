@@ -256,7 +256,7 @@ exports.updateProfile = async (req, res) => {
         id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
-        profilePic: updatedUser.profilePic, // Pura URL jayega frontend ko
+        profilePic: updatedUser.profilePic,
       },
     });
   } catch (err) {
