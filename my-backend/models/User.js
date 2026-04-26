@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
 
     badge: {
       type: String,
-      enum: ["normal", "vip", false],
+      enum: ["normal", "vip"],
       default: "normal",
     },
     isVip: {
