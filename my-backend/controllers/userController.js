@@ -1,4 +1,5 @@
 //#region ━━━━━ 🚀 WELCOME DEVELOPER | USER SYSTEM INITIALIZED ━━━━━
+const axios = require("axios");
 const User = require("../models/User");
 const Coupon = require("../models/Coupon");
 const {

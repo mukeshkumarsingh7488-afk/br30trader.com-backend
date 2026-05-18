@@ -1,5 +1,5 @@
 //#region ━━━━━ 🚀 WELCOME DEVELOPER | AUTH CONTROLLER INITIALIZED ━━━━━
-
+const axios = require("axios");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

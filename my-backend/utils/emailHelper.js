@@ -1,4 +1,5 @@
 //#region ━━━━━ 🚀 WELCOME DEVELOPER | SYSTEM INITIALIZED ━━━━━
+const axios = require("axios");
 const { Resend } = require("resend");
 const fs = require("fs"); // File read karne ke liye
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -6,21 +7,55 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 /* ---------------- SEND EMAIL CORE ---------------- */
 const sendEmail = async (options) => {
   try {
-    // 🔥 FIX 1: 'to' ki jagah 'options.to' use karo console mein
-    console.log(`📧 Sending email TO: ${options.to}`);
-    console.log("Resend API Trigger ho raha hai...");
+    if (!process.env.BREVO_EMAIL || !process.env.BREVO_SMTP_KEY) {
+      throw new Error("Brevo configuration missing");
+    }
 
-    const data = await resend.emails.send({
-      from: "onboarding@resend.dev", // Jab tak domain verify na ho, yahi rehne do
-      to: options.to, // 🔥 FIX 2: 'options.email' ko 'options.to' karo
-      subject: options.subject,
-      html: options.html, // 🔥 FIX 3: 'options.message' ko 'options.html' karo
-    });
+    const targetEmail = options?.to || options?.email;
 
-    console.log("Email Sent Success:", data);
-    return data;
+    if (!targetEmail) {
+      throw new Error("Recipient email is required");
+    }
+
+    const emailHtmlContent = options?.html || options?.message || "";
+
+    console.log(`📧 Dispatching Live BR30Trader Brevo API TO: ${targetEmail}`);
+
+    const brevoResponse = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "BR30 Trader Platform",
+          email: process.env.BREVO_EMAIL.trim(),
+        },
+        to: [
+          {
+            email: targetEmail.trim(),
+          },
+        ],
+        subject: options?.subject || "No Subject",
+        htmlContent: emailHtmlContent,
+      },
+      {
+        headers: {
+          accept: "application/json",
+          "api-key": process.env.BREVO_SMTP_KEY.trim(),
+          "content-type": "application/json",
+        },
+      },
+    );
+
+    if (brevoResponse.status === 200 || brevoResponse.status === 201) {
+      console.log("✅ Dynamic Email Sent Successfully via Brevo API");
+      return brevoResponse.data;
+    }
+
+    throw new Error("Brevo API rejected the email request");
   } catch (error) {
-    console.error("Resend Error:", error);
+    console.error(
+      "❌ Live Brevo API Transaction Failed:",
+      error.response?.data || error.message,
+    );
     throw error;
   }
 };
@@ -57,7 +92,7 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
 </head>
 <body class="email-body">
 <div class="card">
-    <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" class="banner">
+    <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" class="banner">
     <div class="content">
         <h1 class="title">💎 VIP CERTIFICATE UNLOCKED</h1>
         <h3 style="margin-top:25px; color:#fff;">Priority Member Alert 🚀</h3>
@@ -168,7 +203,7 @@ const welcomeTemplate = (user, coupon) => {
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="BR30 Official" class="banner">
         <div class="content">
             <h1 class="alert-title">📢 ACCESS GRANTED</h1>
             <h3 style="color: #ffffff !important; font-size: 20px; margin-top: 25px; margin-bottom: 10px;">
@@ -306,7 +341,7 @@ const otpTemplate = (name, otp, isMaster) => {
     </style></head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="Admin Access" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="Admin Access" class="banner">
         <div class="content">
             <div style="color: #d4af37; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">👑 Master Admin Auth</div>
             <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6; margin-top: 15px;">
@@ -417,7 +452,7 @@ const forgotOtpTemplate = (name, otp, isMaster) => {
 <body class="email-body">
     <div class="card">
         <!-- Security Banner -->
-        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="Security Lockdown" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="Security Lockdown" class="banner">
         
         <div class="content">
             <div style="color: #ff4d4d; font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">
@@ -538,7 +573,7 @@ const purchaseTemplate = (name, courseName) => {
 
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="BR30 Official" class="banner">
 
         <div class="content">
             <h1 class="alert-title">💎 VIP ACCESS UNLOCKED🚀</h1>
@@ -740,7 +775,7 @@ const paymentFailUserTemplate = (user, course, reason) => {
 
 <body class="email-body">
 <div class="card">
-<img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
+<img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="BR30 Official" class="banner">
 
 <div class="content">
   <span class="thanks-note">Hi ${user.name}, We're here to help! 🚀</span>
@@ -878,7 +913,7 @@ const offerTemplate = ({
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="BR30 Official" class="banner">
         
         <div class="content">
             <h1 class="alert-title">📢 SPECIAL OFFER</h1>
@@ -997,7 +1032,7 @@ const vipTemplate = ({
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 VIP Official" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="BR30 VIP Official" class="banner">
         
         <div class="content">
             <h1 class="alert-title">💎 VIP PRIVATE UPDATE</h1>
@@ -1106,7 +1141,7 @@ const getAnnouncementHTML = (subject, message) => {
 </head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/tpJPw6YY/Green-burner.jpg" alt="BR30 Official Alert" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="BR30 Official Alert" class="banner">
         
         <div class="content">
             <h1 class="alert-title">📢 OFFICIAL ANNOUNCEMENT</h1>
