@@ -195,6 +195,85 @@ exports.handleAutoReply = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+// 9. 🧹 BULK HIDE / SHOW REVIEWS
+exports.bulkUpdateReviewStatus = async (req, res) => {
+  try {
+    const { ids, status } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ message: "Review IDs required!" });
+    }
+
+    if (!["approved", "hidden"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status!" });
+    }
+
+    const result = await Review.updateMany(
+      { _id: { $in: ids } },
+      { $set: { status } },
+    );
+
+    res.status(200).json({
+      message: `${result.modifiedCount} reviews ${status} ho gaye! ✅`,
+      modifiedCount: result.modifiedCount,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// 10. 💬 BULK REPLY REVIEWS
+exports.bulkReplyReviews = async (req, res) => {
+  try {
+    const { ids, adminReply } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ message: "Review IDs required!" });
+    }
+
+    if (!adminReply || !adminReply.trim()) {
+      return res.status(400).json({ message: "Reply text required!" });
+    }
+
+    const result = await Review.updateMany(
+      { _id: { $in: ids } },
+      {
+        $set: {
+          adminReply: adminReply.trim(),
+          replied: true,
+        },
+      },
+    );
+
+    res.status(200).json({
+      message: `${result.modifiedCount} reviews me reply save ho gaya! ✅`,
+      modifiedCount: result.modifiedCount,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// 11. 🗑️ BULK DELETE REVIEWS
+exports.bulkDeleteReviews = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ message: "Review IDs required!" });
+    }
+
+    const result = await Review.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      message: `${result.deletedCount} reviews delete ho gaye! 🗑️`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 //#endregion
 // ==========================================================================
 // ✅ REVIEW STATUS: CUSTOMER FEEDBACK & RATING LOGIC FULLY REFACTORED.

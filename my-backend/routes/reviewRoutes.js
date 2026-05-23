@@ -24,6 +24,15 @@ router.delete("/delete/:id", reviewController.deleteReview);
 // 5. 🤖 AUTO-REPLY TO REVIEWS | @route: POST /api/admin/reviews/auto-reply
 router.post("/auto-reply", reviewController.handleAutoReply);
 
+// 7. 🧹 BULK HIDE / SHOW REVIEWS
+router.patch("/bulk-status", reviewController.bulkUpdateReviewStatus);
+
+// 8. 💬 BULK REPLY REVIEWS
+router.put("/bulk-reply", reviewController.bulkReplyReviews);
+
+// 9. 🗑️ BULK DELETE REVIEWS
+router.delete("/bulk-delete", reviewController.bulkDeleteReviews);
+
 // 6. 📊 FETCH REVIEW ANALYTICS | LOGIC: AGGREGATING TOTAL COUNTS & STAR RATINGS (TOP DISPLAY)
 exports.getTotalReviewCount = async (req, res) => {
   try {
