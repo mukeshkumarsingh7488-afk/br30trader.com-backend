@@ -99,7 +99,7 @@ exports.verifyOTP = async (req, res) => {
 
     // 🔥 TEMPLATE CALL
     const coupon = {
-      code: "WELCOME10",
+      code: "WELCOME30",
       discount: 30,
     };
 
