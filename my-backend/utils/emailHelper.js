@@ -176,10 +176,9 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
 /* welcome templet */
 const welcomeTemplate = (user, coupon) => {
   // 🎉 WELCOME TEMPLATE (FULL SAFE - NOTHING REMOVED)
-  welcome: (user, coupon = {}) => {
-    console.log("📩 Welcome Template Triggered:", user?.email);
+  console.log("📩 Welcome Template Triggered:", user?.email);
 
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -318,8 +317,8 @@ const welcomeTemplate = (user, coupon) => {
     </div>
 </body>
 </html>`;
-  };
 };
+
 // 🔐 UPGRADED REGISTER OTP TEMPLATE (User & Admin) v2.5
 const otpTemplate = (name, otp, isMaster) => {
   const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
@@ -380,7 +379,7 @@ const otpTemplate = (name, otp, isMaster) => {
     </style></head>
 <body class="email-body">
     <div class="card">
-        <img src="https://i.ibb.co/3VzZ21W/blue-burner-jpg.jpg" alt="Welcome to BR30" class="banner">
+        <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="Welcome to BR30" class="banner">
         <div class="content">
             <div style="color: #00ff88; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Welcome to BR30ᴛʀᴀᴅᴇʀ</div>
             <p style="color: #cbd5e1 !important; font-size: 15px; line-height: 1.6; margin-top: 15px;">
