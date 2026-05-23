@@ -1057,6 +1057,24 @@ const vipTemplate = ({
               <p style="color: #00ff88; font-size: 12px; text-align: center; margin-top: 15px; font-weight: bold; letter-spacing: 1px;">
              🚀 VIP SUPPORT: DIRECT ACCESS ENABLED
             </p>
+
+            <div style="background: linear-gradient(145deg, rgba(0,255,136,0.08), rgba(0,0,0,1)); border: 1px solid rgba(0,255,136,0.35); border-radius: 16px; padding: 22px; margin-top: 28px; text-align: center;">
+             <h3 style="color:#00ff88; margin:0 0 10px 0; font-size:18px;">
+             ⭐ Share Your BR30 Trader Experience
+             </h3>
+
+             <p style="color:#e2e8f0; font-size:14px; line-height:1.7; margin:0 0 18px 0;">
+             Agar aapko BR30 Trader ka course, support aur VIP updates helpful lage ho, to apna honest review Trustpilot par zaroor share karein ❤️
+             </p>
+
+             <a
+             href="https://www.trustpilot.com/review/my-frontend-eight-roan.vercel.app"
+             target="_blank"
+             style="display:inline-block; background:#00ff88; color:#000000 !important; padding:14px 28px; border-radius:12px; text-decoration:none; font-weight:900; font-size:14px; letter-spacing:1px; box-shadow:0 0 20px rgba(0,255,136,0.35);"
+             >
+            ⭐ Review BR30 Trader on Trustpilot
+            </a>
+            </div>
             
             <p style="color: #94a3b8 !important; font-size: 13px; text-align: center; margin-top: 40px; font-style: italic;">
                 <b>Exclusive Access:</b> VIP Benefits Active for your Account. ✅
