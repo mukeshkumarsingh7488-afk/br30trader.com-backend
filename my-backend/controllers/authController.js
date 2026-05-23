@@ -100,7 +100,7 @@ exports.verifyOTP = async (req, res) => {
     // 🔥 TEMPLATE CALL
     const coupon = {
       code: "WELCOME10",
-      discount: 10,
+      discount: 30,
     };
 
     const html = welcomeTemplate(user, coupon);
