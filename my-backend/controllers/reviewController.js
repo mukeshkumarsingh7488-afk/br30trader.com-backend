@@ -45,7 +45,9 @@ exports.postReview = async (req, res) => {
 // 2. 👤 FETCH MY REVIEWS | LOGIC: RETRIEVING AUTHENTICATED USER'S FEEDBACK HISTORY
 exports.getTopReviews = async (req, res) => {
   try {
-    const totalReviewCount = await Review.countDocuments();
+    const totalReviewCount = await Review.countDocuments({
+      status: "approved",
+    });
 
     const reviews = await Review.aggregate([
       {
