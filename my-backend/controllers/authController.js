@@ -108,7 +108,6 @@ exports.verifyOTP = async (req, res) => {
     // 📩 SEND EMAIL
     try {
       await sendEmail({
-        from: "onboarding@resend.dev",
         to: user.email,
         subject: "Welcome to the Family! 🚀",
         html: html,
