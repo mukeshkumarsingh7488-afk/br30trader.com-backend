@@ -25,7 +25,7 @@ const sendEmail = async (options) => {
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
-          name: "BR30 Trader Platform",
+          name: "BR30 Trader",
           email: process.env.BREVO_EMAIL.trim(),
         },
         to: [
@@ -52,10 +52,7 @@ const sendEmail = async (options) => {
 
     throw new Error("Brevo API rejected the email request");
   } catch (error) {
-    console.error(
-      "❌ Live Brevo API Transaction Failed:",
-      error.response?.data || error.message,
-    );
+    console.error("❌ Live Brevo API Transaction Failed:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -419,9 +416,7 @@ const forgotOtpTemplate = (name, otp, isMaster) => {
   const timestamp = new Date().toLocaleString("en-IN");
 
   // Content change hoga based on isMaster
-  const mainTitle = isMaster
-    ? "🚨 ADMIN ACCESS RESET"
-    : "🔐 PASSWORD RESET REQUEST";
+  const mainTitle = isMaster ? "🚨 ADMIN ACCESS RESET" : "🔐 PASSWORD RESET REQUEST";
   const welcomeMsg = isMaster
     ? `Hi <b>Master Admin</b>, a request has been made to reset your administrative credentials. Please use this highly secure code to proceed:`
     : `Hi <b>${name}</b>, we received a request to reset your password. Use the secure verification code below to proceed.`;
@@ -859,12 +854,7 @@ const paymentFailUserTemplate = (user, course, reason) => {
 };
 
 // 💰 UPGRADED OFFER TEMPLATE v2.5
-const offerTemplate = ({
-  discountValue,
-  dynamicCoupon,
-  htmlContent,
-  userName = "Trader",
-}) => {
+const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "Trader" }) => {
   // Gmail collapsing bypass & Tracking
   const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
   const timestamp = new Date().toLocaleString("en-IN");
@@ -988,12 +978,7 @@ const offerTemplate = ({
 };
 
 // 💎 UPGRADED VIP TEMPLATE v2.5
-const vipTemplate = ({
-  discountValue,
-  dynamicCoupon,
-  htmlContent,
-  userName = "VIP Trader",
-}) => {
+const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "VIP Trader" }) => {
   // Gmail collapsing bypass logic
   const syncId = Math.random().toString(36).substring(2, 12).toUpperCase();
   const timestamp = new Date().toLocaleString("en-IN");
