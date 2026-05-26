@@ -89,8 +89,8 @@ exports.sendMarketingMail = async (req, res) => {
     }
 
     await sendEmail({
-      from: "onboarding@resend.dev",
-      bcc: emailList.join(","),
+      from: "BR30 Trader <support.br30trader@gmail.com>",
+      to: emailList.join(","),
       subject: subject || (target === "vip" ? "💎 VIP Special Update" : "🔥 Special Discount for You"),
       html: finalHtml,
     });
