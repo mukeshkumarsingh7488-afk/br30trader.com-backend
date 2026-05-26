@@ -4,12 +4,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const {
-  sendEmail,
-  otpTemplate,
-  welcomeTemplate,
-  forgotOtpTemplate,
-} = require("../utils/emailHelper");
+const { sendEmail, otpTemplate, welcomeTemplate, forgotOtpTemplate } = require("../utils/emailHelper");
 const path = require("path");
 
 //#region Master Admin Email (Jo .env se aayega)
@@ -25,8 +20,7 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    if (!email || !password)
-      return res.status(400).json({ msg: "Email/Pass missing!" });
+    if (!email || !password) return res.status(400).json({ msg: "Email/Pass missing!" });
 
     const isMaster = email.toLowerCase() === MASTER_ADMIN_EMAIL.toLowerCase();
     const role = isMaster ? "admin" : "student";
@@ -37,8 +31,7 @@ exports.register = async (req, res) => {
 
     let user = await User.findOne({ email });
 
-    if (user && user.isVerified)
-      return res.status(400).json({ msg: "Already verified." });
+    if (user && user.isVerified) return res.status(400).json({ msg: "Already verified." });
 
     if (user) {
       user.name = name;
@@ -147,14 +140,9 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Wrong Password." });
 
-    if (!user.isVerified)
-      return res.status(401).json({ msg: "Verify email first." });
+    if (!user.isVerified) return res.status(401).json({ msg: "Verify email first." });
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET || "test_secret",
-      { expiresIn: "1d" },
-    );
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || "test_secret", { expiresIn: "1d" });
 
     res.json({
       token,
@@ -163,6 +151,7 @@ exports.login = async (req, res) => {
         name: user.name,
         role: user.role,
         email: user.email,
+        badge: user.badge,
       },
     });
   } catch (err) {
@@ -191,9 +180,7 @@ exports.forgotPassword = async (req, res) => {
       await sendEmail({
         from: "onboarding@resend.dev",
         to: email,
-        subject: isMaster
-          ? `👑 Admin Reset OTP: ${otp}`
-          : `🔐 Password Reset OTP`,
+        subject: isMaster ? `👑 Admin Reset OTP: ${otp}` : `🔐 Password Reset OTP`,
         html: html,
       });
 
@@ -218,9 +205,7 @@ exports.getProfile = async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error("Get Profile Error:", err.message);
-    res
-      .status(500)
-      .json({ error: "Server Error: Profile fetch nahi ho payi." });
+    res.status(500).json({ error: "Server Error: Profile fetch nahi ho payi." });
   }
 };
 
@@ -231,19 +216,14 @@ exports.updateProfile = async (req, res) => {
     const user = await User.findById(req.user.id);
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "❌ User nahi mila! (msr pro)" });
+      return res.status(404).json({ success: false, message: "❌ User nahi mila! (msr pro)" });
     }
 
     user.name = req.body.name || user.name;
 
     if (req.file) {
       user.profilePic = req.file.path;
-      console.log(
-        "✅ Nayi Cloudinary URL DB mein save ho gayi:",
-        req.file.path,
-      );
+      console.log("✅ Nayi Cloudinary URL DB mein save ho gayi:", req.file.path);
     }
 
     const updatedUser = await user.save();
@@ -278,8 +258,7 @@ exports.resetPassword = async (req, res) => {
       otpExpires: { $gt: Date.now() },
     });
 
-    if (!user)
-      return res.status(400).json({ msg: "Invalid ya Expired OTP! ❌" });
+    if (!user) return res.status(400).json({ msg: "Invalid ya Expired OTP! ❌" });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
