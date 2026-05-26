@@ -77,7 +77,9 @@ exports.sendMarketingMail = async (req, res) => {
       });
     }
 
-    const emailList = targetUsers.map((u) => u.email).filter(Boolean);
+    const emailList = targetUsers.map((u) => u.email?.trim()).filter((email) => email && email.includes("@"));
+    console.log("TARGET USERS:", targetUsers);
+    console.log("EMAIL LIST:", emailList);
 
     if (!emailList.length) {
       return res.status(404).json({
@@ -88,7 +90,7 @@ exports.sendMarketingMail = async (req, res) => {
 
     await sendEmail({
       from: "onboarding@resend.dev",
-      bcc: emailList,
+      bcc: emailList.join(","),
       subject: subject || (target === "vip" ? "💎 VIP Special Update" : "🔥 Special Discount for You"),
       html: finalHtml,
     });
