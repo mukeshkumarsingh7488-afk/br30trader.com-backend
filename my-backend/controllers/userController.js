@@ -78,6 +78,7 @@ exports.sendMarketingMail = async (req, res) => {
     }
 
     const emailList = targetUsers.map((u) => u.email?.trim()).filter((email) => email && email.includes("@"));
+
     console.log("TARGET USERS:", targetUsers);
     console.log("EMAIL LIST:", emailList);
 
@@ -90,7 +91,7 @@ exports.sendMarketingMail = async (req, res) => {
 
     await sendEmail({
       from: "BR30 Trader <support.br30trader@gmail.com>",
-      to: emailList.join(","),
+      to: emailList.map((email) => ({ email })),
       subject: subject || (target === "vip" ? "💎 VIP Special Update" : "🔥 Special Discount for You"),
       html: finalHtml,
     });
@@ -104,7 +105,7 @@ exports.sendMarketingMail = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: error.message || "Marketing mail send failed!",
+      message: error.response?.data?.message || error.message || "Marketing mail send failed!",
     });
   }
 };
