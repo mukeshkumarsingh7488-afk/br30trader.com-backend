@@ -42,7 +42,7 @@ const sendEmail = async (options) => {
           "api-key": process.env.BREVO_SMTP_KEY.trim(),
           "content-type": "application/json",
         },
-      },
+      }
     );
 
     if (brevoResponse.status === 200 || brevoResponse.status === 201) {
@@ -635,7 +635,7 @@ body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-seri
 <div class="content">
 
 <div style="color:#00ff88;font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:2.5px;text-shadow:0 0 18px rgba(0,255,136,.45);">
-🚀 WELCOME TO BR30ᴛʀᴀᴅᴇʀ
+🔐 REGISTER OTP VERIFICATION
 </div>
 
 <p style="color:#cbd5e1!important;font-size:15px;line-height:1.9;margin-top:18px;">
@@ -1289,7 +1289,7 @@ No worries — if you faced any issue during checkout, our BR30 Support Team is 
 Please reply to this email if you need assistance.
 
 Regards,
-BR30 Support Team`,
+BR30 Support Team`
   );
 
   return `
@@ -1548,7 +1548,7 @@ My payment was not completed for "${course.title}".
 
 Please help me complete my enrollment safely.
 
-Reference ID: ${traceId}`,
+Reference ID: ${traceId}`
   );
 
   return `
