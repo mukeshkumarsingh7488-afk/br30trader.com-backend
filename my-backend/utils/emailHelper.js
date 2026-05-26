@@ -5,45 +5,76 @@ const fs = require("fs"); // File read karne ke liye
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 /* ---------------- SEND EMAIL CORE ---------------- */
-const sendEmail = async (options) => {
+const sendEmail = async (options = {}) => {
   try {
     if (!process.env.BREVO_EMAIL || !process.env.BREVO_SMTP_KEY) {
       throw new Error("Brevo configuration missing");
     }
 
-    const targetEmail = options?.to || options?.email;
+    const normalizeEmails = (input) => {
+      if (!input) return [];
 
-    if (!targetEmail) {
+      const rawList = Array.isArray(input) ? input : String(input).split(",");
+
+      return rawList
+        .flatMap((item) => {
+          if (!item) return [];
+
+          if (typeof item === "string") {
+            return item.split(",").map((email) => ({ email: email.trim() }));
+          }
+
+          if (typeof item === "object" && item.email) {
+            return [{ email: String(item.email).trim(), name: item.name ? String(item.name).trim() : undefined }];
+          }
+
+          return [];
+        })
+        .filter((item) => item.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item.email))
+        .filter((item, index, self) => index === self.findIndex((x) => x.email.toLowerCase() === item.email.toLowerCase()));
+    };
+
+    const toList = normalizeEmails(options.to || options.email);
+    const ccList = normalizeEmails(options.cc);
+    const bccList = normalizeEmails(options.bcc);
+
+    if (!toList.length && !ccList.length && !bccList.length) {
       throw new Error("Recipient email is required");
     }
 
-    const emailHtmlContent = options?.html || options?.message || "";
+    const emailHtmlContent = options.html || options.message || "";
+    const emailSubject = options.subject || "No Subject";
 
-    console.log(`📧 Dispatching Live BR30Trader Brevo API TO: ${targetEmail}`);
-
-    const brevoResponse = await axios.post(
-      "https://api.brevo.com/v3/smtp/email",
-      {
-        sender: {
-          name: "BR30 Trader",
-          email: process.env.BREVO_EMAIL.trim(),
-        },
-        to: [
-          {
-            email: targetEmail.trim(),
-          },
-        ],
-        subject: options?.subject || "No Subject",
-        htmlContent: emailHtmlContent,
+    const payload = {
+      sender: {
+        name: options.senderName || "BR30 Trader",
+        email: process.env.BREVO_EMAIL.trim(),
       },
-      {
-        headers: {
-          accept: "application/json",
-          "api-key": process.env.BREVO_SMTP_KEY.trim(),
-          "content-type": "application/json",
-        },
-      }
-    );
+      subject: emailSubject,
+      htmlContent: emailHtmlContent,
+    };
+
+    if (toList.length) payload.to = toList;
+    if (ccList.length) payload.cc = ccList;
+    if (bccList.length) payload.bcc = bccList;
+
+    const replyToList = normalizeEmails(options.replyTo);
+    if (replyToList.length) payload.replyTo = replyToList[0];
+
+    console.log("📧 Dispatching Live BR30Trader Brevo API:", {
+      to: toList.map((x) => x.email),
+      cc: ccList.map((x) => x.email),
+      bcc: bccList.map((x) => x.email),
+      subject: emailSubject,
+    });
+
+    const brevoResponse = await axios.post("https://api.brevo.com/v3/smtp/email", payload, {
+      headers: {
+        accept: "application/json",
+        "api-key": process.env.BREVO_SMTP_KEY.trim(),
+        "content-type": "application/json",
+      },
+    });
 
     if (brevoResponse.status === 200 || brevoResponse.status === 201) {
       console.log("✅ Dynamic Email Sent Successfully via Brevo API");
@@ -53,7 +84,7 @@ const sendEmail = async (options) => {
     throw new Error("Brevo API rejected the email request");
   } catch (error) {
     console.error("❌ Live Brevo API Transaction Failed:", error.response?.data || error.message);
-    throw error;
+    throw new Error(error.response?.data?.message || error.message || "Email sending failed");
   }
 };
 
