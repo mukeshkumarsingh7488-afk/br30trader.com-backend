@@ -17,23 +17,19 @@ router.post("/send-all-email", auth, async (req, res) => {
   }
 
   try {
-    const users = await User.find(
-      { email: { $exists: true, $ne: "" } },
-      "email",
-    );
+    const users = await User.find({ email: { $exists: true, $ne: "" } }, "email");
 
     if (!users.length) {
       return res.status(404).json({ msg: "No users found!" });
     }
 
-    const emailList = users.map((u) => u.email);
+    const emailList = users.map((u) => u.email?.trim()).filter((email) => email && email.includes("@"));
 
-    // ✅ TEMPLATE CALL
     const emailTemplate = getAnnouncementHTML(subject, message);
 
-    // ✅ SEND EMAIL (RESEND HIDDEN INSIDE HELPER)
     await sendEmail({
-      to: emailList,
+      to: process.env.BREVO_EMAIL,
+      bcc: emailList,
       subject: `📢 ${subject}`,
       html: emailTemplate,
     });
