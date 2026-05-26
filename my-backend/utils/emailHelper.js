@@ -1282,11 +1282,11 @@ const paymentFailAdminTemplate = (user, course, reason) => {
   const recoveryBody = encodeURIComponent(
     `Hi ${user.name},
 
-We noticed that your payment for ${course.title} was not completed.
+We noticed that your payment for ${course.title} was not completed successfully.
 
-Don't worries — if you faced any issue during checkout, our BR30 Support Team is here to help you complete your enrollment safely.
+No worries — if you faced any issue during checkout, our BR30 Support Team is here to help you complete your enrollment safely and quickly.
 
-Please reply to this email if you need assistance.
+Please reply to this email if you need any assistance.
 
 Regards,
 BR30 Support Team`
@@ -1613,9 +1613,9 @@ Payment Status:
 ${safeReason}
 </span><br><br>
 
-Don't worries — our BR30 Support Team is ready to help you complete your enrollment safely and quickly. ✅<br><br>
+We noticed that your payment was not completed successfully. But no worries — your enrollment process is still active and our BR30 Enrollment Team is here to assist you personally. ✅<br><br>
 
-Please click the button below to connect with our support team directly on WhatsApp.
+Click the button below to connect directly with our WhatsApp assistance team for quick support and secure payment help.
 
 </div>
 
