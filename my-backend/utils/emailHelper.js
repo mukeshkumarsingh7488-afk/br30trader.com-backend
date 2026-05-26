@@ -1284,7 +1284,7 @@ const paymentFailAdminTemplate = (user, course, reason) => {
 
 We noticed that your payment for ${course.title} was not completed.
 
-No worries — if you faced any issue during checkout, our BR30 Support Team is here to help you complete your enrollment safely.
+Don't worries — if you faced any issue during checkout, our BR30 Support Team is here to help you complete your enrollment safely.
 
 Please reply to this email if you need assistance.
 

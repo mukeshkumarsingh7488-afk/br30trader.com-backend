@@ -6,11 +6,7 @@ const User = require("../models/User");
 const Course = require("../models/Course");
 const Order = require("../models/Order");
 const Coupon = require("../models/Coupon");
-const {
-  sendEmail,
-  paymentFailAdminTemplate,
-  paymentFailUserTemplate,
-} = require("../utils/emailHelper");
+const { sendEmail, paymentFailAdminTemplate, paymentFailUserTemplate } = require("../utils/emailHelper");
 
 //#region Rozorpay key_id And Key_Secret Process.env file
 const razorpay = new Razorpay({
@@ -23,13 +19,10 @@ const razorpay = new Razorpay({
 exports.createOrder = async (req, res) => {
   try {
     const { courseId, couponCode } = req.body;
-    console.log(
-      `🚀 Creating order for: ${courseId} with Coupon: ${couponCode || "None"}`,
-    );
+    console.log(`🚀 Creating order for: ${courseId} with Coupon: ${couponCode || "None"}`);
 
     const course = await Course.findById(courseId);
-    if (!course)
-      return res.status(404).json({ success: false, msg: "Course nahi mila" });
+    if (!course) return res.status(404).json({ success: false, msg: "Course nahi mila" });
 
     let finalPrice = Number(course.price);
     let isApplied = false;
@@ -40,9 +33,7 @@ exports.createOrder = async (req, res) => {
       const validCoupon = await Coupon.findOne({ code: cleanCode });
 
       if (validCoupon) {
-        const isExpired =
-          validCoupon.expiryDate &&
-          new Date() > new Date(validCoupon.expiryDate);
+        const isExpired = validCoupon.expiryDate && new Date() > new Date(validCoupon.expiryDate);
 
         if (!isExpired) {
           const discountPercent = Number(validCoupon.discount);
@@ -71,40 +62,24 @@ exports.createOrder = async (req, res) => {
       key: process.env.RAZORPAY_KEY_ID,
       finalPrice: finalPrice,
       discountApplied: isApplied,
-      msg: isApplied
-        ? `Success! ₹${finalPrice} ka payment hai.`
-        : "Order Created",
+      msg: isApplied ? `Success! ₹${finalPrice} ka payment hai.` : "Order Created",
     });
   } catch (err) {
     console.error("❌ RAZORPAY ERROR:", err);
-    res
-      .status(500)
-      .json({ success: false, msg: "Order Error", error: err.message });
+    res.status(500).json({ success: false, msg: "Order Error", error: err.message });
   }
 };
 
 // 2. 🛡️ VERIFY PAYMENT SIGNATURE | LOGIC: HMAC SHA256 VALIDATION FOR TRANSACTION INTEGRITY
 exports.verifyPayment = async (req, res) => {
   try {
-    const {
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature,
-      courseId,
-      amount,
-      couponCode,
-    } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, courseId, amount, couponCode } = req.body;
 
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
-    const expectedSign = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(sign.toString())
-      .digest("hex");
+    const expectedSign = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET).update(sign.toString()).digest("hex");
 
     if (razorpay_signature !== expectedSign) {
-      return res
-        .status(400)
-        .json({ success: false, msg: "Fraud Detected! Invalid Signature." });
+      return res.status(400).json({ success: false, msg: "Fraud Detected! Invalid Signature." });
     }
 
     const existingOrder = await Order.findOne({
@@ -120,18 +95,14 @@ exports.verifyPayment = async (req, res) => {
     const paymentDetails = await razorpay.payments.fetch(razorpay_payment_id);
 
     if (paymentDetails.status !== "captured") {
-      return res
-        .status(400)
-        .json({ success: false, msg: "Payment not captured yet!" });
+      return res.status(400).json({ success: false, msg: "Payment not captured yet!" });
     }
 
     const user = await User.findById(req.user.id);
     const course = await Course.findById(courseId);
 
     if (!user || !course) {
-      return res
-        .status(404)
-        .json({ success: false, msg: "User or Course not found" });
+      return res.status(404).json({ success: false, msg: "User or Course not found" });
     }
 
     if (!user.purchasedCourses.includes(courseId)) {
@@ -187,15 +158,15 @@ exports.handlePaymentFailure = async (req, res) => {
 
     // 🔥 1. ADMIN ALERT MAIL
     await sendEmail({
-      to: process.env.MASTER_ADMIN_EMAIL,
+      to: process.env.SUPPORT_EMAIL_USER,
       subject: `⚠️ Payment Failed: ${user.name}`,
       html: paymentFailAdminTemplate(user, course, reason),
     });
 
     // 🔥 2. USER HELP MAIL
     await sendEmail({
-      to: process.env.MASTER_ADMIN_EMAIL,
-      subject: `Payment Issue - ${course.title}`,
+      to: user.email,
+      subject: `⚠️ Payment Failed - ${course.title}`,
       html: paymentFailUserTemplate(user, course, reason),
     });
 
@@ -205,7 +176,11 @@ exports.handlePaymentFailure = async (req, res) => {
     });
   } catch (err) {
     console.error("❌ PAYMENT FAIL ERROR:", err);
-    res.status(500).json({ msg: "Server Error", error: err.message });
+
+    res.status(500).json({
+      msg: "Server Error",
+      error: err.message,
+    });
   }
 };
 //#endregion
