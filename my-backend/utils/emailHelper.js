@@ -76,7 +76,6 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
 <head>
 <meta charset="UTF-8">
 <style>
-.email-body { background-color:#000; padding:40px 20px; font-family:sans-serif; margin:0; }
 .card { max-width:600px; margin:auto; background:#050505; border-radius:30px; border:1px solid rgba(0,255,136,0.4); box-shadow:0 0 50px rgba(0,255,136,0.15); overflow:hidden; }
 .banner { width:100%; display:block; border-bottom:3px solid #00ff88; }
 .content { padding:45px 35px; color:#fff !important; }
@@ -115,38 +114,81 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
             </p>
 
             <!-- 🚀 Social Links -->
-<div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-    <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">
-        JOIN OUR COMMUNITY 🚀
-    </p>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
 
-               <!-- YouTube -->
-    <a href="https://www.youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-    </a>
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
 
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-    </a>
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
 
-    <!-- Facebook -->
-    <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-       width="17"
-       style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
 
-    <!-- Telegram -->
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-    </a>
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
 
-    <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-    </a>
-</div>
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
             
             <div style="margin-top: 10px; font-size: 10px; color: #9298a3; letter-spacing: 1px; text-align: center;">
                 EST. 2026 | SECURE TRADING ENVIRONMENT | © BR30ᴛʀᴀᴅᴇʀ
@@ -180,8 +222,6 @@ const welcomeTemplate = (user, coupon) => {
 <head>
     <meta charset="UTF-8">
     <style>
-        /* Cyber Neon Glow Theme */
-        .email-body { background-color: #000000; padding: 40px 20px; font-family: sans-serif; margin: 0; }
         .card { max-width: 600px; margin: auto; background: #050505; border-radius: 30px; border: 1px solid rgba(0, 255, 136, 0.4); overflow: hidden; box-shadow: 0 0 50px rgba(0, 255, 136, 0.15); }
         .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
         .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
@@ -278,35 +318,81 @@ const welcomeTemplate = (user, coupon) => {
             </p>
 
             <!-- Social Links -->
-            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;">JOIN OUR COMMUNITY 🚀</p>
-                <!-- YouTube -->
-                <a href="https://www.youtube.com" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-                </a>
+                 <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
 
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/br30traderofficial?igsh=MWN5eHBscWY5bXFvMw==" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-                </a>
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
 
-                <!-- Facebook -->
-              <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-                  width="17"
-                 style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-                </a>
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
 
-                <!-- Telegram -->
-                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-                </a>
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
 
-                <!-- WhatsApp -->
-                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-                </a>
-            </div>
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
             <div style="margin-top: 25px; font-size: 10px; color: #576172; text-align: center;">
                 © 2026 BR30 Global Service. Secure Access Guaranteed.
             </div>
@@ -326,7 +412,6 @@ const otpTemplate = (name, otp, isMaster) => {
     return `
 <!DOCTYPE html><html><head><meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { max-width: 500px; margin: auto; background: #050505; border-radius: 24px; border: 2px solid #d4af37; overflow: hidden; box-shadow: 0 0 40px rgba(212, 175, 55, 0.2); }
         .banner { width: 100%; height: auto; display: block; border-bottom: 2px solid #d4af37; }
         .content { padding: 40px 30px; text-align: center; color: #ffffff !important; }
@@ -349,13 +434,29 @@ const otpTemplate = (name, otp, isMaster) => {
             <p style="color: #ff4d4d !important; font-size: 12px; font-weight: bold;">⚠️ CONFIDENTIAL: DO NOT SHARE THIS CODE.</p>
             <div style="display:none;">Trace: ${syncId}</div>
         </div>
-        <div class="footer">
-            <div style="color: #64748b; font-size: 13px;">Regards,<br><span class="admin-tag">BR30 Support Team</span><br>System Master Admin Access</div>
-            <p style="color: #ffd700 !important; font-size: 11px; margin-top: 20px; font-weight: bold; letter-spacing: 1.5px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);">🛡️ ROOT AUTHENTICATION VERIFIED</p>
-            ${getSocialLinksHTML()}
-            <div style="margin-top: 25px; font-size: 10px; color: #444; text-align: center;">
-                © 2026 BR30 Global Service | Session Hash: ${syncId.substring(0, 6)}
-            </div>
+   <div class="footer">
+    <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
+        Regards,<br>
+        <span class="admin-tag">BR30 Support Team</span><br>
+        System Master Admin Access
+    </div>
+
+    <!-- DO NOT REPLY NOTE -->
+    <p style="color:#ffd700 !important;font-size:10px;margin-top:15px;font-style:italic;letter-spacing:1px;line-height:1.7;">
+        🚫 <b>OFFICIAL SECURITY NOTICE:</b> This is an automated security broadcast from BR30 Master System. 
+        Please <b>DO NOT REPLY</b> to this email.
+    </p>
+
+    <p style="color: #ffd700 !important; font-size: 11px; margin-top: 20px; font-weight: bold; letter-spacing: 1.5px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);">
+        🛡️ ROOT AUTHENTICATION VERIFIED
+    </p>
+
+    ${getSocialLinksHTML()}
+
+    <div style="margin-top: 25px; font-size: 10px; color: #444; text-align: center;">
+        © 2026 BR30 Global Service | Session Hash: ${syncId.substring(0, 6)}
+    </div>
+</div>
         </div>
     </div>
 </body></html>`;
@@ -365,7 +466,6 @@ const otpTemplate = (name, otp, isMaster) => {
   return `
 <!DOCTYPE html><html><head><meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { max-width: 500px; margin: auto; background: #050505; border-radius: 24px; border: 2px solid #00ff88; overflow: hidden; box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
         .banner { width: 100%; height: auto; display: block; border-bottom: 2px solid #00ff88; }
         .content { padding: 40px 30px; text-align: center; color: #ffffff !important; }
@@ -388,11 +488,25 @@ const otpTemplate = (name, otp, isMaster) => {
             <p style="color: #ff4d4d !important; font-size: 12px; font-weight: bold;">⚠️ VALID FOR 10 MINUTES ONLY.</p>
             <div style="display:none;">Trace: ${syncId} | Node: ${timestamp}</div>
         </div>
-        <div class="footer">
-            <div style="color: #64748b; font-size: 13px;">Regards,<br><span class="brand-tag">BR30 Support Team</span><br>Official Onboarding Division</div>
-            ${getSocialLinksHTML()}
-            <div style="margin-top: 20px; font-size: 10px; color: #444;">ID: ${syncId} | © 2026 BR30 Global</div>
-        </div>
+<div class="footer">
+    <div style="color: #64748b; font-size: 13px; line-height: 1.6;">
+        Regards,<br>
+        <span class="brand-tag">BR30 Support Team</span><br>
+        Official Onboarding Division
+    </div>
+
+    <!-- DO NOT REPLY NOTE -->
+    <p style="color:#00ff88 !important;font-size:10px;margin-top:15px;font-style:italic;letter-spacing:1px;line-height:1.7;">
+        🚫 <b>OFFICIAL NOTICE:</b> This is an automated onboarding email from BR30 System. 
+        Please <b>DO NOT REPLY</b> to this email.
+    </p>
+
+    ${getSocialLinksHTML()}
+
+    <div style="margin-top: 20px; font-size: 10px; color: #444;">
+        ID: ${syncId} | © 2026 BR30 Global
+    </div>
+</div>
     </div>
 </body></html>`;
 };
@@ -401,12 +515,73 @@ const otpTemplate = (name, otp, isMaster) => {
 function getSocialLinksHTML() {
   return `
     <div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-        <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">JOIN OUR COMMU&#8203;NITY 🚀</p>
-        <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;"></a>
-        <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;"></a>
-        <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;"></a>
-        <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;"></a>
-        <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;"></a>
+               <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
     </div>`;
 }
 
@@ -425,7 +600,6 @@ const forgotOtpTemplate = (name, otp, isMaster) => {
 <!DOCTYPE html><html><head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { max-width: 500px; margin: auto; background: #050505; border-radius: 24px; border: 2px solid #ff4d4d; overflow: hidden; box-shadow: 0 0 30px rgba(255, 77, 77, 0.2); }
         .banner { width: 100%; display: block; border-bottom: 2px solid #ff4d4d; }
         .content { padding: 40px 30px; text-align: center; color: #ffffff !important; }
@@ -485,27 +659,87 @@ const forgotOtpTemplate = (name, otp, isMaster) => {
                 🚫 <b>Note:</b> Dispatched at ${timestamp} (Ref: ${traceId})
             </p>
 
+                          <!-- No-reply Note -->
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>OFFICIAL NOTE:</b> This is an automated broadcast. Please <b>do not reply</b> to this email.
+            </p>
+
             <!-- 🚀 Social Links (Neon Green Community Section) -->
-            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #111;">
-                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
-                    JOIN OUR COMMU&#8203;NITY 🚀
-                </p>
-                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-                </a>
-                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-                </a>
-            </div>
+                 <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
+
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
 
             <div style="margin-top: 20px; font-size: 10px; color: #444; text-align: center; letter-spacing: 1px;">
                 SECURE AUTH NODE: ${traceId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
@@ -527,48 +761,38 @@ const purchaseTemplate = (name, courseName) => {
 <head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
-        
         .card { 
             max-width: 600px; margin: auto; background: #0a0a0a; border-radius: 30px; 
             border: 2px solid #00ff88; overflow: hidden; 
             box-shadow: 0 0 50px rgba(0, 255, 136, 0.2); 
         }
-
         .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
-        
         .content { padding: 45px 35px; text-align: center; color: #ffffff !important; }
-
         .alert-title { 
             color: #00ff88 !important; font-size: 28px; font-weight: 900; 
             text-transform: uppercase; letter-spacing: 2px; 
             text-shadow: 0 0 15px #00ff88; margin-bottom: 25px;
         }
-
         .message-box { 
             background: linear-gradient(145deg, rgba(0, 255, 136, 0.05), rgba(0, 0, 0, 1));
             border-left: 5px solid #00ff88; padding: 25px; border-radius: 12px; 
             color: #e2e8f0; font-size: 16px; margin-bottom: 25px; text-align: left;
             line-height: 1.8;
         }
-
         .login-btn {
             display: inline-block; padding: 15px 35px; background: #00ff88; 
             color: #000000 !important; font-weight: 900; text-decoration: none; 
             border-radius: 10px; box-shadow: 0 0 20px #00ff88; text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .footer { background: #010101; padding: 35px; text-align: center; border-top: 1px solid #111; }
         
         .admin-tag { color: #00ff88 !important; font-weight: 800; font-size: 16px; letter-spacing: 1px; }
     </style>
 </head>
-
 <body class="email-body">
     <div class="card">
         <img src="https://res.cloudinary.com/dw4imlekm/image/upload/v1779141465/Green_burner_qc5lon.jpg" alt="BR30 Official" class="banner">
-
         <div class="content">
             <h1 class="alert-title">💎 VIP ACCESS UNLOCKED🚀</h1>
             
@@ -603,27 +827,87 @@ const purchaseTemplate = (name, courseName) => {
                 🚫 <b>OFFICIAL NOTE:</b> Transaction logged at ${timestamp} (Ref: ${syncId})
             </p>
 
+                          <!-- No-reply Note -->
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>NOTE:</b> Please <b>do not reply</b> to this email.
+            </p>
+
             <!-- 🚀 Social Links -->
-            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
-                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
-                    JOIN OUR COMMU&#8203;NITY 🚀
-                </p>
-                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-                </a>
-                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-                </a>
-            </div>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
+
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
 
             <div style="margin-top: 15px; font-size: 10px; color: #64748b; letter-spacing: 1px;">
                 SECURE AUTH NODE: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
@@ -646,7 +930,6 @@ const paymentFailAdminTemplate = (user, course, reason) => {
 <head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', sans-serif; margin: 0; }
         .card { 
             max-width: 600px; margin: auto; background: #050505; border-radius: 25px; 
             border: 1px solid rgba(255, 62, 62, 0.5); overflow: hidden; 
@@ -744,7 +1027,6 @@ const paymentFailUserTemplate = (user, course, reason) => {
 
   return `
 <!DOCTYPE html><html><head><meta charset="UTF-8"><style>
-  .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', sans-serif; margin: 0; }
   .card { max-width: 600px; margin: auto; background: #050505; border-radius: 30px; border: 1px solid rgba(0, 255, 136, 0.4); overflow: hidden; box-shadow: 0 0 50px rgba(0, 255, 136, 0.15); }
   .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
   .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
@@ -821,27 +1103,81 @@ const paymentFailUserTemplate = (user, course, reason) => {
   </p>
 
   <!-- SOCIAL LINKS -->
-  <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #1a1a1a;">
-    <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 15px;">
-      JOIN OUR COMMU&#8203;NITY 🚀
-    </p>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
 
-    <a href="https://www.youtube.com" target="_blank" style="text-decoration:none; margin: 0 10px;">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22">
-    </a>
-    <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none; margin: 0 10px;">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22">
-    </a>
-    <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
-       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-    </a>
-    <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none; margin: 0 10px;">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22">
-    </a>
-    <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none; margin: 0 10px;">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22">
-    </a>
-  </div>
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
 
   <div style="margin-top:20px; color:#64748b; font-size:10px;">
     BR30 TRADER AUTOMATED SYSTEM v2.5<br>
@@ -865,7 +1201,6 @@ const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "
 <head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { 
             max-width: 600px; margin: auto; background: #050505; border-radius: 30px; 
             border: 1px solid rgba(0, 255, 136, 0.4); overflow: hidden; 
@@ -946,27 +1281,87 @@ const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "
                 🚫 <b>OFFICIAL NOTE:</b> Personalized offer dispatched at ${timestamp} (Ref: ${syncId})
             </p>
 
+                          <!-- No-reply Note -->
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>NOTE:</b> Please <b>do not reply</b> to this email.
+            </p>
+
             <!-- 🚀 Social Links -->
-            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
-                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
-                    JOIN OUR COMMU&#8203;NITY 🚀
-                </p>
-                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-                </a>
-                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-                </a>
-            </div>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
+
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
             
             <div style="margin-top: 15px; font-size: 10px; color: #64748b; letter-spacing: 1px; text-align: center;">
                 SECURE BATCH ID: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
@@ -989,7 +1384,6 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "VI
 <head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { max-width: 600px; margin: auto; background: #050505; border-radius: 30px; border: 2px solid #00ff88; overflow: hidden; box-shadow: 0 0 50px rgba(0, 255, 136, 0.2); }
         .banner { width: 100%; display: block; border-bottom: 3px solid #00ff88; }
         .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
@@ -1082,27 +1476,87 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "VI
                 🚫 <b>OFFICIAL NOTE:</b> Broadcasted at ${timestamp} (Ref: ${syncId})
             </p>
 
+                          <!-- No-reply Note -->
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>NOTE:</b> Please <b>do not reply</b> to this email.
+            </p>
+
             <!-- 🚀 Social Links (UNCHANGED) -->
-            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
-                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
-                    JOIN OUR COMMU&#8203;NITY 🚀
-                </p>
-                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-                </a>
-                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-                </a>
-            </div>
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
+
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
             
             <div style="margin-top: 10px; font-size: 10px; color: #64748b; letter-spacing: 1px; text-align: center;">
                 SECURE VIP NODE: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
@@ -1125,7 +1579,6 @@ const getAnnouncementHTML = (subject, message) => {
 <head>
     <meta charset="UTF-8">
     <style>
-        .email-body { background-color: #000000 !important; padding: 40px 20px; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
         .card { max-width: 600px; margin: auto; background: #0a0a0a; border-radius: 30px; border: 2px solid #00ff88; overflow: hidden; box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
         .banner { width: 100%; height: auto; display: block; border-bottom: 3px solid #00ff88; }
         .content { padding: 45px 35px; text-align: left; color: #ffffff !important; }
@@ -1172,27 +1625,87 @@ const getAnnouncementHTML = (subject, message) => {
                 🚫 <b>OFFICIAL NOTE:</b> Dispatched at ${timestamp} (Ref: ${syncId})
             </p>
 
+                          <!-- No-reply Note -->
+            <p style="color: #65748a; font-size: 10px; margin-top: 15px; font-style: italic; letter-spacing: 1px;">
+                🚫 <b>NOTE:</b> Please <b>do not reply</b> to this email.
+            </p>
+
             <!-- 🚀 Social Links -->
-            <div style="margin-top:25px;padding-top:20px;border-top:1px solid #1a1a1a;">
-                <p style="color:#00ff88;font-size:11px;letter-spacing:2px;margin-bottom:15px;">
-                    JOIN OUR COMMU&#8203;NITY 🚀
-                </p>
-                <a href="https://www.youtube.com" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.instagram.com/br30traderofficial" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://www.facebook.com/share/1DDJYGYYDf/" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="17" style="background:#1877F2; border-radius:50%; padding:3px; margin:0 5px;">
-                </a>
-                <a href="https://t.me/+F8mDhdfiGaI1NDY1" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="22" style="margin:0 5px;">
-                </a>
-                <a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank" style="text-decoration:none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="22" style="margin:0 5px;">
-                </a>
-            </div>
+           <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #111; text-align: center">
+          <p style="color: #00ff88; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px">
+            STAY CONNECTED WITH BR30 🚀
+          </p>
+
+          <div style="white-space: nowrap">
+            <a
+              href="https://www.youtube.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/br30Traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1DDJYGYYDf/"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                width="20"
+                style="background: #1877f2; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a href="https://t.me/+hBAT4kWo63A4ZWY1" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="24" style="display: block" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" style="display: block" />
+            </a>
+
+            <a href="https://x.com/MukeshKuma48159" target="_blank" style="display: inline-block; margin: 0 4px">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.threads.com/@br30traderofficial"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/threads.png"
+                width="24"
+                style="background: #000; border-radius: 50%; padding: 3px; display: block"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mukesh-raj-b75a65253"
+              target="_blank"
+              style="display: inline-block; margin: 0 4px"
+            >
+              <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" style="display: block" />
+            </a>
+          </div>
+        </div>
             
             <div style="margin-top: 15px; font-size: 10px; color: #64748b; letter-spacing: 1px; text-align: center;">
                 SYSTEM NODE: ${syncId.substring(0, 6)} | EST. 2026 | © BR30ᴛʀᴀᴅᴇʀ
