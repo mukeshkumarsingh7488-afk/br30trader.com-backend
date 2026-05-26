@@ -83,11 +83,7 @@ exports.updateCourse = async (req, res) => {
 
     console.log("📦 Final Data:", updateFields);
 
-    const updatedCourse = await Course.findByIdAndUpdate(
-      req.params.id,
-      { $set: updateFields },
-      { new: true },
-    );
+    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, { $set: updateFields }, { new: true });
 
     console.log("🎉 Update Success");
 
@@ -105,8 +101,7 @@ exports.updateCourse = async (req, res) => {
 exports.deleteCourse = async (req, res) => {
   try {
     const deletedCourse = await Course.findByIdAndDelete(req.params.id);
-    if (!deletedCourse)
-      return res.status(404).json({ success: false, msg: "Course nahi mila!" });
+    if (!deletedCourse) return res.status(404).json({ success: false, msg: "Course nahi mila!" });
     res.json({ success: true, msg: "Course deleted! 🗑️" });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -220,9 +215,7 @@ exports.getLeaderboard = async (req, res) => {
         const loggedInUserId = decoded.id;
 
         // Check karo ki logged-in user list mein hai ya nahi
-        const userIndex = combinedList.findIndex(
-          (u) => u._id && u._id.toString() === loggedInUserId,
-        );
+        const userIndex = combinedList.findIndex((u) => u._id && u._id.toString() === loggedInUserId);
 
         if (userIndex !== -1) {
           const myProfile = combinedList[userIndex];
