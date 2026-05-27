@@ -9,9 +9,7 @@ const auth = require("../middleware/auth");
 const { sendVipCertEmail } = require("../utils/emailHelper");
 const Certificate = require("../models/Certificate");
 
-const {
-  generateProfessionalCert,
-} = require("../utils/generateProfessionalCert");
+const { generateProfessionalCert } = require("../utils/generateProfessionalCert");
 
 // ==========================================
 // 🛡️ MIDDLEWARES
@@ -21,15 +19,7 @@ const upload = require("../middleware/upload");
 // ==========================================
 // 🎮 CONTROLLERS
 // ==========================================
-const {
-  register,
-  login,
-  forgotPassword,
-  resetPassword,
-  getProfile,
-  updateProfile,
-  verifyOTP,
-} = require("../controllers/authController");
+const { register, login, forgotPassword, resetPassword, getProfile, updateProfile, verifyOTP } = require("../controllers/authController");
 
 const userController = require("../controllers/userController");
 const paymentController = require("../controllers/paymentController");
@@ -63,12 +53,7 @@ router.get("/latest-coupon", async (req, res) => {
 
       // ⏳ Expiry Calculation Logic
       // अगर DB में expiryDate है तो वो लो, नहीं तो createdAt से 7 दिन कैलकुलेट करो
-      let expiry = latestCoupon.expiryDate
-        ? new Date(latestCoupon.expiryDate)
-        : new Date(
-            new Date(latestCoupon.createdAt).getTime() +
-              7 * 24 * 60 * 60 * 1000,
-          );
+      let expiry = latestCoupon.expiryDate ? new Date(latestCoupon.expiryDate) : new Date(new Date(latestCoupon.createdAt).getTime() + 7 * 24 * 60 * 60 * 1000);
 
       const diffInMs = expiry - today;
       const daysLeft = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
@@ -125,9 +110,7 @@ router.post("/cancel-coupon", auth, async (req, res) => {
     const Coupon = require("../models/Coupon");
     // Security: Check karo ki user 'admin' hai ya nahi
     if (req.user.role !== "admin") {
-      return res
-        .status(403)
-        .json({ msg: "Bhai, sirf Admin hi coupon cancel kar sakta hai!" });
+      return res.status(403).json({ msg: "Bhai, sirf Admin hi coupon cancel kar sakta hai!" });
     }
 
     // Saare active coupons ko deactivate kar do
@@ -149,16 +132,11 @@ router.get("/all-users", auth, async (req, res) => {
     const Certificate = require("../models/Certificate");
 
     if (req.user.role !== "admin") {
-      return res
-        .status(403)
-        .json({ success: false, msg: "Admin Access Only!" });
+      return res.status(403).json({ success: false, msg: "Admin Access Only!" });
     }
 
     // 👤 Saare Users (Newest First)
-    const users = await User.find()
-      .select("-password")
-      .sort({ createdAt: -1 })
-      .lean();
+    const users = await User.find().select("-password").sort({ createdAt: -1 }).lean();
 
     // 📜 Saare Certificates
     const certificates = await Certificate.find().lean();
@@ -249,10 +227,7 @@ router.get("/sales-history", auth, async (req, res) => {
     const { startDate, endDate } = req.query;
 
     // 1. Saara data ek baar mangwao
-    let allOrders = await Order.find()
-      .populate("user", "name email")
-      .populate("course", "title")
-      .sort({ createdAt: -1 });
+    let allOrders = await Order.find().populate("user", "name email").populate("course", "title").sort({ createdAt: -1 });
 
     let filteredSales = allOrders;
 
@@ -269,10 +244,7 @@ router.get("/sales-history", auth, async (req, res) => {
     }
 
     // 💰 1. Total Revenue calculation
-    const totalRevenue = filteredSales.reduce(
-      (sum, order) => sum + order.amount,
-      0,
-    );
+    const totalRevenue = filteredSales.reduce((sum, order) => sum + order.amount, 0);
 
     // 🏆 2. BEST SELLER LOGIC
     const counts = {};
@@ -280,10 +252,7 @@ router.get("/sales-history", auth, async (req, res) => {
       const title = order.course?.title || order.courseName || "Other";
       counts[title] = (counts[title] || 0) + 1;
     });
-    const bestSeller = Object.keys(counts).reduce(
-      (a, b) => (counts[a] > counts[b] ? a : b),
-      "No Sales",
-    );
+    const bestSeller = Object.keys(counts).reduce((a, b) => (counts[a] > counts[b] ? a : b), "No Sales");
 
     res.json({
       success: true,
@@ -299,30 +268,28 @@ router.get("/sales-history", auth, async (req, res) => {
 // 13. 🎓 GENERATE CERTIFICATE | LOGIC: ID-BASED DATA MATCHING & DYNAMIC PDF ISSUANCE
 router.post("/claim-certificate", auth, async (req, res) => {
   try {
-    // 👤 1. User ka data database se nikalo
     const user = await User.findById(req.user.id);
+
     if (!user) {
-      return res.status(404).json({ success: false, msg: "User nahi mila!" });
+      return res.status(404).json({
+        success: false,
+        msg: "User nahi mila!",
+      });
     }
 
-    // 📘 2. DYNAMIC COURSE
-    const courseName =
-      req.body.courseName || "ADVANCED CRYPTO & OPTION TRADING MASTERCLASS";
+    const courseName = req.body.courseName || "ADVANCED CRYPTO & OPTION TRADING MASTERCLASS";
 
-    // ✨ 3. UNIQUE ID
     const certId = `BR30-${user._id.toString().substring(18).toUpperCase()}`;
     const fullName = user.name;
 
-    // 🔍 4. DATABASE CHECK (Certificate Collection)
-    let existingCert = await Certificate.findOne({ certId: certId });
+    let existingCert = await Certificate.findOne({ certId });
+
+    const oldUserCertData = user.certificateData || {};
+    const permanentIssueDate = oldUserCertData.issueDate || existingCert?.date || new Date();
 
     if (existingCert) {
-      // 🗑️ FILE DELETE: Purani file backup cleanup
-      const oldPath = path.join(
-        process.cwd(),
-        "certificates",
-        existingCert.fileName,
-      );
+      const oldPath = path.join(process.cwd(), "certificates", existingCert.fileName);
+
       if (fs.existsSync(oldPath)) {
         try {
           fs.unlinkSync(oldPath);
@@ -333,67 +300,61 @@ router.post("/claim-certificate", auth, async (req, res) => {
       }
     }
 
-    // 📄 5. GENERATE PDF (Aapka purana utility function)
-    const result = await generateProfessionalCert(
-      user,
-      fullName,
-      certId,
-      courseName,
-    );
+    const result = await generateProfessionalCert(user, fullName, certId, courseName, permanentIssueDate);
 
-    // 🔗 Download URL taiyar karo
     const downloadUrl = `${process.env.API_BASE_URL || "https://my-backend-1-avpd.onrender.com"}/certificates/${result.fileName}`;
 
-    // 💾 6. CERTIFICATE COLLECTION UPDATE
     if (existingCert) {
       existingCert.fileName = result.fileName;
       existingCert.course = courseName;
-      existingCert.date = new Date();
+      existingCert.date = permanentIssueDate;
       await existingCert.save();
       console.log("📝 Certificate Record Updated!");
     } else {
       const newCert = new Certificate({
         name: fullName,
-        certId: certId,
+        certId,
         course: courseName,
         fileName: result.fileName,
+        date: permanentIssueDate,
       });
+
       await newCert.save();
       console.log("✅ New Certificate Record Created!");
     }
 
-    // 🔥 🔥 🔥 7. ASLI FIX: USER MODEL UPDATE (YE MISSING THA)
-    // Isse aapka 'User' folder (collection) update hoga
     user.isCertified = true;
     user.certificateData = {
-      fullName: fullName,
-      certId: certId,
-      issueDate: new Date(),
-      downloadUrl: downloadUrl, // Response wala same link
-      mobile: user.certificateData?.mobile || "", // Purana mobile data safe rakho
-      photoUrl: user.certificateData?.photoUrl || "",
+      ...oldUserCertData,
+      fullName,
+      certId,
+      issueDate: permanentIssueDate,
+      downloadUrl,
+      mobile: oldUserCertData.mobile || "",
+      photoUrl: oldUserCertData.photoUrl || "",
     };
 
-    // NESTED OBJECT FIX: Mongoose ko force karo save karne ke liye
     user.markModified("certificateData");
     await user.save();
+
     console.log("💾 USER MODEL UPDATED IN ATLAS!");
 
-    // ✅ 8. RESPONSE
     res.status(200).json({
       success: true,
-      certId: certId,
-      downloadUrl: downloadUrl,
+      certId,
+      downloadUrl,
+      issueDate: permanentIssueDate,
     });
 
-    // 📧 9. MAIL
-    sendVipCertEmail(user, result.fileName, result.filePath).catch((err) =>
-      console.error("❌ Mail Error:", err.message),
-    );
+    sendVipCertEmail(user, result.fileName, result.filePath).catch((err) => console.error("❌ Mail Error:", err.message));
   } catch (err) {
     console.error("❌ Critical Error:", err.message);
+
     if (!res.headersSent) {
-      res.status(500).json({ success: false, msg: "Server Side Issue!" });
+      res.status(500).json({
+        success: false,
+        msg: "Server Side Issue!",
+      });
     }
   }
 });
@@ -413,8 +374,7 @@ router.get("/verify-certificate/:id", async (req, res) => {
       success: true,
       studentName: cert.name,
       course: cert.course,
-      issueDate: cert.date,
-      // Agar variable na mile toh direct URL use ho jaye
+      issueDate: cert.date || cert.createdAt,
       downloadUrl: `${process.env.API_BASE_URL || "https://my-backend-1-avpd.onrender.com"}/certificates/${cert.fileName}`,
     });
   } catch (err) {

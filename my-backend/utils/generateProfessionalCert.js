@@ -27,28 +27,28 @@ const generateProfessionalCert = async (user, fullName, certId, courseName, issu
   doc.rect(20, 20, 802, 555).lineWidth(12).stroke(gold);
   doc.rect(45, 45, 752, 505).lineWidth(2).stroke("#1a1a1a");
 
-  // ✅ Logo watermark center
   if (fs.existsSync(logoPath)) {
     doc.save();
-    doc.opacity(0.07);
-    doc.image(logoPath, 300, 155, { width: 240 });
+    doc.opacity(0.14);
+    doc.image(logoPath, 285, 130, { width: 275 });
     doc.opacity(1);
     doc.restore();
   }
 
-  // ✅ Diagonal text watermark
   const watermarkLines = [
-    { x: -40, y: 120 },
-    { x: 130, y: 420 },
-    { x: 390, y: 120 },
-    { x: 560, y: 425 },
-    { x: 650, y: 240 },
+    { x: -95, y: 115 },
+    { x: 35, y: 300 },
+    { x: 80, y: 470 },
+    { x: 235, y: 105 },
+    { x: 390, y: 455 },
+    { x: 560, y: 145 },
+    { x: 640, y: 365 },
   ];
 
   watermarkLines.forEach((pos) => {
     doc.save();
-    doc.rotate(-28, { origin: [pos.x + 150, pos.y + 30] });
-    doc.font("Helvetica-Bold").fontSize(32).fillColor("#9ca3af").opacity(0.09).text("BR30 ACADEMY", pos.x, pos.y, { width: 420 });
+    doc.rotate(-32, { origin: [pos.x + 170, pos.y + 25] });
+    doc.font("Helvetica-Bold").fontSize(31).fillColor("#6b7280").opacity(0.14).text("BR30 ACADEMY", pos.x, pos.y, { width: 430 });
     doc.opacity(1);
     doc.restore();
   });
@@ -75,14 +75,14 @@ const generateProfessionalCert = async (user, fullName, certId, courseName, issu
 
   doc.image(qrImage, 385, 445, { width: 75 });
 
-  doc.fontSize(8).fillColor("#94a3b8").text("SCAN TO VERIFY 🛡️", 0, 525, { align: "center" });
+  doc.fontSize(8).fillColor("#94a3b8").text("SCAN TO VERIFY", 0, 525, { align: "center" });
 
   doc.fontSize(10).fillColor("#1a1a1a").font("Helvetica-Bold").text("OFFICE ADDRESS", 100, footerY);
 
   doc
     .fontSize(9)
     .font("Helvetica")
-    .text("Sitamarhi Bihar, 843302", 100, footerY + 15);
+    .text("Whitefield, Bangalore 560066, India", 100, footerY + 15);
 
   doc
     .fontSize(12)
