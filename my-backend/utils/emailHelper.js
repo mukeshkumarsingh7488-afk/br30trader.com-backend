@@ -96,7 +96,7 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
     const attachmentContent = fs.readFileSync(filePath);
 
     await resend.emails.send({
-      from: '"BR30 VIP OFFICIAL" <onboarding@resend.dev>',
+      from: '"BR30 VIP OFFICIAL" <support.br30trader@gmail.com>',
       to: user.email,
       subject: "🏆 CONGRATULATIONS! YOUR VIP CERTIFICATE IS READY",
       html: `
