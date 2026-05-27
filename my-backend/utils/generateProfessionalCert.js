@@ -36,19 +36,16 @@ const generateProfessionalCert = async (user, fullName, certId, courseName, issu
   }
 
   const watermarkLines = [
-    { x: -95, y: 115 },
-    { x: 35, y: 300 },
-    { x: 80, y: 470 },
-    { x: 235, y: 105 },
-    { x: 390, y: 455 },
-    { x: 560, y: 145 },
-    { x: 640, y: 365 },
+    { x: -75, y: 135 },
+    { x: 70, y: 425 },
+    { x: 520, y: 155 },
+    { x: 590, y: 385 },
   ];
 
   watermarkLines.forEach((pos) => {
     doc.save();
     doc.rotate(-32, { origin: [pos.x + 170, pos.y + 25] });
-    doc.font("Helvetica-Bold").fontSize(31).fillColor("#d1d5db").opacity(0.045).text("BR30 ACADEMY", pos.x, pos.y, { width: 430 });
+    doc.font("Helvetica-Bold").fontSize(28).fillColor("#e5e7eb").opacity(0.028).text("BR30 ACADEMY", pos.x, pos.y, { width: 430 });
     doc.opacity(1);
     doc.restore();
   });
