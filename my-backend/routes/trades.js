@@ -8,6 +8,7 @@ router.get("/test", (req, res) => res.send("Backend is Working!"));
 
 // 1. 🚀 EXECUTE NEW TRADE | @route: POST /api/trades/save
 router.post("/add", auth, async (req, res) => {
+  console.log("🔥 ADD TRADE HIT:", req.body, req.user);
   try {
     const newTrade = new Trade({
       ...req.body,
