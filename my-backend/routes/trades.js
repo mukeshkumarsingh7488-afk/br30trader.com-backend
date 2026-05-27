@@ -11,12 +11,24 @@ router.post("/add", auth, async (req, res) => {
   try {
     const newTrade = new Trade({
       ...req.body,
-      userId: req.user.id, // सिर्फ इसी यूजर के लिए सेव होगा
+      userId: req.user.id,
     });
+
     const trade = await newTrade.save();
-    res.json(trade);
+
+    return res.status(201).json({
+      success: true,
+      msg: "Trade saved successfully",
+      trade,
+    });
   } catch (err) {
-    res.status(500).send("Server Error");
+    console.error("❌ TRADE SAVE ERROR:", err);
+
+    return res.status(500).json({
+      success: false,
+      msg: err.message || "Trade not saved",
+      error: err.errors || err,
+    });
   }
 });
 
