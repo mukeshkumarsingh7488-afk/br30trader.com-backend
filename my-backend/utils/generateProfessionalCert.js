@@ -45,7 +45,7 @@ const generateProfessionalCert = async (user, fullName, certId, courseName, issu
   watermarkLines.forEach((pos) => {
     doc.save();
     doc.rotate(-32, { origin: [pos.x + 170, pos.y + 25] });
-    doc.font("Helvetica-Bold").fontSize(28).fillColor("#cbd5e1").opacity(0.05).text("BR30 ACADEMY", pos.x, pos.y, { width: 430 });
+    doc.font("Helvetica-Bold").fontSize(28).fillColor("#cbd5e1").opacity(0.14).text("BR30 ACADEMY", pos.x, pos.y, { width: 430 });
     doc.opacity(1);
     doc.restore();
   });
