@@ -170,9 +170,17 @@ exports.purchaseCourse = async (req, res) => {
       const html = purchaseTemplate(user.name, course.title);
 
       await sendEmail({
-        from: "onboarding@resend.dev",
+        from: process.env.BREVO_EMAIL,
+
+        replyTo: {
+          email: "support.br30trader@gmail.com",
+          name: "BR30 Support Team",
+        },
+
         to: user.email,
+
         subject: "💎 VIP Status Unlocked: Welcome to the Elite Circle!",
+
         html: html,
       });
 

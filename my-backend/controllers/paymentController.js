@@ -159,14 +159,28 @@ exports.handlePaymentFailure = async (req, res) => {
     // 🔥 1. ADMIN ALERT MAIL
     await sendEmail({
       to: process.env.SUPPORT_EMAIL_USER,
+
+      replyTo: {
+        email: "support.br30trader@gmail.com",
+        name: "BR30 Support Team",
+      },
+
       subject: `⚠️ Payment Failed: ${user.name}`,
+
       html: paymentFailAdminTemplate(user, course, reason),
     });
 
     // 🔥 2. USER HELP MAIL
     await sendEmail({
       to: user.email,
+
+      replyTo: {
+        email: "support.br30trader@gmail.com",
+        name: "BR30 Support Team",
+      },
+
       subject: `⚠️ Payment Failed - ${course.title}`,
+
       html: paymentFailUserTemplate(user, course, reason),
     });
 

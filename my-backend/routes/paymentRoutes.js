@@ -5,11 +5,7 @@ const auth = require("../middleware/auth"); // 🔥 Auth ko sabse upar le aaya
 
 // Controllers Import
 const { getUserStats } = require("../controllers/userController");
-const {
-  createOrder,
-  verifyPayment,
-  handlePaymentFailure,
-} = require("../controllers/paymentController");
+const { createOrder, verifyPayment, handlePaymentFailure } = require("../controllers/paymentController");
 
 // --- ROUTES ---
 

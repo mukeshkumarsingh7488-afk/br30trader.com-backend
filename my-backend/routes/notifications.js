@@ -56,7 +56,7 @@ router.delete("/clear-all", auth, async (req, res) => {
     // Sabhi notifications mein is User ki ID 'deletedBy' mein daal do
     await Notification.updateMany(
       { deletedBy: { $ne: userId } }, // Agar pehle se ID nahi hai
-      { $push: { deletedBy: userId } }, // Toh ID push kar do
+      { $push: { deletedBy: userId } } // Toh ID push kar do
     );
 
     res.status(200).json({ msg: "Aapke liye notifications clear ho gaye!" });

@@ -29,8 +29,16 @@ router.post("/send-all-email", auth, async (req, res) => {
 
     await sendEmail({
       to: process.env.BREVO_EMAIL,
+
       bcc: emailList,
+
+      replyTo: {
+        email: "support.br30trader@gmail.com",
+        name: "BR30 Support Team",
+      },
+
       subject: `📢 ${subject}`,
+
       html: emailTemplate,
     });
 

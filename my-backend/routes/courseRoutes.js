@@ -8,17 +8,7 @@ const admin = require("../middleware/admin");
 // ✅ ONLY CLOUDINARY
 const uploadCloud = require("../middleware/multerCloudinary");
 
-const {
-  createCourse,
-  getCourses,
-  getMyCourses,
-  addVideo,
-  getCourseById,
-  purchaseCourse,
-  getLeaderboard,
-  updateCourse,
-  deleteCourse,
-} = require("../controllers/courseController");
+const { createCourse, getCourses, getMyCourses, addVideo, getCourseById, purchaseCourse, getLeaderboard, updateCourse, deleteCourse } = require("../controllers/courseController");
 
 // 1. Leaderboard
 router.get("/leaderboard", getLeaderboard);
@@ -39,13 +29,7 @@ router.get("/:id", auth, getCourseById);
 router.put("/add-video/:id", auth, admin, addVideo);
 
 // 🚀 8. UPDATE COURSE (ONLY ONE ROUTE)
-router.put(
-  "/update-course/:id",
-  auth,
-  admin,
-  uploadCloud.single("thumbnail"),
-  updateCourse,
-);
+router.put("/update-course/:id", auth, admin, uploadCloud.single("thumbnail"), updateCourse);
 
 // 🗑️ 9. DELETE COURSE
 router.delete("/delete-course/:id", auth, admin, deleteCourse);

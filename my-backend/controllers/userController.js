@@ -91,8 +91,16 @@ exports.sendMarketingMail = async (req, res) => {
 
     await sendEmail({
       to: process.env.BREVO_EMAIL,
+
       bcc: emailList,
+
+      replyTo: {
+        email: "support.br30trader@gmail.com",
+        name: "BR30 Support Team",
+      },
+
       subject: subject || (target === "vip" ? "💎 VIP Special Update" : "🔥 Special Discount for You"),
+
       html: finalHtml,
     });
 

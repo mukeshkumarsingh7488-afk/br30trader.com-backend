@@ -54,9 +54,17 @@ exports.register = async (req, res) => {
     const html = otpTemplate(name, otp, isMaster);
 
     await sendEmail({
-      from: "onboarding@resend.dev",
+      from: process.env.BREVO_EMAIL,
+
+      replyTo: {
+        email: "support.br30trader@gmail.com",
+        name: "BR30 Support Team",
+      },
+
       to: email,
+
       subject: `🔐 OTP: ${otp}`,
+
       html: html,
     });
 
@@ -102,7 +110,14 @@ exports.verifyOTP = async (req, res) => {
     try {
       await sendEmail({
         to: user.email,
+
+        replyTo: {
+          email: "support.br30trader@gmail.com",
+          name: "BR30 Support Team",
+        },
+
         subject: "Welcome to the Family! 🚀",
+
         html: html,
       });
 
@@ -178,9 +193,17 @@ exports.forgotPassword = async (req, res) => {
 
     try {
       await sendEmail({
-        from: "onboarding@resend.dev",
+        from: process.env.BREVO_EMAIL,
+
+        replyTo: {
+          email: "support.br30trader@gmail.com",
+          name: "BR30 Support Team",
+        },
+
         to: email,
+
         subject: isMaster ? `👑 Admin Reset OTP: ${otp}` : `🔐 Password Reset OTP`,
+
         html: html,
       });
 
