@@ -248,7 +248,7 @@ Stay Connected With BR30 🚀
 </td>
 
 <td style="padding:0 6px;">
-<a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+<a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" height="24" style="display:block;border:0;">
 </a>
 </td>
@@ -430,7 +430,7 @@ You can now log in and begin your professional VIP trading journey with BR30ᴛ�
 <td style="padding:0 6px;"><a href="https://chat.whatsapp.com/B4t82SWBcgOIZTeQXp1wDI" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="24" height="24" style="display:block;border:0;"></a></td>
 <td style="padding:0 6px;"><a href="https://x.com/MukeshKuma48159" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v1.png" width="24" height="24" style="display:block;border:0;background:#000;border-radius:50%;"></a></td>
 <td style="padding:0 6px;"><a href="https://www.threads.com/@br30traderofficial" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/threads.png" width="24" height="24" style="display:block;border:0;background:#000;border-radius:50%;"></a></td>
-<td style="padding:0 6px;"><a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" height="24" style="display:block;border:0;"></a></td>
+<td style="padding:0 6px;"><a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" height="24" style="display:block;border:0;"></a></td>
 </tr>
 </table>
 </div>
@@ -604,7 +604,7 @@ STAY CONNECTED WITH BR30 🚀
 </td>
 
 <td style="padding:0 6px;">
-<a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+<a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="24" height="24" style="display:block;border:0;">
 </a>
 </td>
@@ -788,7 +788,7 @@ STAY CONNECTED WITH BR30 🚀
 </td>
 
 <td style="padding:0 5px;">
-<a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+<a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;">
 </a>
 </td>
@@ -1037,7 +1037,7 @@ STAY CONNECTED WITH BR30 🚀
 </td>
 
 <td style="padding:0 5px;">
-<a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+<a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;">
 </a>
 </td>
@@ -1269,7 +1269,7 @@ STAY CONNECTED WITH BR30 🚀
 </td>
 
 <td style="padding:0 5px;">
-<a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+<a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;">
 </a>
 </td>
@@ -1536,7 +1536,7 @@ STAY CONNECTED WITH BR30 🚀
 
 <td style="padding:0 5px;"><a href="https://www.threads.com/@br30traderofficial" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/threads.png" width="26" height="26" style="display:block;border:0;background:#000;border-radius:50%;"></a></td>
 
-<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
+<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
 
 </tr>
 
@@ -1767,7 +1767,7 @@ STAY CONNECTED WITH BR30 🚀
 
 <td style="padding:0 5px;"><a href="https://www.threads.com/@br30traderofficial" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/threads.png" width="26" height="26" style="display:block;border:0;background:#000;border-radius:50%;"></a></td>
 
-<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
+<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
 
 </tr>
 
@@ -1992,7 +1992,7 @@ STAY CONNECTED WITH BR30 🚀
 
 <td style="padding:0 5px;"><a href="https://www.threads.com/@br30traderofficial" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/threads.png" width="26" height="26" style="display:block;border:0;background:#000;border-radius:50%;"></a></td>
 
-<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
+<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
 
 </tr>
 
@@ -2246,7 +2246,7 @@ STAY CONNECTED WITH BR30 🚀
 
 <td style="padding:0 5px;"><a href="https://www.threads.com/@br30traderofficial" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/threads.png" width="26" height="26" style="display:block;border:0;background:#000;border-radius:50%;"></a></td>
 
-<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
+<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
 
 </tr>
 
@@ -2452,7 +2452,7 @@ STAY CONNECTED WITH BR30 🚀
 
 <td style="padding:0 5px;"><a href="https://www.threads.com/@br30traderofficial" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/threads.png" width="26" height="26" style="display:block;border:0;background:#000;border-radius:50%;"></a></td>
 
-<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukesh-raj-b75a65253?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
+<td style="padding:0 5px;"><a href="https://www.linkedin.com/in/mukeshraj-br30/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" width="26" height="26" style="display:block;border:0;"></a></td>
 
 </tr>
 
