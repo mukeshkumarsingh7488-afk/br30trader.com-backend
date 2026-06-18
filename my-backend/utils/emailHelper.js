@@ -59,6 +59,8 @@ const sendEmail = async (options = {}) => {
     if (bccList.length) payload.bcc = bccList;
 
     const replyToList = normalizeEmails(options.replyTo);
+    console.log("replyTo received:", options.replyTo);
+    console.log("replyTo parsed:", replyToList);
     if (replyToList.length) payload.replyTo = replyToList[0];
 
     console.log("📧 Dispatching Live BR30Trader Brevo API:", {
