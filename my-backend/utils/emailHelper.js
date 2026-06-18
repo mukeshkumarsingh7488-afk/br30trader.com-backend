@@ -95,8 +95,8 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
   try {
     const attachmentContent = fs.readFileSync(filePath);
 
-    await resend.emails.send({
-      from: '"BR30 VIP OFFICIAL" <support.br30trader@gmail.com>',
+    await sendEmail({
+      from: process.env.BREVO_EMAIL,
       replyTo: {
         email: "support.br30trader@gmail.com",
         name: "BR30 Support Team",
@@ -1315,10 +1315,7 @@ We noticed that your payment for ${course.title} was not completed successfully.
 
 No worries — if you faced any issue during checkout, our BR30 Support Team is here to help you complete your enrollment safely and quickly.
 
-Please reply to this email if you need any assistance.
-
-Regards,
-BR30 Support Team`
+Please reply to this email if you need any assistance.`
   );
 
   return `

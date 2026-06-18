@@ -6,7 +6,7 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const auth = require("../middleware/auth");
-const { sendVipCertEmail } = require("../utils/emailHelper");
+const { sendEmail, sendVipCertEmail } = require("../utils/emailHelper");
 const Certificate = require("../models/Certificate");
 
 const { generateProfessionalCert } = require("../utils/generateProfessionalCert");
