@@ -111,8 +111,7 @@ const sendVipCertEmail = async (user, fileName, filePath) => {
 <title>BR30 VIP Certificate</title>
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:0;margin:0;}
 .card{max-width:620px;margin:auto;background:#050505;border-radius:30px;border:1px solid rgba(0,255,136,.35);overflow:hidden;box-shadow:0 0 50px rgba(0,255,136,.12);}
 .banner{width:100%;display:block;height:auto;border-bottom:3px solid #00ff88;}
 .content{padding:45px 35px;color:#ffffff!important;}
@@ -310,8 +309,7 @@ const welcomeTemplate = (user, coupon) => {
 <head>
 <meta charset="UTF-8">
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:0;margin:0;}
 .card{max-width:620px;margin:auto;background:#050505;border-radius:30px;border:1px solid rgba(0,255,136,.4);overflow:hidden;box-shadow:0 0 50px rgba(0,255,136,.15);}
 .banner{width:100%;display:block;height:auto;border-bottom:3px solid #00ff88;}
 .content{padding:45px 35px;text-align:left;color:#ffffff!important;}
@@ -465,8 +463,7 @@ const otpTemplate = (name, otp, isMaster) => {
 <title>BR30 Master Authentication</title>
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:0;margin:0;}
 .card{max-width:520px;margin:auto;background:#050505;border-radius:28px;border:2px solid rgba(212,175,55,.45);overflow:hidden;box-shadow:0 0 55px rgba(212,175,55,.18);}
 .banner{width:100%;height:auto;display:block;border-bottom:2px solid #d4af37;}
 .content{padding:42px 32px;text-align:center;color:#ffffff!important;}
@@ -648,8 +645,7 @@ ADMIN-AUTH-${Date.now()}-${syncId}
 <title>BR30 Verification</title>
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:0;margin:0;}
 .card{max-width:520px;margin:auto;background:#050505;border-radius:28px;border:2px solid rgba(0,255,136,.35);overflow:hidden;box-shadow:0 0 55px rgba(0,255,136,.16);}
 .banner{width:100%;height:auto;display:block;border-bottom:2px solid #00ff88;}
 .content{padding:42px 32px;text-align:center;color:#ffffff!important;}
@@ -864,8 +860,7 @@ const forgotOtpTemplate = (name, otp, isMaster) => {
 <title>BR30 Password Reset</title>
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:0;margin:0;}
 .card{max-width:520px;margin:auto;background:#050505;border-radius:28px;border:2px solid rgba(255,77,77,.35);overflow:hidden;box-shadow:0 0 55px rgba(255,77,77,.18);}
 .banner{width:100%;height:auto;display:block;border-bottom:2px solid #ff4d4d;}
 .content{padding:42px 32px;text-align:center;color:#ffffff!important;}
@@ -1087,8 +1082,7 @@ const purchaseTemplate = (name, courseName) => {
 <title>BR30 VIP Access</title>
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:0;margin:0;}
 .card{max-width:620px;margin:auto;background:#050505;border-radius:30px;border:2px solid rgba(0,255,136,.35);overflow:hidden;box-shadow:0 0 55px rgba(0,255,136,.18);}
 .banner{width:100%;display:block;border-bottom:3px solid #00ff88;}
 .content{padding:45px 35px;text-align:center;color:#ffffff!important;}
@@ -1336,8 +1330,7 @@ BR30 Support Team`
 <title>Payment Failure Alert | BR30 Trader</title>
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:30px 12px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:30px 12px;margin:0;}
 .card{max-width:620px;margin:auto;background:#050505;border-radius:30px;border:2px solid rgba(255,62,62,.35);overflow:hidden;box-shadow:0 0 55px rgba(255,62,62,.18);}
 .banner{width:100%;display:block;border-bottom:3px solid #ff3e3e;}
 .content{padding:42px 34px;color:#ffffff!important;}
@@ -1595,8 +1588,7 @@ Reference ID: ${traceId}`
 <title>Payment Not Completed | BR30 Trader</title>
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:30px 12px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:30px 12px;margin:0;}
 .card{max-width:620px;margin:auto;background:#050505;border-radius:30px;border:2px solid rgba(0,255,136,.35);overflow:hidden;box-shadow:0 0 55px rgba(0,255,136,.18);}
 .banner{width:100%;display:block;border-bottom:3px solid #00ff88;}
 .content{padding:45px 35px;text-align:left;color:#ffffff!important;}
@@ -1816,8 +1808,7 @@ const offerTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "
 <meta charset="UTF-8">
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:25px 10px;margin:0;}
 .card{max-width:600px;margin:auto;background:#050505;border-radius:30px;border:1px solid rgba(0,255,136,.4);overflow:hidden;box-shadow:0 0 50px rgba(0,255,136,.15);}
 .banner{width:100%;display:block;border-bottom:3px solid #00ff88;}
 .content{padding:45px 35px;text-align:left;color:#ffffff!important;}
@@ -2038,8 +2029,7 @@ const vipTemplate = ({ discountValue, dynamicCoupon, htmlContent, userName = "VI
 <meta charset="UTF-8">
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:25px 10px;margin:0;}
 .card{max-width:600px;margin:auto;background:#050505;border-radius:30px;border:2px solid #00ff88;overflow:hidden;box-shadow:0 0 50px rgba(0,255,136,.2);}
 .banner{width:100%;display:block;border-bottom:3px solid #00ff88;}
 .content{padding:45px 35px;text-align:left;color:#ffffff!important;}
@@ -2292,8 +2282,7 @@ const getAnnouncementHTML = (subject, message) => {
 <meta charset="UTF-8">
 
 <style>
-body{margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;}
-.email-body{background:#f4f4f5;padding:25px 10px;}
+body{margin:0;padding:0;background:transparent;font-family:Arial,Helvetica,sans-serif;}.email-body{background:transparent;padding:25px 10px;margin:0;}
 .card{max-width:600px;margin:auto;background:#0a0a0a;border-radius:30px;border:2px solid #00ff88;overflow:hidden;box-shadow:0 0 40px rgba(0,255,136,.2);}
 .banner{width:100%;height:auto;display:block;border-bottom:3px solid #00ff88;}
 .content{padding:45px 35px;text-align:left;color:#ffffff!important;}

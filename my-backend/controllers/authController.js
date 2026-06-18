@@ -63,7 +63,7 @@ exports.register = async (req, res) => {
 
       to: email,
 
-      subject: `🔐 OTP: ${otp}`,
+      subject: "🔐 Account Verification OTP",
 
       html: html,
     });
