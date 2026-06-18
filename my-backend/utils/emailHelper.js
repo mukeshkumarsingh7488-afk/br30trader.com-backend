@@ -14,6 +14,15 @@ const sendEmail = async (options = {}) => {
     const normalizeEmails = (input) => {
       if (!input) return [];
 
+      if (typeof input === "object" && !Array.isArray(input) && input.email) {
+        return [
+          {
+            email: String(input.email).trim(),
+            name: input.name ? String(input.name).trim() : undefined,
+          },
+        ].filter((item) => item.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item.email));
+      }
+
       const rawList = Array.isArray(input) ? input : String(input).split(",");
 
       return rawList
