@@ -18,59 +18,75 @@ const MASTER_ADMIN_EMAIL = process.env.MASTER_ADMIN_EMAIL;
 // 1. 👥 USER & ADMIN REGISTRATION | LOGIC: HANDLING MULTI-ROLE ACCOUNT CREATION
 exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, acceptedTerms, acceptedTermsAt, acceptedTermsVersion, acceptedPrivacyVersion } = req.body;
 
-    if (!email || !password) return res.status(400).json({ msg: "Email/Pass missing!" });
+    if (!name || !email || !password) {
+      return res.status(400).json({ msg: "Name, Email and Password are required!" });
+    }
 
-    const isMaster = email.toLowerCase() === MASTER_ADMIN_EMAIL.toLowerCase();
+    if (acceptedTerms !== true) {
+      return res.status(400).json({ msg: "Please accept Terms & Privacy Policy." });
+    }
+
+    const cleanEmail = email.toLowerCase().trim();
+    const isMaster = cleanEmail === MASTER_ADMIN_EMAIL.toLowerCase();
     const role = isMaster ? "admin" : "student";
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email: cleanEmail });
 
-    if (user && user.isVerified) return res.status(400).json({ msg: "Already verified." });
+    if (user && user.isVerified) {
+      return res.status(400).json({ msg: "Already verified." });
+    }
+
+    const termsAcceptedDate = acceptedTermsAt ? new Date(acceptedTermsAt) : new Date();
 
     if (user) {
       user.name = name;
+      user.email = cleanEmail;
       user.password = hashedPassword;
       user.otp = otp;
       user.role = role;
       user.otpExpires = Date.now() + 600000;
+
+      user.acceptedTerms = true;
+      user.acceptedTermsAt = termsAcceptedDate;
+      user.acceptedTermsVersion = acceptedTermsVersion || "BR30 Trader Terms v1 - 2026";
+      user.acceptedPrivacyVersion = acceptedPrivacyVersion || "BR30 Trader Privacy v1 - 2026";
     } else {
       user = new User({
         name,
-        email,
+        email: cleanEmail,
         password: hashedPassword,
         otp,
         role,
         otpExpires: Date.now() + 600000,
+
+        acceptedTerms: true,
+        acceptedTermsAt: termsAcceptedDate,
+        acceptedTermsVersion: acceptedTermsVersion || "BR30 Trader Terms v1 - 2026",
+        acceptedPrivacyVersion: acceptedPrivacyVersion || "BR30 Trader Privacy v1 - 2026",
       });
     }
 
-    // 🔥 TEMPLATE CALL
     const html = otpTemplate(name, otp, isMaster);
 
     await sendEmail({
       from: process.env.BREVO_EMAIL,
-
       replyTo: {
         email: "support.br30trader@gmail.com",
         name: "BR30 Support Team",
       },
-
-      to: email,
-
+      to: cleanEmail,
       subject: "🔐 Account Verification OTP",
-
-      html: html,
+      html,
     });
 
     await user.save();
 
-    console.log("✅ OTP Sent:", email);
+    console.log("✅ OTP Sent:", cleanEmail);
 
     res.status(201).json({ msg: "OTP Sent!" });
   } catch (err) {

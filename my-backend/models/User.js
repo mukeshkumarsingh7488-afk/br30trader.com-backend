@@ -77,8 +77,28 @@ const userSchema = new mongoose.Schema(
     otpExpires: {
       type: Date,
     },
+
+    acceptedTerms: {
+      type: Boolean,
+      default: false,
+    },
+
+    acceptedTermsAt: {
+      type: Date,
+      default: null,
+    },
+
+    acceptedTermsVersion: {
+      type: String,
+      default: "",
+    },
+
+    acceptedPrivacyVersion: {
+      type: String,
+      default: "",
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("User", userSchema);
